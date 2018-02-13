@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Dip
 import PerfectHTTP
 
 extension Routes {

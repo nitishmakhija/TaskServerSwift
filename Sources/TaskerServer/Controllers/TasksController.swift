@@ -7,7 +7,6 @@
 
 import Foundation
 import PerfectHTTP
-import Dip
 
 class TasksController : Controller {
     
