@@ -24,7 +24,7 @@
 		OBJ_458 /* HealthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* HealthController.swift */; };
 		OBJ_459 /* TasksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* TasksController.swift */; };
 		OBJ_460 /* UsersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* UsersController.swift */; };
-		OBJ_461 /* DependencyInjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* DependencyInjection.swift */; };
+		OBJ_461 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* DependencyContainer.swift */; };
 		OBJ_462 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* Task.swift */; };
 		OBJ_463 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* User.swift */; };
 		OBJ_464 /* TasksRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* TasksRepository.swift */; };
@@ -644,7 +644,7 @@
 		OBJ_147 /* cfb128.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cfb128.c; sourceTree = "<group>"; };
 		OBJ_148 /* cfb64ede.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cfb64ede.c; sourceTree = "<group>"; };
 		OBJ_149 /* cfb64enc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cfb64enc.c; sourceTree = "<group>"; };
-		OBJ_15 /* DependencyInjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjection.swift; sourceTree = "<group>"; };
+		OBJ_15 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		OBJ_150 /* cfb_enc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cfb_enc.c; sourceTree = "<group>"; };
 		OBJ_151 /* cm_.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cm_.c; sourceTree = "<group>"; };
 		OBJ_152 /* cmac.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cmac.c; sourceTree = "<group>"; };
@@ -1366,7 +1366,7 @@
 		OBJ_14 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_15 /* DependencyInjection.swift */,
+				OBJ_15 /* DependencyContainer.swift */,
 				F87069572033306800DD8EDF /* Routes.swift */,
 				F870695B2033431400DD8EDF /* HTTPResponse.swift */,
 				F870695D20334CEA00DD8EDF /* HTTPRequest.swift */,
@@ -2163,7 +2163,7 @@
 				OBJ_458 /* HealthController.swift in Sources */,
 				OBJ_459 /* TasksController.swift in Sources */,
 				OBJ_460 /* UsersController.swift in Sources */,
-				OBJ_461 /* DependencyInjection.swift in Sources */,
+				OBJ_461 /* DependencyContainer.swift in Sources */,
 				OBJ_462 /* Task.swift in Sources */,
 				OBJ_463 /* User.swift in Sources */,
 				OBJ_464 /* TasksRepository.swift in Sources */,
