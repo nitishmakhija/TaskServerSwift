@@ -14,12 +14,13 @@ class HealthController : Controller {
         routes.add(method: .get, uri: "/health", handler: getHealth)
     }
 
-    private func getHealth(request: HTTPRequest, response: HTTPResponse) {
+    func getHealth(request: HTTPRequest, response: HTTPResponse) {
         
-        let scoreArray: [String:Any] = ["state": true, "responseTime": 230.45]
+        let scoreArray: [String:Any] = ["message": "I'm fine and running!"]
         let encoded = try! scoreArray.jsonEncodedString()
         
         response.setHeader(.contentType, value: "text/json")
+        response.status = HTTPResponseStatus.ok
         response.appendBody(string: encoded).completed()
     }
 }

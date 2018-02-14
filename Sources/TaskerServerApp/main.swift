@@ -2,6 +2,7 @@ import PerfectHTTP
 import PerfectHTTPServer
 import PerfectLib
 import Dip
+import TaskerServerLib
 
 // Configure dependency injection.
 let container = DependencyContainer()

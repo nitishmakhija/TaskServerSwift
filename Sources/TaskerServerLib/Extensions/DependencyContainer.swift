@@ -9,16 +9,16 @@ import Foundation
 import Dip
 
 extension DependencyContainer {
-    func configure() {
+    public func configure() {
         self.registerRepositories(container: self)
         self.registerControllers(container: self)
     }
     
-    func resolveAllControllers() -> [Controller] {
+    public func resolveAllControllers() -> [Controller] {
         let controllers:[Controller] = [
-            try! container.resolve() as HealthController,
-            try! container.resolve() as TasksController,
-            try! container.resolve() as UsersController
+            try! self.resolve() as HealthController,
+            try! self.resolve() as TasksController,
+            try! self.resolve() as UsersController
         ]
         
         return controllers

@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "TaskerServer::TaskerServer"
-               BuildableName = "TaskerServer"
-               BlueprintName = "TaskerServer"
+               BlueprintIdentifier = "TaskerServer::TaskerServerApp"
+               BuildableName = "TaskerServerApp"
+               BlueprintName = "TaskerServerApp"
+               ReferencedContainer = "container:TaskerServer.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "TaskerServer::TaskerServerLib"
+               BuildableName = "TaskerServerLib.framework"
+               BlueprintName = "TaskerServerLib"
                ReferencedContainer = "container:TaskerServer.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -169,6 +183,16 @@
       language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "TaskerServer::TaskerServerLibTests"
+               BuildableName = "TaskerServerLibTests.xctest"
+               BlueprintName = "TaskerServerLibTests"
+               ReferencedContainer = "container:TaskerServer.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <AdditionalOptions>
       </AdditionalOptions>
@@ -187,9 +211,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "TaskerServer::TaskerServer"
-            BuildableName = "TaskerServer"
-            BlueprintName = "TaskerServer"
+            BlueprintIdentifier = "TaskerServer::TaskerServerApp"
+            BuildableName = "TaskerServerApp"
+            BlueprintName = "TaskerServerApp"
             ReferencedContainer = "container:TaskerServer.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

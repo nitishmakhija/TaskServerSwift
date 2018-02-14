@@ -9,9 +9,9 @@ import Foundation
 import PerfectHTTP
 
 extension Routes {
-    func configure(basedOnControllers controllers: [Controller]) {
+    public mutating func configure(basedOnControllers controllers: [Controller]) {
         for controller in controllers {
-            routes.add(controller.routes)
+            self.add(controller.routes)
         }
     }
 }

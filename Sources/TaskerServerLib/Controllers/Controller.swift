@@ -8,7 +8,7 @@
 import Foundation
 import PerfectHTTP
 
-class Controller {
+public class Controller {
     var routes = Routes()
     
     init() {
