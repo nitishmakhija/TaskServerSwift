@@ -9,7 +9,7 @@ import XCTest
 import PerfectHTTP
 @testable import TaskerServerLib
 
-class TasksControllerTests: XCTestCase {
+class UsersControllerTests: XCTestCase {
     
     func testInitRoutesShouldInitializeGetAllUsersRoute() {
         
