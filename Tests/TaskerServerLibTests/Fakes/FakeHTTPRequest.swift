@@ -34,6 +34,11 @@ class FakeHTTPRequest : HTTPRequest {
         self.headers = AnyIterator(emptyHeaders.makeIterator())
     }
     
+    convenience init(method: HTTPMethod) {
+        self.init()
+        self.method = method
+    }
+    
     func header(_ named: HTTPRequestHeader.Name) -> String? {
         return ""
     }

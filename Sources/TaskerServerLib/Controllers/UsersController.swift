@@ -21,6 +21,7 @@ class UsersController : Controller {
         routes.add(method: .get, uri: "/users/{id}", handler: getUser)
         routes.add(method: .post, uri: "/users", handler: postUser)
         routes.add(method: .put, uri: "/users/{id}", handler: putUser)
+        routes.add(method: .delete, uri: "/users/{id}", handler: deleteUser)
     }
     
     private func getUsers(request: HTTPRequest, response: HTTPResponse) {
