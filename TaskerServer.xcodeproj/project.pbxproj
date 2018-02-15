@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		F87A5F3020362F0300C9BAA9 /* TasksControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87A5F2F20362F0300C9BAA9 /* TasksControllerTests.swift */; };
 		OBJ_1000 /* SwiftCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_397 /* SwiftCompatibility.swift */; };
 		OBJ_1001 /* SysProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_398 /* SysProcess.swift */; };
 		OBJ_1002 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_399 /* Utilities.swift */; };
@@ -810,6 +811,7 @@
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Dip::Dip::Product" /* Dip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Dip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Dobby::Dobby::Product" /* Dobby.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Dobby.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F87A5F2F20362F0300C9BAA9 /* TasksControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksControllerTests.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
 		OBJ_100 /* inflate.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = inflate.c; sourceTree = "<group>"; };
 		OBJ_101 /* inftrees.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = inftrees.c; sourceTree = "<group>"; };
@@ -1728,6 +1730,7 @@
 			children = (
 				OBJ_30 /* HealthControllerTests.swift */,
 				OBJ_31 /* UsersControllerTests.swift */,
+				F87A5F2F20362F0300C9BAA9 /* TasksControllerTests.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2614,6 +2617,7 @@
 			files = (
 				OBJ_487 /* HealthControllerTests.swift in Sources */,
 				OBJ_488 /* UsersControllerTests.swift in Sources */,
+				F87A5F3020362F0300C9BAA9 /* TasksControllerTests.swift in Sources */,
 				OBJ_489 /* FakeHTTPRequest.swift in Sources */,
 				OBJ_490 /* FakeHTTPResponse.swift in Sources */,
 				OBJ_491 /* FakeUsersRepository.swift in Sources */,
