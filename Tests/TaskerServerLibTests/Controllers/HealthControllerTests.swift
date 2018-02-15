@@ -7,16 +7,16 @@ class HealthControllerTests: XCTestCase {
         
         // Arrange.
         let healthController = HealthController()
-        let request = FakeHTTPRequest()
-        let response = FakeHTTPResponse()
+        let fakeRequest = FakeHTTPRequest()
+        let fakeResponse = FakeHTTPResponse()
         
         // Act.
-        healthController.getHealth(request: request, response: response)
+        healthController.getHealth(request: fakeRequest, response: fakeResponse)
         
         // Assert.
-        XCTAssert(response.status.code == HTTPResponseStatus.ok.code)
-        XCTAssert(response.body != nil)
-        XCTAssert(response.body!.contains(string: "I'm fine and running!"))
+        XCTAssert(fakeResponse.status.code == HTTPResponseStatus.ok.code)
+        XCTAssert(fakeResponse.body != nil)
+        XCTAssert(fakeResponse.body!.contains(string: "I'm fine and running!"))
     }
 
 

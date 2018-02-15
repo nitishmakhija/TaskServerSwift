@@ -24,12 +24,12 @@ class UsersController : Controller {
         routes.add(method: .delete, uri: "/users/{id}", handler: deleteUser)
     }
     
-    private func getUsers(request: HTTPRequest, response: HTTPResponse) {
-        let users = self.usersRepository.getUsres()
+    public func getUsers(request: HTTPRequest, response: HTTPResponse) {
+        let users = self.usersRepository.getUsers()
         response.sendJson(users)
     }
     
-    private func getUser(request: HTTPRequest, response: HTTPResponse) {
+    public func getUser(request: HTTPRequest, response: HTTPResponse) {
         
         if let stringId = request.urlVariables["id"], let id = Int(stringId) {
             if let task = self.usersRepository.getUser(id: id) {

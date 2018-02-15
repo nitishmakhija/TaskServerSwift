@@ -14,6 +14,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Dobby::Dobby"
+               BuildableName = "Dobby.framework"
+               BlueprintName = "Dobby"
+               ReferencedContainer = "container:TaskerServer.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "TaskerServer::TaskerServerApp"
                BuildableName = "TaskerServerApp"
                BlueprintName = "TaskerServerApp"
@@ -211,9 +225,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "TaskerServer::TaskerServerApp"
-            BuildableName = "TaskerServerApp"
-            BlueprintName = "TaskerServerApp"
+            BlueprintIdentifier = "Dobby::Dobby"
+            BuildableName = "Dobby.framework"
+            BlueprintName = "Dobby"
             ReferencedContainer = "container:TaskerServer.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

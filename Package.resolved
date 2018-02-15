@@ -20,6 +20,15 @@
         }
       },
       {
+        "package": "Dobby",
+        "repositoryURL": "https://github.com/mczachurski/Dobby",
+        "state": {
+          "branch": null,
+          "revision": "d2bc24b9a07310535c34eb133de8fe845f6d53a3",
+          "version": "0.7.1"
+        }
+      },
+      {
         "package": "PerfectCZlib",
         "repositoryURL": "https://github.com/PerfectlySoft/Perfect-CZlib-src.git",
         "state": {
@@ -80,24 +89,6 @@
           "branch": null,
           "revision": "1846390a47bfe0c5263bb70ba318b2bbe751ac95",
           "version": "3.0.2"
-        }
-      },
-      {
-        "package": "Reflection",
-        "repositoryURL": "https://github.com/Zewo/Reflection.git",
-        "state": {
-          "branch": null,
-          "revision": "8a90b157455d13b7cde036403a406b72a86f3ea9",
-          "version": "0.15.0"
-        }
-      },
-      {
-        "package": "Swinject",
-        "repositoryURL": "https://github.com/Swinject/Swinject",
-        "state": {
-          "branch": null,
-          "revision": "893fee926be8b65fb940c7df0ca51ebe98adf5de",
-          "version": "2.1.1"
         }
       }
     ]

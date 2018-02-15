@@ -20,7 +20,6 @@ class HealthController : Controller {
         let encoded = try! scoreArray.jsonEncodedString()
         
         response.setHeader(.contentType, value: "text/json")
-        response.status = HTTPResponseStatus.ok
         response.appendBody(string: encoded).completed()
     }
 }

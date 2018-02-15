@@ -8,6 +8,7 @@
 import Foundation
 import PerfectHTTP
 import PerfectNet
+import Dobby
 
 class FakeHTTPRequest : HTTPRequest {
     
@@ -23,15 +24,22 @@ class FakeHTTPRequest : HTTPRequest {
     var connection: NetTCP = NetTCP()
     var urlVariables: [String : String] = [:]
     var scratchPad: [String : Any] = [:]
-    var headers: AnyIterator<(HTTPRequestHeader.Name, String)>
+    var headers: AnyIterator<(HTTPRequestHeader.Name, String)> = AnyIterator { return nil }
     var postParams: [(String, String)] = []
     var postBodyBytes: [UInt8]?
     var postBodyString: String?
     var postFileUploads: [MimeReader.BodySpec]?
     
+    let headerMock = Mock<(HTTPRequestHeader.Name)>()
+    let headerStub = Stub<(HTTPRequestHeader.Name), String?>()
+    
+    let addHeaderMock = Mock<(HTTPRequestHeader.Name, String)>()
+    let setHeaderMock = Mock<(HTTPRequestHeader.Name, String)>()
+    
     init() {
-        let emptyHeaders:[(HTTPRequestHeader.Name, String)] = []
-        self.headers = AnyIterator(emptyHeaders.makeIterator())
+        headerMock.expect(any())
+        addHeaderMock.expect(any())
+        setHeaderMock.expect(any())
     }
     
     convenience init(method: HTTPMethod) {
@@ -39,14 +47,21 @@ class FakeHTTPRequest : HTTPRequest {
         self.method = method
     }
     
+    convenience init(urlVariables:[String:String]) {
+        self.init()
+        self.urlVariables = urlVariables
+    }
+    
     func header(_ named: HTTPRequestHeader.Name) -> String? {
-        return ""
+        headerMock.record(named)
+        return try! headerStub.invoke(named)
     }
     
     func addHeader(_ named: HTTPRequestHeader.Name, value: String) {
+        addHeaderMock.record((named, value))
     }
     
     func setHeader(_ named: HTTPRequestHeader.Name, value: String) {
+        setHeaderMock.record((named, value))
     }
-    
 }

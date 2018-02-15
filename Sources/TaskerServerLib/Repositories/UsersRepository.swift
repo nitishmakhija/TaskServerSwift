@@ -7,8 +7,8 @@
 
 import Foundation
 
-protocol UsersRepositoryProtocol {
-    func getUsres() -> [User]
+public protocol UsersRepositoryProtocol {
+    func getUsers() -> [User]
     func getUser(id: Int) -> User?
     func addUser(user: User)
     func updateUser(user: User)
@@ -24,7 +24,7 @@ class UsersRepository : UsersRepositoryProtocol {
         4: User(id: 4, name: "Anna Qui", email: "anna.qui@xemail.com", isLocked: false)
     ]
     
-    func getUsres() -> [User] {
+    func getUsers() -> [User] {
         return Array(self.users.values)
     }
     
