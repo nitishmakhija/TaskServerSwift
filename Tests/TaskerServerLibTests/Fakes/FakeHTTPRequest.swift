@@ -65,3 +65,21 @@ class FakeHTTPRequest : HTTPRequest {
         setHeaderMock.record((named, value))
     }
 }
+
+extension FakeHTTPRequest {
+    func addObjectToRequestBody<T>(_ value: T) where T : Encodable {
+        let json = self.encode(value)
+        
+        self.setHeader(.contentType, value: "text/json")
+        self.postBodyString = json
+    }
+        
+    private func encode<T>(_ value: T) -> String where T : Encodable {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        let jsonData = try! encoder.encode(value)
+        let json = String(data: jsonData, encoding: .utf8)!
+        
+        return json
+    }
+}

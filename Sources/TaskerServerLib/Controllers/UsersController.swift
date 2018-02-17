@@ -40,7 +40,7 @@ class UsersController : Controller {
         response.sendNotFound()
     }
     
-    private func postUser(request: HTTPRequest, response: HTTPResponse) {
+    public func postUser(request: HTTPRequest, response: HTTPResponse) {
         do {
             let user = try request.getObjectFromRequest(User.self)
             self.usersRepository.addUser(user: user)
@@ -52,7 +52,7 @@ class UsersController : Controller {
         }
     }
     
-    private func putUser(request: HTTPRequest, response: HTTPResponse) {
+    public func putUser(request: HTTPRequest, response: HTTPResponse) {
         do {
             let user = try request.getObjectFromRequest(User.self)
             self.usersRepository.updateUser(user: user)
@@ -64,7 +64,7 @@ class UsersController : Controller {
         }
     }
     
-    private func deleteUser(request: HTTPRequest, response: HTTPResponse) {
+    public func deleteUser(request: HTTPRequest, response: HTTPResponse) {
         if let stringId = request.urlVariables["id"], let id = Int(stringId) {
             self.usersRepository.deleteUser(id: id)
             return response.sendOk();

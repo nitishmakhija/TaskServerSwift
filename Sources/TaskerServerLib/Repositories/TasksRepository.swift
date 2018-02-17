@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol TasksRepositoryProtocol {
+public protocol TasksRepositoryProtocol {
     func getTasks() -> [Task]
     func getTask(id: Int) -> Task?
     func addTask(task: Task)

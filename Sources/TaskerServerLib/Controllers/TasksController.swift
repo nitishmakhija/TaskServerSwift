@@ -24,12 +24,12 @@ class TasksController : Controller {
         routes.add(method: .delete, uri: "/tasks/{id}", handler: deleteTask)
     }
     
-    private func getTasks(request: HTTPRequest, response: HTTPResponse) {
+    public func getTasks(request: HTTPRequest, response: HTTPResponse) {
         let tasks = self.tasksRepository.getTasks()
         response.sendJson(tasks)
     }
     
-    private func getTask(request: HTTPRequest, response: HTTPResponse) {
+    public func getTask(request: HTTPRequest, response: HTTPResponse) {
         
         if let stringId = request.urlVariables["id"], let id = Int(stringId) {
             if let task = self.tasksRepository.getTask(id: id) {
@@ -40,7 +40,7 @@ class TasksController : Controller {
         response.sendNotFound()
     }
     
-    private func postTask(request: HTTPRequest, response: HTTPResponse) {
+    public func postTask(request: HTTPRequest, response: HTTPResponse) {
         do {
             let task = try request.getObjectFromRequest(Task.self)
             self.tasksRepository.addTask(task: task)
@@ -52,7 +52,7 @@ class TasksController : Controller {
         }
     }
     
-    private func putTask(request: HTTPRequest, response: HTTPResponse) {
+    public func putTask(request: HTTPRequest, response: HTTPResponse) {
         do {
             let task = try request.getObjectFromRequest(Task.self)
             self.tasksRepository.updateTask(task: task)
@@ -64,7 +64,7 @@ class TasksController : Controller {
         }
     }
     
-    private func deleteTask(request: HTTPRequest, response: HTTPResponse) {
+    public func deleteTask(request: HTTPRequest, response: HTTPResponse) {
         if let stringId = request.urlVariables["id"], let id = Int(stringId) {
             self.tasksRepository.deleteTask(id: id)
             return response.sendOk();

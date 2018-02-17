@@ -14,21 +14,13 @@ class FakeUsersRepository : UsersRepositoryProtocol {
     let getUsersMock = Mock<()>()
     let getUsersStub = Stub<(), [User]>()
 
-    let getUserMock = Mock<(Int)>()
-    let getUserStub = Stub<(Int), User?>()
+    let getUserMock = Mock<Int>()
+    let getUserStub = Stub<Int, User?>()
 
-    let addUserMock = Mock<(User)>()
-    let updateUserMock = Mock<(User)>()
-    let deleteUserMock = Mock<(Int)>()
-    
-    init() {
-        getUsersMock.expect(any())
-        getUserMock.expect(any())
-        addUserMock.expect(any())
-        updateUserMock.expect(any())
-        deleteUserMock.expect(any())
-    }
-    
+    let addUserMock = Mock<User>()
+    let updateUserMock = Mock<User>()
+    let deleteUserMock = Mock<Int>()
+        
     func getUsers() -> [User] {
         getUsersMock.record(())
         return try! getUsersStub.invoke(())
