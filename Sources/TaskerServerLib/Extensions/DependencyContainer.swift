@@ -9,7 +9,8 @@ import Foundation
 import Dip
 
 extension DependencyContainer {
-    public func configure() {
+    public func configure(withConfiguration configuration: Configuration) {
+        self.registerConfiguration(container: self, configuration: configuration)
         self.registerRepositories(container: self)
         self.registerControllers(container: self)
     }
@@ -24,9 +25,13 @@ extension DependencyContainer {
         return controllers
     }
     
+    private func registerConfiguration(container: DependencyContainer, configuration: Configuration) {
+        container.register(.singleton) { configuration }
+    }
+    
     private func registerRepositories(container: DependencyContainer) {
-        container.register { TasksRepository() as TasksRepositoryProtocol }
-        container.register { UsersRepository() as UsersRepositoryProtocol }
+        container.register { TasksRepository(configuration: $0) as TasksRepositoryProtocol }
+        container.register { UsersRepository(configuration: $0) as UsersRepositoryProtocol }
     }
     
     private func registerControllers(container: DependencyContainer) {

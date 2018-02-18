@@ -24,6 +24,10 @@ class TasksRepository : TasksRepositoryProtocol {
         4: Task(id: 4, name: "Move to newest fremeworks", isFinished: false)
     ]
     
+    init(configuration: Configuration) {
+        print("Database host: \(configuration.databaseHost)")
+    }
+    
     func getTasks() -> [Task] {
         return Array(self.tasks.values)
     }

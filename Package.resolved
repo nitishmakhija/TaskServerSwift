@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "Configuration",
+        "repositoryURL": "https://github.com/IBM-Swift/Configuration.git",
+        "state": {
+          "branch": null,
+          "revision": "a5e3ce4619089069697bbef5abfe3687f6830b9d",
+          "version": "3.0.1"
+        }
+      },
+      {
         "package": "Dip",
         "repositoryURL": "https://github.com/AliSoftware/Dip",
         "state": {
@@ -26,6 +35,24 @@
           "branch": null,
           "revision": "d2bc24b9a07310535c34eb133de8fe845f6d53a3",
           "version": "0.7.1"
+        }
+      },
+      {
+        "package": "FileKit",
+        "repositoryURL": "https://github.com/IBM-Swift/FileKit.git",
+        "state": {
+          "branch": null,
+          "revision": "319016dbf4b3ce04589265c23c9cac0016fe8096",
+          "version": "0.0.1"
+        }
+      },
+      {
+        "package": "LoggerAPI",
+        "repositoryURL": "https://github.com/IBM-Swift/LoggerAPI.git",
+        "state": {
+          "branch": null,
+          "revision": "6b62fe66da9b8794d6581e5c341710eea3173cd4",
+          "version": "1.7.1"
         }
       },
       {

@@ -1,0 +1,9 @@
+{
+    "serverName": "www.example.com",
+    "serverPort": 8181,
+    "logFile": "logs/log.txt",
+    "databaseHost": "localhost",
+    "datanaseName": "tasker",
+    "databaseUser": "tasker_user",
+    "databasePassword": "P@ssw0rd!"
+}

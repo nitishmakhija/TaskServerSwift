@@ -24,6 +24,10 @@ class UsersRepository : UsersRepositoryProtocol {
         4: User(id: 4, name: "Anna Qui", email: "anna.qui@xemail.com", isLocked: false)
     ]
     
+    init(configuration: Configuration) {
+        print("Database host: \(configuration.databaseHost)")
+    }
+    
     func getUsers() -> [User] {
         return Array(self.users.values)
     }
