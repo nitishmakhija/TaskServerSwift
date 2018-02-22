@@ -21,10 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		F8792894203E9BCD0082D33C /* SQLiteConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8792893203E9BCD0082D33C /* SQLiteConnection.swift */; };
+		F8792894203E9BCD0082D33C /* SqlConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8792893203E9BCD0082D33C /* SqlConnection.swift */; };
 		F8792896203E9F5B0082D33C /* DatabaseContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8792895203E9F5B0082D33C /* DatabaseContext.swift */; };
-		F8792898203ED4290082D33C /* PostgresqlConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8792897203ED4290082D33C /* PostgresqlConnection.swift */; };
-		F879289A203ED4490082D33C /* SqlConnectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8792899203ED4490082D33C /* SqlConnectionProtocol.swift */; };
 		OBJ_1000 /* e_cast.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_260 /* e_cast.c */; };
 		OBJ_1001 /* e_chil.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_261 /* e_chil.c */; };
 		OBJ_1002 /* e_chil_err.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_262 /* e_chil_err.c */; };
@@ -1008,10 +1006,8 @@
 		"Configuration::Configuration::Product" /* Configuration.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Configuration.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Dip::Dip::Product" /* Dip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Dip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Dobby::Dobby::Product" /* Dobby.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Dobby.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8792893203E9BCD0082D33C /* SQLiteConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SQLiteConnection.swift; path = Database/SQLiteConnection.swift; sourceTree = "<group>"; };
+		F8792893203E9BCD0082D33C /* SqlConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SqlConnection.swift; path = Database/SqlConnection.swift; sourceTree = "<group>"; };
 		F8792895203E9F5B0082D33C /* DatabaseContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DatabaseContext.swift; path = Database/DatabaseContext.swift; sourceTree = "<group>"; };
-		F8792897203ED4290082D33C /* PostgresqlConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PostgresqlConnection.swift; path = Database/PostgresqlConnection.swift; sourceTree = "<group>"; };
-		F8792899203ED4490082D33C /* SqlConnectionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqlConnectionProtocol.swift; sourceTree = "<group>"; };
 		"FileKit::FileKit::Product" /* FileKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"LoggerAPI::LoggerAPI::Product" /* LoggerAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoggerAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
@@ -1641,10 +1637,8 @@
 		F8792892203E9BAA0082D33C /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				F8792893203E9BCD0082D33C /* SQLiteConnection.swift */,
+				F8792893203E9BCD0082D33C /* SqlConnection.swift */,
 				F8792895203E9F5B0082D33C /* DatabaseContext.swift */,
-				F8792897203ED4290082D33C /* PostgresqlConnection.swift */,
-				F8792899203ED4490082D33C /* SqlConnectionProtocol.swift */,
 			);
 			name = Database;
 			sourceTree = "<group>";
@@ -3368,20 +3362,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				F8792898203ED4290082D33C /* PostgresqlConnection.swift in Sources */,
 				OBJ_689 /* Configuration.swift in Sources */,
 				OBJ_690 /* Controller.swift in Sources */,
 				OBJ_691 /* HealthController.swift in Sources */,
 				OBJ_692 /* TasksController.swift in Sources */,
 				OBJ_693 /* UsersController.swift in Sources */,
-				F879289A203ED4490082D33C /* SqlConnectionProtocol.swift in Sources */,
 				OBJ_694 /* ConfigurationManager.swift in Sources */,
 				OBJ_695 /* DependencyContainer.swift in Sources */,
 				OBJ_696 /* HTTPRequest.swift in Sources */,
 				OBJ_697 /* HTTPResponse.swift in Sources */,
 				OBJ_698 /* Routes.swift in Sources */,
 				F8792896203E9F5B0082D33C /* DatabaseContext.swift in Sources */,
-				F8792894203E9BCD0082D33C /* SQLiteConnection.swift in Sources */,
+				F8792894203E9BCD0082D33C /* SqlConnection.swift in Sources */,
 				OBJ_699 /* Task.swift in Sources */,
 				OBJ_700 /* User.swift in Sources */,
 				OBJ_701 /* TasksRepository.swift in Sources */,

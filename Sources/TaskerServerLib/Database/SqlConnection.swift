@@ -9,6 +9,11 @@ import Foundation
 import PerfectCRUD
 import PerfectSQLite
 
+public protocol SqlConnectionProtocol {
+    func getDatabaseConfiguration() -> DatabaseConfigurationProtocol
+    func isValidConnection() -> Bool
+}
+
 class SQLiteConnection : SqlConnectionProtocol {
 
     
