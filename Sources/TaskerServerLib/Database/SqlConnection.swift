@@ -16,7 +16,6 @@ public protocol SqlConnectionProtocol {
 
 class SQLiteConnection : SqlConnectionProtocol {
 
-    
     private let connectionString: String
     private var configuration: SQLiteDatabaseConfiguration?
     private let lock = NSLock()

@@ -7,6 +7,7 @@
 
 import Foundation
 import PerfectHTTP
+import PerfectSQLite
 
 extension HTTPResponse {
     
@@ -30,6 +31,23 @@ extension HTTPResponse {
     func sendBadRequest() {
         self.status = .badRequest
         self.completed()
+    }
+    
+    func sendError(error: Error) {
+        self.status = .internalServerError
+        
+        var errorDictionary: [String:String] = [:]
+        errorDictionary["error"] = error.localizedDescription
+        
+        switch error {
+        case let sqliteError as SQLiteCRUDError:
+            errorDictionary["description"] = sqliteError.description
+        default:
+            break
+        }
+        
+        let errorJosn = encode(errorDictionary)
+        self.appendBody(string: errorJosn).completed()
     }
     
     private func encode<T>(_ value: T) -> String where T : Encodable {

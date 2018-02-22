@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PerfectCRUD
 import PerfectHTTP
 
 class TasksController : Controller {
@@ -30,7 +31,7 @@ class TasksController : Controller {
             response.sendJson(tasks)
         }
         catch {
-            response.sendBadRequest()
+            response.sendError(error: error)
         }
     }
     
@@ -40,12 +41,15 @@ class TasksController : Controller {
                 if let task = try self.tasksRepository.getTask(id: id) {
                     return response.sendJson(task)
                 }
+                else {
+                    return response.sendNotFound()
+                }
             }
             
-            response.sendNotFound()
+            response.sendBadRequest()
         }
         catch {
-            response.sendBadRequest()
+            response.sendError(error: error)
         }
     }
     
@@ -53,11 +57,13 @@ class TasksController : Controller {
         do {
             let task = try request.getObjectFromRequest(Task.self)
             try self.tasksRepository.addTask(task: task)
-            
             return response.sendJson(task)
         }
-        catch {
+        catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequest()
+        }
+        catch {
+            response.sendError(error: error)
         }
     }
     
@@ -65,25 +71,32 @@ class TasksController : Controller {
         do {
             let task = try request.getObjectFromRequest(Task.self)
             try self.tasksRepository.updateTask(task: task)
-            
             return response.sendJson(task)
         }
-        catch {
+        catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequest()
+        }
+        catch {
+            response.sendError(error: error)
         }
     }
     
     public func deleteTask(request: HTTPRequest, response: HTTPResponse) {
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                try self.tasksRepository.deleteTask(id: id)
-                return response.sendOk();
+                if let _ = try self.tasksRepository.getTask(id: id) {
+                    try self.tasksRepository.deleteTask(id: id)
+                    return response.sendOk();
+                }
+                else {
+                    return response.sendNotFound()
+                }
             }
             
-            response.sendNotFound()
+            response.sendBadRequest()
         }
         catch {
-            response.sendBadRequest()
+            response.sendError(error: error)
         }
     }
 }

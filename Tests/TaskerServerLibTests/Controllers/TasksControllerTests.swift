@@ -233,6 +233,8 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeTasksRepository = FakeTasksRepository()
         
+        fakeTasksRepository.getTaskMock.expect(any())
+        fakeTasksRepository.getTaskStub.on(any(), return: Task(id: 1, name: "Create article", isFinished: true))
         fakeTasksRepository.deleteTaskMock.expect(matches({(id) -> Bool in id == 1 }))
         let tasksController = TasksController(tasksRepository: fakeTasksRepository)
         
@@ -247,9 +249,12 @@ class TasksControllerTests: XCTestCase {
     func testDeleteTaskShouldReturnNotFoundStatusCodeWhenWeNotProvideCorrectId() {
         
         // Arrange.
-        let fakeHttpRequest = FakeHTTPRequest()
+        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "1001"])
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeTasksRepository = FakeTasksRepository()
+        
+        fakeTasksRepository.getTaskMock.expect(any())
+        fakeTasksRepository.getTaskStub.on(any(), return: nil)
         let tasksController = TasksController(tasksRepository: fakeTasksRepository)
         
         // Act.

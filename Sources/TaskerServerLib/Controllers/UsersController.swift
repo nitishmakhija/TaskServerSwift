@@ -30,7 +30,7 @@ class UsersController : Controller {
             response.sendJson(users)
         }
         catch {
-            response.sendBadRequest()
+            response.sendError(error: error)
         }
     }
     
@@ -38,15 +38,18 @@ class UsersController : Controller {
         
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                if let task = try self.usersRepository.getUser(id: id) {
-                    return response.sendJson(task)
+                if let user = try self.usersRepository.getUser(id: id) {
+                    return response.sendJson(user)
+                }
+                else {
+                    return response.sendNotFound()
                 }
             }
             
-            response.sendNotFound()
+            response.sendBadRequest()
         }
         catch {
-            response.sendBadRequest()
+            response.sendError(error: error)
         }
     }
     
@@ -54,11 +57,13 @@ class UsersController : Controller {
         do {
             let user = try request.getObjectFromRequest(User.self)
             try self.usersRepository.addUser(user: user)
-            
             return response.sendJson(user)
         }
-        catch {
+        catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequest()
+        }
+        catch {
+            response.sendError(error: error)
         }
     }
     
@@ -66,25 +71,32 @@ class UsersController : Controller {
         do {
             let user = try request.getObjectFromRequest(User.self)
             try self.usersRepository.updateUser(user: user)
-            
             return response.sendJson(user)
         }
-        catch {
+        catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequest()
+        }
+        catch {
+            response.sendError(error: error)
         }
     }
     
     public func deleteUser(request: HTTPRequest, response: HTTPResponse) {
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                try self.usersRepository.deleteUser(id: id)
-                return response.sendOk();
+                if let _ = try self.usersRepository.getUser(id: id) {
+                    try self.usersRepository.deleteUser(id: id)
+                    return response.sendOk();
+                }
+                else {
+                    return response.sendNotFound()
+                }
             }
             
-            response.sendNotFound()
+            response.sendBadRequest()
         }
         catch {
-            response.sendBadRequest()
+            response.sendError(error: error)
         }
     }
 }

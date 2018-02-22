@@ -237,6 +237,8 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeUsersRepository = FakeUsersRepository()
         
+        fakeUsersRepository.getUserMock.expect(any())
+        fakeUsersRepository.getUserStub.on(any(), return: User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: false))
         fakeUsersRepository.deleteUserMock.expect(matches({(id) -> Bool in id == 1 }))
         let usersController = UsersController(usersRepository: fakeUsersRepository)
         
@@ -251,9 +253,12 @@ class UsersControllerTests: XCTestCase {
     func testDeleteUserShouldReturnNotFoundStatusCodeWhenWeNotProvideCorrectId() {
         
         // Arrange.
-        let fakeHttpRequest = FakeHTTPRequest()
+        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "1"])
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeUsersRepository = FakeUsersRepository()
+        
+        fakeUsersRepository.getUserMock.expect(any())
+        fakeUsersRepository.getUserStub.on(any(), return: nil)
         let usersController = UsersController(usersRepository: fakeUsersRepository)
         
         // Act.
