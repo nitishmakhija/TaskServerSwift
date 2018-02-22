@@ -42,6 +42,48 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "TaskerServer::TaskerServerLib"
+               BuildableName = "TaskerServerLib.framework"
+               BlueprintName = "TaskerServerLib"
+               ReferencedContainer = "container:TaskerServer.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PerfectSQLite::PerfectSQLite"
+               BuildableName = "PerfectSQLite.framework"
+               BlueprintName = "PerfectSQLite"
+               ReferencedContainer = "container:TaskerServer.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PerfectCRUD::PerfectCRUD"
+               BuildableName = "PerfectCRUD.framework"
+               BlueprintName = "PerfectCRUD"
+               ReferencedContainer = "container:TaskerServer.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "Configuration::Configuration"
                BuildableName = "Configuration.framework"
                BlueprintName = "Configuration"
@@ -73,20 +115,6 @@
                BlueprintIdentifier = "LoggerAPI::LoggerAPI"
                BuildableName = "LoggerAPI.framework"
                BlueprintName = "LoggerAPI"
-               ReferencedContainer = "container:TaskerServer.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "TaskerServer::TaskerServerLib"
-               BuildableName = "TaskerServerLib.framework"
-               BlueprintName = "TaskerServerLib"
                ReferencedContainer = "container:TaskerServer.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

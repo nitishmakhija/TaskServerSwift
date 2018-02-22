@@ -25,25 +25,34 @@ class TasksController : Controller {
     }
     
     public func getTasks(request: HTTPRequest, response: HTTPResponse) {
-        let tasks = self.tasksRepository.getTasks()
-        response.sendJson(tasks)
+        do {
+            let tasks = try self.tasksRepository.getTasks()
+            response.sendJson(tasks)
+        }
+        catch {
+            response.sendBadRequest()
+        }
     }
     
     public func getTask(request: HTTPRequest, response: HTTPResponse) {
-        
-        if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-            if let task = self.tasksRepository.getTask(id: id) {
-                return response.sendJson(task)
+        do {
+            if let stringId = request.urlVariables["id"], let id = Int(stringId) {
+                if let task = try self.tasksRepository.getTask(id: id) {
+                    return response.sendJson(task)
+                }
             }
+            
+            response.sendNotFound()
         }
-        
-        response.sendNotFound()
+        catch {
+            response.sendBadRequest()
+        }
     }
     
     public func postTask(request: HTTPRequest, response: HTTPResponse) {
         do {
             let task = try request.getObjectFromRequest(Task.self)
-            self.tasksRepository.addTask(task: task)
+            try self.tasksRepository.addTask(task: task)
             
             return response.sendJson(task)
         }
@@ -55,7 +64,7 @@ class TasksController : Controller {
     public func putTask(request: HTTPRequest, response: HTTPResponse) {
         do {
             let task = try request.getObjectFromRequest(Task.self)
-            self.tasksRepository.updateTask(task: task)
+            try self.tasksRepository.updateTask(task: task)
             
             return response.sendJson(task)
         }
@@ -65,11 +74,16 @@ class TasksController : Controller {
     }
     
     public func deleteTask(request: HTTPRequest, response: HTTPResponse) {
-        if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-            self.tasksRepository.deleteTask(id: id)
-            return response.sendOk();
+        do {
+            if let stringId = request.urlVariables["id"], let id = Int(stringId) {
+                try self.tasksRepository.deleteTask(id: id)
+                return response.sendOk();
+            }
+            
+            response.sendNotFound()
         }
-        
-        response.sendNotFound()
+        catch {
+            response.sendBadRequest()
+        }
     }
 }

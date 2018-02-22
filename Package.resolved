@@ -56,6 +56,24 @@
         }
       },
       {
+        "package": "PerfectCRUD",
+        "repositoryURL": "https://github.com/PerfectlySoft/Perfect-CRUD.git",
+        "state": {
+          "branch": null,
+          "revision": "db1a977284cff84cac2ee489a992d86a3d2ad75b",
+          "version": "0.0.14"
+        }
+      },
+      {
+        "package": "PerfectCSQLite3",
+        "repositoryURL": "https://github.com/PerfectlySoft/Perfect-sqlite3-support.git",
+        "state": {
+          "branch": null,
+          "revision": "fb806c0fd0fcbf27ababa9c03a00e32c2c46464c",
+          "version": "3.0.0"
+        }
+      },
+      {
         "package": "PerfectCZlib",
         "repositoryURL": "https://github.com/PerfectlySoft/Perfect-CZlib-src.git",
         "state": {
@@ -107,6 +125,15 @@
           "branch": null,
           "revision": "5e137023e0373b3bdd46a5c80c3ec868fd1c383d",
           "version": "3.0.0"
+        }
+      },
+      {
+        "package": "PerfectSQLite",
+        "repositoryURL": "https://github.com/kjessup/Perfect-SQLite.git",
+        "state": {
+          "branch": null,
+          "revision": "89f5e4dc81a2523b42381ee651945a3b6aad17d1",
+          "version": "3.0.1"
         }
       },
       {

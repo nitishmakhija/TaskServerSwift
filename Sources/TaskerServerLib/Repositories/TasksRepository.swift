@@ -6,49 +6,46 @@
 //
 
 import Foundation
+import PerfectCRUD
 
 public protocol TasksRepositoryProtocol {
-    func getTasks() -> [Task]
-    func getTask(id: Int) -> Task?
-    func addTask(task: Task)
-    func updateTask(task: Task)
-    func deleteTask(id: Int)
+    func getTasks() throws -> [Task]
+    func getTask(id: Int) throws -> Task?
+    func addTask(task: Task) throws
+    func updateTask(task: Task) throws
+    func deleteTask(id: Int) throws
 }
 
 class TasksRepository : TasksRepositoryProtocol {
     
-    var tasks = [
-        1: Task(id: 1, name: "Create new Perfect server", isFinished: false),
-        2: Task(id: 2, name: "Improve MVC pattern on server side", isFinished: false),
-        3: Task(id: 3, name: "Finish code refactoring", isFinished: false),
-        4: Task(id: 4, name: "Move to newest fremeworks", isFinished: false)
-    ]
+    private let databaseContext: DatabaseContextProtocol
     
-    init(configuration: Configuration) {
-        print("Database host: \(configuration.databaseHost)")
+    init(databaseContext: DatabaseContextProtocol) {
+        self.databaseContext = databaseContext
     }
     
-    func getTasks() -> [Task] {
-        return Array(self.tasks.values)
-    }
-    
-    func getTask(id: Int) -> Task? {
-        let filteredTasks = tasks.values.filter { (task) -> Bool in
-            return task.id == id
+    func getTasks() throws -> [Task] {
+        let tasks = try self.databaseContext.set(Task.self).select()
+        return tasks.sorted { (task1, task2) -> Bool in
+            return task1.name < task2.name
         }
+    }
+    
+    func getTask(id: Int) throws -> Task? {
+        let task = try self.databaseContext.set(Task.self).where(\Task.id == id).first()
+        return task
+    }
+    
+    func addTask(task: Task) throws {
+        try self.databaseContext.set(Task.self).insert(task)
+    }
+    
+    func updateTask(task: Task) throws {
+        try self.databaseContext.set(Task.self).where(\Task.id == task.id).update(task)
         
-        return filteredTasks.first
     }
     
-    func addTask(task: Task) {
-        self.tasks[task.id] = task
-    }
-    
-    func updateTask(task: Task) {
-        self.tasks[task.id] = task
-    }
-    
-    func deleteTask(id: Int) {
-        self.tasks.removeValue(forKey: id)
+    func deleteTask(id: Int) throws {
+        try self.databaseContext.set(Task.self).where(\Task.id == id).delete()
     }
 }

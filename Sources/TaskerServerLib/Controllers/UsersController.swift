@@ -25,25 +25,35 @@ class UsersController : Controller {
     }
     
     public func getUsers(request: HTTPRequest, response: HTTPResponse) {
-        let users = self.usersRepository.getUsers()
-        response.sendJson(users)
+        do {
+            let users = try self.usersRepository.getUsers()
+            response.sendJson(users)
+        }
+        catch {
+            response.sendBadRequest()
+        }
     }
     
     public func getUser(request: HTTPRequest, response: HTTPResponse) {
         
-        if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-            if let task = self.usersRepository.getUser(id: id) {
-                return response.sendJson(task)
+        do {
+            if let stringId = request.urlVariables["id"], let id = Int(stringId) {
+                if let task = try self.usersRepository.getUser(id: id) {
+                    return response.sendJson(task)
+                }
             }
+            
+            response.sendNotFound()
         }
-        
-        response.sendNotFound()
+        catch {
+            response.sendBadRequest()
+        }
     }
     
     public func postUser(request: HTTPRequest, response: HTTPResponse) {
         do {
             let user = try request.getObjectFromRequest(User.self)
-            self.usersRepository.addUser(user: user)
+            try self.usersRepository.addUser(user: user)
             
             return response.sendJson(user)
         }
@@ -55,7 +65,7 @@ class UsersController : Controller {
     public func putUser(request: HTTPRequest, response: HTTPResponse) {
         do {
             let user = try request.getObjectFromRequest(User.self)
-            self.usersRepository.updateUser(user: user)
+            try self.usersRepository.updateUser(user: user)
             
             return response.sendJson(user)
         }
@@ -65,11 +75,16 @@ class UsersController : Controller {
     }
     
     public func deleteUser(request: HTTPRequest, response: HTTPResponse) {
-        if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-            self.usersRepository.deleteUser(id: id)
-            return response.sendOk();
+        do {
+            if let stringId = request.urlVariables["id"], let id = Int(stringId) {
+                try self.usersRepository.deleteUser(id: id)
+                return response.sendOk();
+            }
+            
+            response.sendNotFound()
         }
-        
-        response.sendNotFound()
+        catch {
+            response.sendBadRequest()
+        }
     }
 }

@@ -24,6 +24,9 @@ let controllers = container.resolveAllControllers()
 var routes = Routes()
 routes.configure(basedOnControllers: controllers)
 
+// Run migrations.
+let databaseContext = try! container.resolve() as DatabaseContextProtocol
+databaseContext.executeMigrations()
 
 do {
     // Launch the HTTP server.

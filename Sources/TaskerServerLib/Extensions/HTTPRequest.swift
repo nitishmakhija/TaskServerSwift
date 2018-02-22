@@ -7,6 +7,7 @@
 
 import Foundation
 import PerfectHTTP
+import PerfectHTTPServer
 
 enum RequestError: Error {
     case BodyIsEmpty

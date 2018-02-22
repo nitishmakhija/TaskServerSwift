@@ -7,10 +7,12 @@
 
 import Foundation
 import Dip
+import PerfectSQLite
 
 extension DependencyContainer {
     public func configure(withConfiguration configuration: Configuration) {
         self.registerConfiguration(container: self, configuration: configuration)
+        self.registerDatabase(container: self)
         self.registerRepositories(container: self)
         self.registerControllers(container: self)
     }
@@ -25,13 +27,18 @@ extension DependencyContainer {
         return controllers
     }
     
+    private func registerDatabase(container: DependencyContainer) {
+        container.register(.singleton) { SQLiteConnection(configuration: $0) as SqlConnectionProtocol }
+        container.register { DatabaseContext(sqlConnection: $0) as DatabaseContextProtocol }
+    }
+    
     private func registerConfiguration(container: DependencyContainer, configuration: Configuration) {
         container.register(.singleton) { configuration }
     }
     
     private func registerRepositories(container: DependencyContainer) {
-        container.register { TasksRepository(configuration: $0) as TasksRepositoryProtocol }
-        container.register { UsersRepository(configuration: $0) as UsersRepositoryProtocol }
+        container.register { TasksRepository(databaseContext: $0) as TasksRepositoryProtocol }
+        container.register { UsersRepository(databaseContext: $0) as UsersRepositoryProtocol }
     }
     
     private func registerControllers(container: DependencyContainer) {
