@@ -23,6 +23,9 @@
 /* Begin PBXBuildFile section */
 		F8F1AD7E2041BBB6005AC22A /* BaseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F1AD7C2041BA7C005AC22A /* BaseRepository.swift */; };
 		F8F1AD802041BBF3005AC22A /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F1AD7F2041BBF3005AC22A /* EntityProtocol.swift */; };
+		F8F1AD822041E948005AC22A /* TasksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F1AD812041E948005AC22A /* TasksService.swift */; };
+		F8F1AD842041EADB005AC22A /* UsersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F1AD832041EADB005AC22A /* UsersService.swift */; };
+		F8F1AD862041EBC7005AC22A /* FakeBaseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F1AD852041EBC7005AC22A /* FakeBaseRepository.swift */; };
 		OBJ_1000 /* e_atalla_err.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_258 /* e_atalla_err.c */; };
 		OBJ_1001 /* e_bf.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_259 /* e_bf.c */; };
 		OBJ_1002 /* e_camellia.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_260 /* e_camellia.c */; };
@@ -1007,9 +1010,12 @@
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Configuration::Configuration::Product" /* Configuration.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Configuration.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Dip::Dip::Product" /* Dip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Dip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		"Dobby::Dobby::Product" /* Dobby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dobby.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"Dobby::Dobby::Product" /* Dobby.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Dobby.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8F1AD7C2041BA7C005AC22A /* BaseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRepository.swift; sourceTree = "<group>"; };
 		F8F1AD7F2041BBF3005AC22A /* EntityProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityProtocol.swift; sourceTree = "<group>"; };
+		F8F1AD812041E948005AC22A /* TasksService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TasksService.swift; path = Services/TasksService.swift; sourceTree = "<group>"; };
+		F8F1AD832041EADB005AC22A /* UsersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UsersService.swift; path = Services/UsersService.swift; sourceTree = "<group>"; };
+		F8F1AD852041EBC7005AC22A /* FakeBaseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeBaseRepository.swift; sourceTree = "<group>"; };
 		"FileKit::FileKit::Product" /* FileKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"LoggerAPI::LoggerAPI::Product" /* LoggerAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoggerAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
@@ -1641,6 +1647,8 @@
 		F8F1AD7B2041BA03005AC22A /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F8F1AD812041E948005AC22A /* TasksService.swift */,
+				F8F1AD832041EADB005AC22A /* UsersService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -2196,6 +2204,7 @@
 				OBJ_41 /* FakeHTTPResponse.swift */,
 				OBJ_42 /* FakeTasksRepository.swift */,
 				OBJ_43 /* FakeUsersRepository.swift */,
+				F8F1AD852041EBC7005AC22A /* FakeBaseRepository.swift */,
 			);
 			path = Fakes;
 			sourceTree = "<group>";
@@ -3347,6 +3356,7 @@
 				OBJ_582 /* UsersControllerTests.swift in Sources */,
 				OBJ_583 /* FakeHTTPRequest.swift in Sources */,
 				OBJ_584 /* FakeHTTPResponse.swift in Sources */,
+				F8F1AD862041EBC7005AC22A /* FakeBaseRepository.swift in Sources */,
 				OBJ_585 /* FakeTasksRepository.swift in Sources */,
 				OBJ_586 /* FakeUsersRepository.swift in Sources */,
 			);
@@ -3381,8 +3391,10 @@
 				OBJ_693 /* Controller.swift in Sources */,
 				OBJ_694 /* HealthController.swift in Sources */,
 				OBJ_695 /* TasksController.swift in Sources */,
+				F8F1AD822041E948005AC22A /* TasksService.swift in Sources */,
 				OBJ_696 /* UsersController.swift in Sources */,
 				OBJ_697 /* DatabaseContext.swift in Sources */,
+				F8F1AD842041EADB005AC22A /* UsersService.swift in Sources */,
 				F8F1AD802041BBF3005AC22A /* EntityProtocol.swift in Sources */,
 				OBJ_698 /* SqlConnection.swift in Sources */,
 				OBJ_699 /* ConfigurationManager.swift in Sources */,

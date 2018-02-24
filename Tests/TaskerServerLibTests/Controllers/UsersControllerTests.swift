@@ -89,8 +89,8 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeUsersRepository = FakeUsersRepository()
         
-        fakeUsersRepository.getUsersMock.expect(any())
-        fakeUsersRepository.getUsersStub.on(any(), return: [
+        fakeUsersRepository.getMock.expect(any())
+        fakeUsersRepository.getStub.on(any(), return: [
                 User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: false),
                 User(id: 2, name: "Victor Doe", email: "victor.doe@emailx.com", isLocked: false)
         ])
@@ -101,7 +101,7 @@ class UsersControllerTests: XCTestCase {
         
         // Assert.
         let users = try! fakeHttpResponse.getObjectFromResponseBody(Array<User>.self)
-        fakeUsersRepository.getUsersMock.verify()
+        fakeUsersRepository.getMock.verify()
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
         XCTAssertEqual(2, users.count)
         XCTAssertEqual("john.doe@emailx.com", users[0].email)
@@ -115,8 +115,8 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeUsersRepository = FakeUsersRepository()
         
-        fakeUsersRepository.getUserMock.expect(any())
-        fakeUsersRepository.getUserStub.on(equals(1), return:
+        fakeUsersRepository.getByIdMock.expect(any())
+        fakeUsersRepository.getByIdStub.on(equals(1), return:
             User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: false)
         )
         let usersController = UsersController(usersRepository: fakeUsersRepository)
@@ -126,7 +126,7 @@ class UsersControllerTests: XCTestCase {
         
         // Assert.
         let users = try! fakeHttpResponse.getObjectFromResponseBody(User.self)
-        fakeUsersRepository.getUserMock.verify()
+        fakeUsersRepository.getByIdMock.verify()
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
         XCTAssertEqual(1, users.id)
         XCTAssertEqual("john.doe@emailx.com", users.email)
@@ -139,8 +139,8 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeUsersRepository = FakeUsersRepository()
         
-        fakeUsersRepository.getUserMock.expect(any())
-        fakeUsersRepository.getUserStub.on(equals(2), return: nil)
+        fakeUsersRepository.getByIdMock.expect(any())
+        fakeUsersRepository.getByIdStub.on(equals(2), return: nil)
         let usersController = UsersController(usersRepository: fakeUsersRepository)
         
         // Act.
@@ -158,7 +158,7 @@ class UsersControllerTests: XCTestCase {
         let fakeUsersRepository = FakeUsersRepository()
         
         fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: true))
-        fakeUsersRepository.addUserMock.expect(matches({(user) -> Bool in
+        fakeUsersRepository.addMock.expect(matches({(user) -> Bool in
             user.id == 1 &&
             user.email == "john.doe@emailx.com" &&
             user.name == "John Doe" &&
@@ -172,7 +172,7 @@ class UsersControllerTests: XCTestCase {
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
-        fakeUsersRepository.addUserMock.verify()
+        fakeUsersRepository.addMock.verify()
     }
     
     func testPostUserShouldReturnBadRequestStatusCodeWhenWeNotProvideJson() {
@@ -198,7 +198,7 @@ class UsersControllerTests: XCTestCase {
         let fakeUsersRepository = FakeUsersRepository()
         
         fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: true))
-        fakeUsersRepository.updateUserMock.expect(matches({(user) -> Bool in
+        fakeUsersRepository.updateMock.expect(matches({(user) -> Bool in
             user.id == 1 &&
                 user.email == "john.doe@emailx.com" &&
                 user.name == "John Doe" &&
@@ -212,7 +212,7 @@ class UsersControllerTests: XCTestCase {
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
-        fakeUsersRepository.addUserMock.verify()
+        fakeUsersRepository.addMock.verify()
     }
     
     func testPutUserShouldReturnBadRequestStatusCodeWhenWeNotProvideJson() {
@@ -237,9 +237,9 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeUsersRepository = FakeUsersRepository()
         
-        fakeUsersRepository.getUserMock.expect(any())
-        fakeUsersRepository.getUserStub.on(any(), return: User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: false))
-        fakeUsersRepository.deleteUserMock.expect(matches({(id) -> Bool in id == 1 }))
+        fakeUsersRepository.getByIdMock.expect(any())
+        fakeUsersRepository.getByIdStub.on(any(), return: User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: false))
+        fakeUsersRepository.deleteMock.expect(matches({(id) -> Bool in id == 1 }))
         let usersController = UsersController(usersRepository: fakeUsersRepository)
         
         // Act.
@@ -247,7 +247,7 @@ class UsersControllerTests: XCTestCase {
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
-        fakeUsersRepository.deleteUserMock.verify()
+        fakeUsersRepository.deleteMock.verify()
     }
     
     func testDeleteUserShouldReturnNotFoundStatusCodeWhenWeNotProvideCorrectId() {
@@ -257,8 +257,8 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeUsersRepository = FakeUsersRepository()
         
-        fakeUsersRepository.getUserMock.expect(any())
-        fakeUsersRepository.getUserStub.on(any(), return: nil)
+        fakeUsersRepository.getByIdMock.expect(any())
+        fakeUsersRepository.getByIdStub.on(any(), return: nil)
         let usersController = UsersController(usersRepository: fakeUsersRepository)
         
         // Act.
