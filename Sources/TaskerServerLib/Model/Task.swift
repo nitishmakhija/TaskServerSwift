@@ -7,11 +7,11 @@
 
 import Foundation
 
-public class Task : Codable {
+public class Task : EntityProtocol {
     
-    var id: Int
-    var name: String
-    var isFinished: Bool
+    public var id: Int
+    public var name: String
+    public var isFinished: Bool
     
     init(id: Int, name: String, isFinished: Bool) {
         self.id = id

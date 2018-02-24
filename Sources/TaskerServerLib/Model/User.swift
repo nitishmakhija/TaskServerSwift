@@ -7,12 +7,12 @@
 
 import Foundation
 
-public class User : Codable {
+public class User : EntityProtocol {
     
-    var id: Int
-    var name: String
-    var email: String
-    var isLocked: Bool
+    public var id: Int
+    public var name: String
+    public var email: String
+    public var isLocked: Bool
     
     init(id: Int, name: String, email: String, isLocked: Bool) {
         self.id = id

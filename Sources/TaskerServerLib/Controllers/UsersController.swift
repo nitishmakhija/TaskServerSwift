@@ -26,7 +26,7 @@ class UsersController : Controller {
     
     public func getUsers(request: HTTPRequest, response: HTTPResponse) {
         do {
-            let users = try self.usersRepository.getUsers()
+            let users = try self.usersRepository.get()
             response.sendJson(users)
         }
         catch {
@@ -38,7 +38,7 @@ class UsersController : Controller {
         
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                if let user = try self.usersRepository.getUser(id: id) {
+                if let user = try self.usersRepository.get(byId: id) {
                     return response.sendJson(user)
                 }
                 else {
@@ -56,7 +56,7 @@ class UsersController : Controller {
     public func postUser(request: HTTPRequest, response: HTTPResponse) {
         do {
             let user = try request.getObjectFromRequest(User.self)
-            try self.usersRepository.addUser(user: user)
+            try self.usersRepository.add(entity: user)
             return response.sendJson(user)
         }
         catch let error where error is DecodingError || error is RequestError {
@@ -70,7 +70,7 @@ class UsersController : Controller {
     public func putUser(request: HTTPRequest, response: HTTPResponse) {
         do {
             let user = try request.getObjectFromRequest(User.self)
-            try self.usersRepository.updateUser(user: user)
+            try self.usersRepository.update(entity: user)
             return response.sendJson(user)
         }
         catch let error where error is DecodingError || error is RequestError {
@@ -84,8 +84,8 @@ class UsersController : Controller {
     public func deleteUser(request: HTTPRequest, response: HTTPResponse) {
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                if let _ = try self.usersRepository.getUser(id: id) {
-                    try self.usersRepository.deleteUser(id: id)
+                if let _ = try self.usersRepository.get(byId: id) {
+                    try self.usersRepository.delete(entityWithId: id)
                     return response.sendOk();
                 }
                 else {

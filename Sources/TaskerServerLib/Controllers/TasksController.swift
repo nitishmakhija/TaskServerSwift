@@ -27,7 +27,7 @@ class TasksController : Controller {
     
     public func getTasks(request: HTTPRequest, response: HTTPResponse) {
         do {
-            let tasks = try self.tasksRepository.getTasks()
+            let tasks = try self.tasksRepository.get()
             response.sendJson(tasks)
         }
         catch {
@@ -38,7 +38,7 @@ class TasksController : Controller {
     public func getTask(request: HTTPRequest, response: HTTPResponse) {
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                if let task = try self.tasksRepository.getTask(id: id) {
+                if let task = try self.tasksRepository.get(byId: id) {
                     return response.sendJson(task)
                 }
                 else {
@@ -56,7 +56,7 @@ class TasksController : Controller {
     public func postTask(request: HTTPRequest, response: HTTPResponse) {
         do {
             let task = try request.getObjectFromRequest(Task.self)
-            try self.tasksRepository.addTask(task: task)
+            try self.tasksRepository.add(entity: task)
             return response.sendJson(task)
         }
         catch let error where error is DecodingError || error is RequestError {
@@ -70,7 +70,7 @@ class TasksController : Controller {
     public func putTask(request: HTTPRequest, response: HTTPResponse) {
         do {
             let task = try request.getObjectFromRequest(Task.self)
-            try self.tasksRepository.updateTask(task: task)
+            try self.tasksRepository.update(entity: task)
             return response.sendJson(task)
         }
         catch let error where error is DecodingError || error is RequestError {
@@ -84,8 +84,8 @@ class TasksController : Controller {
     public func deleteTask(request: HTTPRequest, response: HTTPResponse) {
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                if let _ = try self.tasksRepository.getTask(id: id) {
-                    try self.tasksRepository.deleteTask(id: id)
+                if let _ = try self.tasksRepository.get(byId: id) {
+                    try self.tasksRepository.delete(entityWithId: id)
                     return response.sendOk();
                 }
                 else {
