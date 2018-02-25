@@ -23,17 +23,26 @@ extension HTTPResponse {
         self.completed()
     }
     
-    func sendNotFound() {
+    func sendNotFoundError() {
         self.status = .notFound
         self.completed()
     }
 
-    func sendBadRequest() {
+    func sendBadRequestError() {
         self.status = .badRequest
-        self.completed()
+        let badRequestResponse = BadRequestResponseDto(message: "Error during parsing your request. Verify that all parameters and json was correct.")
+        let errorJosn = encode(badRequestResponse)
+        self.appendBody(string: errorJosn).completed()
     }
     
-    func sendError(error: Error) {
+    func sendValidationsError(error: ValidationsError) {
+        self.status = .badRequest
+        let validationErrorResponse = ValidationErrorResponseDto(message: "Error during parsing your request. Verify that all parameters and json was correct.", errors: error.errors)
+        let errorJosn = encode(validationErrorResponse)
+        self.appendBody(string: errorJosn).completed()
+    }
+    
+    func sendInternalServerError(error: Error) {
         self.status = .internalServerError
         
         var errorDictionary: [String:String] = [:]

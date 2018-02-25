@@ -48,8 +48,8 @@ extension DependencyContainer {
     }
     
     private func addControllers(toContainer container: DependencyContainer) {
-        container.register { TasksController(tasksRepository: $0) }
-        container.register { UsersController(usersRepository: $0) }
+        container.register { TasksController(tasksService: $0) }
+        container.register { UsersController(usersService: $0) }
         container.register { HealthController() }
     }
 }

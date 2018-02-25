@@ -10,10 +10,10 @@ import PerfectHTTP
 
 class UsersController : Controller {
     
-    private let usersRepository: UsersRepositoryProtocol!
+    private let usersService: UsersServiceProtocol!
     
-    init(usersRepository: UsersRepositoryProtocol) {
-        self.usersRepository = usersRepository
+    init(usersService: UsersServiceProtocol) {
+        self.usersService = usersService
     }
     
     override func initRoutes() {
@@ -26,11 +26,11 @@ class UsersController : Controller {
     
     public func getUsers(request: HTTPRequest, response: HTTPResponse) {
         do {
-            let users = try self.usersRepository.get()
+            let users = try self.usersService.get()
             response.sendJson(users)
         }
         catch {
-            response.sendError(error: error)
+            response.sendInternalServerError(error: error)
         }
     }
     
@@ -38,65 +38,71 @@ class UsersController : Controller {
         
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                if let user = try self.usersRepository.get(byId: id) {
+                if let user = try self.usersService.get(byId: id) {
                     return response.sendJson(user)
                 }
                 else {
-                    return response.sendNotFound()
+                    return response.sendNotFoundError()
                 }
             }
             
-            response.sendBadRequest()
+            response.sendBadRequestError()
         }
         catch {
-            response.sendError(error: error)
+            response.sendInternalServerError(error: error)
         }
     }
     
     public func postUser(request: HTTPRequest, response: HTTPResponse) {
         do {
             let user = try request.getObjectFromRequest(User.self)
-            try self.usersRepository.add(entity: user)
+            try self.usersService.add(entity: user)
             return response.sendJson(user)
         }
         catch let error where error is DecodingError || error is RequestError {
-            response.sendBadRequest()
+            response.sendBadRequestError()
+        }
+        catch let error as ValidationsError {
+            response.sendValidationsError(error: error)
         }
         catch {
-            response.sendError(error: error)
+            response.sendInternalServerError(error: error)
         }
     }
     
     public func putUser(request: HTTPRequest, response: HTTPResponse) {
         do {
             let user = try request.getObjectFromRequest(User.self)
-            try self.usersRepository.update(entity: user)
+            try self.usersService.update(entity: user)
             return response.sendJson(user)
         }
         catch let error where error is DecodingError || error is RequestError {
-            response.sendBadRequest()
+            response.sendBadRequestError()
+        }
+        catch let error as ValidationsError {
+            response.sendValidationsError(error: error)
         }
         catch {
-            response.sendError(error: error)
+            response.sendInternalServerError(error: error)
         }
     }
     
     public func deleteUser(request: HTTPRequest, response: HTTPResponse) {
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                if let _ = try self.usersRepository.get(byId: id) {
-                    try self.usersRepository.delete(entityWithId: id)
+                if let _ = try self.usersService.get(byId: id) {
+                    try self.usersService.delete(entityWithId: id)
                     return response.sendOk();
                 }
                 else {
-                    return response.sendNotFound()
+                    return response.sendNotFoundError()
                 }
             }
             
-            response.sendBadRequest()
+            response.sendBadRequestError()
         }
         catch {
-            response.sendError(error: error)
+            response.sendInternalServerError(error: error)
         }
     }
 }

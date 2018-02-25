@@ -11,10 +11,10 @@ import PerfectHTTP
 
 class TasksController : Controller {
     
-    private let tasksRepository: TasksRepositoryProtocol!
+    private let tasksService: TasksServiceProtocol!
     
-    init(tasksRepository: TasksRepositoryProtocol) {
-        self.tasksRepository = tasksRepository
+    init(tasksService: TasksServiceProtocol) {
+        self.tasksService = tasksService
     }
     
     override func initRoutes() {
@@ -27,76 +27,82 @@ class TasksController : Controller {
     
     public func getTasks(request: HTTPRequest, response: HTTPResponse) {
         do {
-            let tasks = try self.tasksRepository.get()
+            let tasks = try self.tasksService.get()
             response.sendJson(tasks)
         }
         catch {
-            response.sendError(error: error)
+            response.sendInternalServerError(error: error)
         }
     }
     
     public func getTask(request: HTTPRequest, response: HTTPResponse) {
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                if let task = try self.tasksRepository.get(byId: id) {
+                if let task = try self.tasksService.get(byId: id) {
                     return response.sendJson(task)
                 }
                 else {
-                    return response.sendNotFound()
+                    return response.sendNotFoundError()
                 }
             }
             
-            response.sendBadRequest()
+            response.sendBadRequestError()
         }
         catch {
-            response.sendError(error: error)
+            response.sendInternalServerError(error: error)
         }
     }
     
     public func postTask(request: HTTPRequest, response: HTTPResponse) {
         do {
             let task = try request.getObjectFromRequest(Task.self)
-            try self.tasksRepository.add(entity: task)
+            try self.tasksService.add(entity: task)
             return response.sendJson(task)
         }
         catch let error where error is DecodingError || error is RequestError {
-            response.sendBadRequest()
+            response.sendBadRequestError()
+        }
+        catch let error as ValidationsError {
+            response.sendValidationsError(error: error)
         }
         catch {
-            response.sendError(error: error)
+            response.sendInternalServerError(error: error)
         }
     }
     
     public func putTask(request: HTTPRequest, response: HTTPResponse) {
         do {
             let task = try request.getObjectFromRequest(Task.self)
-            try self.tasksRepository.update(entity: task)
+            try self.tasksService.update(entity: task)
             return response.sendJson(task)
         }
         catch let error where error is DecodingError || error is RequestError {
-            response.sendBadRequest()
+            response.sendBadRequestError()
+        }
+        catch let error as ValidationsError {
+            response.sendValidationsError(error: error)
         }
         catch {
-            response.sendError(error: error)
+            response.sendInternalServerError(error: error)
         }
     }
     
     public func deleteTask(request: HTTPRequest, response: HTTPResponse) {
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                if let _ = try self.tasksRepository.get(byId: id) {
-                    try self.tasksRepository.delete(entityWithId: id)
+                if let _ = try self.tasksService.get(byId: id) {
+                    try self.tasksService.delete(entityWithId: id)
                     return response.sendOk();
                 }
                 else {
-                    return response.sendNotFound()
+                    return response.sendNotFoundError()
                 }
             }
             
-            response.sendBadRequest()
+            response.sendBadRequestError()
         }
         catch {
-            response.sendError(error: error)
+            response.sendInternalServerError(error: error)
         }
     }
 }

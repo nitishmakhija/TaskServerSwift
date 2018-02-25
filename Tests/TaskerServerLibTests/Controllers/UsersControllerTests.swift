@@ -19,7 +19,7 @@ class UsersControllerTests: XCTestCase {
         let fakeUsersRepository = FakeUsersRepository()
         
         // Act.
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Assert.
         let requestHandler = usersController.routes.navigator.findHandler(uri: "/users", webRequest: fakeHttpRequest)
@@ -33,7 +33,7 @@ class UsersControllerTests: XCTestCase {
         let fakeUsersRepository = FakeUsersRepository()
         
         // Act.
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Assert.
         let requestHandler = usersController.routes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
@@ -47,7 +47,7 @@ class UsersControllerTests: XCTestCase {
         let fakeUsersRepository = FakeUsersRepository()
         
         // Act.
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Assert.
         let requestHandler = usersController.routes.navigator.findHandler(uri: "/users", webRequest: fakeHttpRequest)
@@ -61,7 +61,7 @@ class UsersControllerTests: XCTestCase {
         let fakeUsersRepository = FakeUsersRepository()
         
         // Act.
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Assert.
         let requestHandler = usersController.routes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
@@ -75,7 +75,7 @@ class UsersControllerTests: XCTestCase {
         let fakeUsersRepository = FakeUsersRepository()
         
         // Act.
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Assert.
         let requestHandler = usersController.routes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
@@ -94,7 +94,7 @@ class UsersControllerTests: XCTestCase {
                 User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: false),
                 User(id: 2, name: "Victor Doe", email: "victor.doe@emailx.com", isLocked: false)
         ])
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Act.
         usersController.getUsers(request: fakeHttpRequest, response: fakeHttpResponse)
@@ -119,7 +119,7 @@ class UsersControllerTests: XCTestCase {
         fakeUsersRepository.getByIdStub.on(equals(1), return:
             User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: false)
         )
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Act.
         usersController.getUser(request: fakeHttpRequest, response: fakeHttpResponse)
@@ -141,7 +141,7 @@ class UsersControllerTests: XCTestCase {
         
         fakeUsersRepository.getByIdMock.expect(any())
         fakeUsersRepository.getByIdStub.on(equals(2), return: nil)
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Act.
         usersController.getUser(request: fakeHttpRequest, response: fakeHttpResponse)
@@ -165,7 +165,7 @@ class UsersControllerTests: XCTestCase {
             user.isLocked == true
         }))
         
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Act.
         usersController.postUser(request: fakeHttpRequest, response: fakeHttpResponse)
@@ -181,13 +181,55 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeUsersRepository = FakeUsersRepository()
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Act.
         usersController.postUser(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
+    }
+    
+    func testPostUserShouldReturnValidationErrorWhenWeProvideEmptyName() {
+        
+        // Arrange.
+        let fakeHttpRequest = FakeHTTPRequest()
+        let fakeHttpResponse = FakeHTTPResponse()
+        let fakeUsersRepository = FakeUsersRepository()
+        fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "", email: "john.doe@emailx.com", isLocked: true))
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
+        
+        // Act.
+        usersController.postUser(request: fakeHttpRequest, response: fakeHttpResponse)
+        
+        // Assert.
+        XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
+        let validationsError = try! fakeHttpResponse.getObjectFromResponseBody(ValidationErrorResponseDto.self)
+        let errorExists = validationsError.errors.contains { (key, value) -> Bool in
+            return key == "name" && value == "Field is required."
+        }
+        XCTAssertTrue(errorExists)
+    }
+    
+    func testPostUserShouldReturnValidationErrorWhenWeProvideEmptyEmail() {
+        
+        // Arrange.
+        let fakeHttpRequest = FakeHTTPRequest()
+        let fakeHttpResponse = FakeHTTPResponse()
+        let fakeUsersRepository = FakeUsersRepository()
+        fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "John Doe", email: "", isLocked: true))
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
+        
+        // Act.
+        usersController.postUser(request: fakeHttpRequest, response: fakeHttpResponse)
+        
+        // Assert.
+        XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
+        let validationsError = try! fakeHttpResponse.getObjectFromResponseBody(ValidationErrorResponseDto.self)
+        let errorExists = validationsError.errors.contains { (key, value) -> Bool in
+            return key == "email" && value == "Field is required."
+        }
+        XCTAssertTrue(errorExists)
     }
     
     func testPutUserShouldUpdateUserInStoreWhenWeProvideCorrectUserData() {
@@ -205,7 +247,7 @@ class UsersControllerTests: XCTestCase {
                 user.isLocked == true
         }))
         
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Act.
         usersController.putUser(request: fakeHttpRequest, response: fakeHttpResponse)
@@ -221,13 +263,55 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeUsersRepository = FakeUsersRepository()
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Act.
         usersController.putUser(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
+    }
+    
+    func testPutUserShouldReturnValidationErrorWhenWeProvideEmptyName() {
+        
+        // Arrange.
+        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "1"])
+        let fakeHttpResponse = FakeHTTPResponse()
+        let fakeUsersRepository = FakeUsersRepository()
+        fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "", email: "john.doe@emailx.com", isLocked: true))
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
+        
+        // Act.
+        usersController.putUser(request: fakeHttpRequest, response: fakeHttpResponse)
+        
+        // Assert.
+        XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
+        let validationsError = try! fakeHttpResponse.getObjectFromResponseBody(ValidationErrorResponseDto.self)
+        let errorExists = validationsError.errors.contains { (key, value) -> Bool in
+            return key == "name" && value == "Field is required."
+        }
+        XCTAssertTrue(errorExists)
+    }
+    
+    func testPutUserShouldReturnValidationErrorWhenWeProvideEmptyEmail() {
+        
+        // Arrange.
+        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "1"])
+        let fakeHttpResponse = FakeHTTPResponse()
+        let fakeUsersRepository = FakeUsersRepository()
+        fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "John Doe", email: "", isLocked: true))
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
+        
+        // Act.
+        usersController.putUser(request: fakeHttpRequest, response: fakeHttpResponse)
+        
+        // Assert.
+        XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
+        let validationsError = try! fakeHttpResponse.getObjectFromResponseBody(ValidationErrorResponseDto.self)
+        let errorExists = validationsError.errors.contains { (key, value) -> Bool in
+            return key == "email" && value == "Field is required."
+        }
+        XCTAssertTrue(errorExists)
     }
     
     func testDeleteUserShouldDeleteUserFromStoreWhenWeProvideCorrectUserId() {
@@ -240,7 +324,7 @@ class UsersControllerTests: XCTestCase {
         fakeUsersRepository.getByIdMock.expect(any())
         fakeUsersRepository.getByIdStub.on(any(), return: User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: false))
         fakeUsersRepository.deleteMock.expect(matches({(id) -> Bool in id == 1 }))
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Act.
         usersController.deleteUser(request: fakeHttpRequest, response: fakeHttpResponse)
@@ -259,7 +343,7 @@ class UsersControllerTests: XCTestCase {
         
         fakeUsersRepository.getByIdMock.expect(any())
         fakeUsersRepository.getByIdStub.on(any(), return: nil)
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Act.
         usersController.deleteUser(request: fakeHttpRequest, response: fakeHttpResponse)
