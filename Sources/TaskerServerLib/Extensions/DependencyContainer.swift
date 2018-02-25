@@ -13,8 +13,8 @@ extension DependencyContainer {
     public func configure(withConfiguration configuration: Configuration) {
         self.addConfiguration(toContainer: self, configuration: configuration)
         self.addDatabase(toContainer: self)
-        self.addRepositories(toContainer: self)
-        self.addServices(toContainer: self)
+        self.addQueries(toContainer: self)
+        self.addCommands(toContainer: self)
         self.addControllers(toContainer: self)
     }
     
@@ -37,19 +37,19 @@ extension DependencyContainer {
         container.register(.singleton) { configuration }
     }
     
-    private func addRepositories(toContainer container: DependencyContainer) {
-        container.register { TasksRepository(databaseContext: $0) as TasksRepositoryProtocol }
-        container.register { UsersRepository(databaseContext: $0) as UsersRepositoryProtocol }
+    private func addQueries(toContainer container: DependencyContainer) {
+        container.register { TasksQueries(databaseContext: $0) as TasksQueriesProtocol }
+        container.register { UsersQueries(databaseContext: $0) as UsersQueriesProtocol }
     }
     
-    private func addServices(toContainer container: DependencyContainer) {
-        container.register { TasksService(tasksRepository: $0) as TasksServiceProtocol }
-        container.register { UsersService(usersRepository: $0) as UsersServiceProtocol }
+    private func addCommands(toContainer container: DependencyContainer) {
+        container.register { TasksCommands(databaseContext: $0) as TasksCommandsProtocol }
+        container.register { UsersCommands(databaseContext: $0) as UsersCommandsProtocol }
     }
     
     private func addControllers(toContainer container: DependencyContainer) {
-        container.register { TasksController(tasksRepository: $0) }
-        container.register { UsersController(usersRepository: $0) }
+        container.register { TasksController(tasksCommands: $0, tasksQueries: $1) }
+        container.register { UsersController(usersCommands: $0, usersQueries: $1) }
         container.register { HealthController() }
     }
 }

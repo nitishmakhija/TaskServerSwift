@@ -8,5 +8,5 @@
 import Foundation
 import TaskerServerLib
 
-class FakeUsersRepository : FakeBaseRepository<User>, UsersRepositoryProtocol {
+class FakeUsersQueries : FakeBaseQueries<User>, UsersQueriesProtocol {
 }

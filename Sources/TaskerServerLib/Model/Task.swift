@@ -19,3 +19,4 @@ public class Task : EntityProtocol {
         self.isFinished = isFinished
     }
 }
+

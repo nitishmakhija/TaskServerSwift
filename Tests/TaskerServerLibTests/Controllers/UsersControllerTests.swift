@@ -16,10 +16,11 @@ class UsersControllerTests: XCTestCase {
         
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest(method: .get)
-        let fakeUsersRepository = FakeUsersRepository()
+        let fakeUsersQueries = FakeUsersQueries()
+        let fakeUsersCommands = FakeUsersCommands()
         
         // Act.
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersCommands: fakeUsersCommands, usersQueries: fakeUsersQueries)
         
         // Assert.
         let requestHandler = usersController.routes.navigator.findHandler(uri: "/users", webRequest: fakeHttpRequest)
@@ -30,10 +31,11 @@ class UsersControllerTests: XCTestCase {
         
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest(method: .get)
-        let fakeUsersRepository = FakeUsersRepository()
+        let fakeUsersQueries = FakeUsersQueries()
+        let fakeUsersCommands = FakeUsersCommands()
         
         // Act.
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersCommands: fakeUsersCommands, usersQueries: fakeUsersQueries)
         
         // Assert.
         let requestHandler = usersController.routes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
@@ -44,10 +46,11 @@ class UsersControllerTests: XCTestCase {
         
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest(method: .post)
-        let fakeUsersRepository = FakeUsersRepository()
+        let fakeUsersQueries = FakeUsersQueries()
+        let fakeUsersCommands = FakeUsersCommands()
         
         // Act.
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersCommands: fakeUsersCommands, usersQueries: fakeUsersQueries)
         
         // Assert.
         let requestHandler = usersController.routes.navigator.findHandler(uri: "/users", webRequest: fakeHttpRequest)
@@ -58,10 +61,11 @@ class UsersControllerTests: XCTestCase {
         
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest(method: .put)
-        let fakeUsersRepository = FakeUsersRepository()
+        let fakeUsersQueries = FakeUsersQueries()
+        let fakeUsersCommands = FakeUsersCommands()
         
         // Act.
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersCommands: fakeUsersCommands, usersQueries: fakeUsersQueries)
         
         // Assert.
         let requestHandler = usersController.routes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
@@ -72,10 +76,11 @@ class UsersControllerTests: XCTestCase {
         
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest(method: .delete)
-        let fakeUsersRepository = FakeUsersRepository()
+        let fakeUsersQueries = FakeUsersQueries()
+        let fakeUsersCommands = FakeUsersCommands()
         
         // Act.
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersCommands: fakeUsersCommands, usersQueries: fakeUsersQueries)
         
         // Assert.
         let requestHandler = usersController.routes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
@@ -87,21 +92,22 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
+        let fakeUsersQueries = FakeUsersQueries()
+        let fakeUsersCommands = FakeUsersCommands()
         
-        fakeUsersRepository.getMock.expect(any())
-        fakeUsersRepository.getStub.on(any(), return: [
+        fakeUsersQueries.getMock.expect(any())
+        fakeUsersQueries.getStub.on(any(), return: [
                 User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: false),
                 User(id: 2, name: "Victor Doe", email: "victor.doe@emailx.com", isLocked: false)
         ])
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersCommands: fakeUsersCommands, usersQueries: fakeUsersQueries)
         
         // Act.
         usersController.getUsers(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         let users = try! fakeHttpResponse.getObjectFromResponseBody(Array<User>.self)
-        fakeUsersRepository.getMock.verify()
+        fakeUsersQueries.getMock.verify()
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
         XCTAssertEqual(2, users.count)
         XCTAssertEqual("john.doe@emailx.com", users[0].email)
@@ -113,20 +119,21 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "1"])
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
+        let fakeUsersQueries = FakeUsersQueries()
+        let fakeUsersCommands = FakeUsersCommands()
         
-        fakeUsersRepository.getByIdMock.expect(any())
-        fakeUsersRepository.getByIdStub.on(equals(1), return:
+        fakeUsersQueries.getByIdMock.expect(any())
+        fakeUsersQueries.getByIdStub.on(equals(1), return:
             User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: false)
         )
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersCommands: fakeUsersCommands, usersQueries: fakeUsersQueries)
         
         // Act.
         usersController.getUser(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         let users = try! fakeHttpResponse.getObjectFromResponseBody(User.self)
-        fakeUsersRepository.getByIdMock.verify()
+        fakeUsersQueries.getByIdMock.verify()
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
         XCTAssertEqual(1, users.id)
         XCTAssertEqual("john.doe@emailx.com", users.email)
@@ -137,11 +144,12 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "2"])
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
+        let fakeUsersQueries = FakeUsersQueries()
+        let fakeUsersCommands = FakeUsersCommands()
         
-        fakeUsersRepository.getByIdMock.expect(any())
-        fakeUsersRepository.getByIdStub.on(equals(2), return: nil)
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        fakeUsersQueries.getByIdMock.expect(any())
+        fakeUsersQueries.getByIdStub.on(equals(2), return: nil)
+        let usersController = UsersController(usersCommands: fakeUsersCommands, usersQueries: fakeUsersQueries)
         
         // Act.
         usersController.getUser(request: fakeHttpRequest, response: fakeHttpResponse)
@@ -155,24 +163,25 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
+        let fakeUsersQueries = FakeUsersQueries()
+        let fakeUsersCommands = FakeUsersCommands()
         
         fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: true))
-        fakeUsersRepository.addMock.expect(matches({(user) -> Bool in
+        fakeUsersCommands.addMock.expect(matches({(user) -> Bool in
             user.id == 1 &&
             user.email == "john.doe@emailx.com" &&
             user.name == "John Doe" &&
             user.isLocked == true
         }))
         
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersCommands: fakeUsersCommands, usersQueries: fakeUsersQueries)
         
         // Act.
         usersController.postUser(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
-        fakeUsersRepository.addMock.verify()
+        fakeUsersCommands.addMock.verify()
     }
     
     func testPostUserShouldReturnBadRequestStatusCodeWhenWeNotProvideJson() {
@@ -180,8 +189,9 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let fakeUsersQueries = FakeUsersQueries()
+        let fakeUsersCommands = FakeUsersCommands()
+        let usersController = UsersController(usersCommands: fakeUsersCommands, usersQueries: fakeUsersQueries)
         
         // Act.
         usersController.postUser(request: fakeHttpRequest, response: fakeHttpResponse)
@@ -195,24 +205,25 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "1"])
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
+        let fakeUsersQueries = FakeUsersQueries()
+        let fakeUsersCommands = FakeUsersCommands()
         
         fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: true))
-        fakeUsersRepository.updateMock.expect(matches({(user) -> Bool in
+        fakeUsersCommands.updateMock.expect(matches({(user) -> Bool in
             user.id == 1 &&
                 user.email == "john.doe@emailx.com" &&
                 user.name == "John Doe" &&
                 user.isLocked == true
         }))
         
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let usersController = UsersController(usersCommands: fakeUsersCommands, usersQueries: fakeUsersQueries)
         
         // Act.
         usersController.putUser(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
-        fakeUsersRepository.addMock.verify()
+        fakeUsersCommands.updateMock.verify()
     }
     
     func testPutUserShouldReturnBadRequestStatusCodeWhenWeNotProvideJson() {
@@ -220,8 +231,9 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        let fakeUsersQueries = FakeUsersQueries()
+        let fakeUsersCommands = FakeUsersCommands()
+        let usersController = UsersController(usersCommands: fakeUsersCommands, usersQueries: fakeUsersQueries)
         
         // Act.
         usersController.putUser(request: fakeHttpRequest, response: fakeHttpResponse)
@@ -235,19 +247,20 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "1"])
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
+        let fakeUsersQueries = FakeUsersQueries()
+        let fakeUsersCommands = FakeUsersCommands()
         
-        fakeUsersRepository.getByIdMock.expect(any())
-        fakeUsersRepository.getByIdStub.on(any(), return: User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: false))
-        fakeUsersRepository.deleteMock.expect(matches({(id) -> Bool in id == 1 }))
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        fakeUsersQueries.getByIdMock.expect(any())
+        fakeUsersQueries.getByIdStub.on(any(), return: User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: false))
+        fakeUsersCommands.deleteMock.expect(matches({(id) -> Bool in id == 1 }))
+        let usersController = UsersController(usersCommands: fakeUsersCommands, usersQueries: fakeUsersQueries)
         
         // Act.
         usersController.deleteUser(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
-        fakeUsersRepository.deleteMock.verify()
+        fakeUsersCommands.deleteMock.verify()
     }
     
     func testDeleteUserShouldReturnNotFoundStatusCodeWhenWeNotProvideCorrectId() {
@@ -255,11 +268,12 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "1"])
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
+        let fakeUsersQueries = FakeUsersQueries()
+        let fakeUsersCommands = FakeUsersCommands()
         
-        fakeUsersRepository.getByIdMock.expect(any())
-        fakeUsersRepository.getByIdStub.on(any(), return: nil)
-        let usersController = UsersController(usersRepository: fakeUsersRepository)
+        fakeUsersQueries.getByIdMock.expect(any())
+        fakeUsersQueries.getByIdStub.on(any(), return: nil)
+        let usersController = UsersController(usersCommands: fakeUsersCommands, usersQueries: fakeUsersQueries)
         
         // Act.
         usersController.deleteUser(request: fakeHttpRequest, response: fakeHttpResponse)

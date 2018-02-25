@@ -21,11 +21,17 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		F8F1AD7E2041BBB6005AC22A /* BaseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F1AD7C2041BA7C005AC22A /* BaseRepository.swift */; };
+		F8D83EFB2042ACE700C9C9DE /* TaskValidations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D83EFA2042ACE700C9C9DE /* TaskValidations.swift */; };
+		F8D83EFD2042B76A00C9C9DE /* BaseCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D83EFC2042B76A00C9C9DE /* BaseCommands.swift */; };
+		F8D83EFF2042BABC00C9C9DE /* FakeBaseCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D83EFE2042BABC00C9C9DE /* FakeBaseCommands.swift */; };
+		F8D83F012042BB1400C9C9DE /* FakeTasksCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D83F002042BB1400C9C9DE /* FakeTasksCommands.swift */; };
+		F8D83F032042BB4800C9C9DE /* FakeUsersCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D83F022042BB4800C9C9DE /* FakeUsersCommands.swift */; };
+		F8F1AD7E2041BBB6005AC22A /* BaseQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F1AD7C2041BA7C005AC22A /* BaseQueries.swift */; };
 		F8F1AD802041BBF3005AC22A /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F1AD7F2041BBF3005AC22A /* EntityProtocol.swift */; };
-		F8F1AD822041E948005AC22A /* TasksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F1AD812041E948005AC22A /* TasksService.swift */; };
-		F8F1AD842041EADB005AC22A /* UsersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F1AD832041EADB005AC22A /* UsersService.swift */; };
-		F8F1AD862041EBC7005AC22A /* FakeBaseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F1AD852041EBC7005AC22A /* FakeBaseRepository.swift */; };
+		F8F1AD822041E948005AC22A /* TasksCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F1AD812041E948005AC22A /* TasksCommands.swift */; };
+		F8F1AD842041EADB005AC22A /* UsersCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F1AD832041EADB005AC22A /* UsersCommands.swift */; };
+		F8F1AD862041EBC7005AC22A /* FakeBaseQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F1AD852041EBC7005AC22A /* FakeBaseQueries.swift */; };
+		F8F1AD892041F5D0005AC22A /* ValidationsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F1AD882041F5D0005AC22A /* ValidationsError.swift */; };
 		OBJ_1000 /* e_atalla_err.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_258 /* e_atalla_err.c */; };
 		OBJ_1001 /* e_bf.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_259 /* e_bf.c */; };
 		OBJ_1002 /* e_camellia.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_260 /* e_camellia.c */; };
@@ -240,8 +246,8 @@
 		OBJ_582 /* UsersControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_38 /* UsersControllerTests.swift */; };
 		OBJ_583 /* FakeHTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* FakeHTTPRequest.swift */; };
 		OBJ_584 /* FakeHTTPResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_41 /* FakeHTTPResponse.swift */; };
-		OBJ_585 /* FakeTasksRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* FakeTasksRepository.swift */; };
-		OBJ_586 /* FakeUsersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* FakeUsersRepository.swift */; };
+		OBJ_585 /* FakeTasksQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* FakeTasksQueries.swift */; };
+		OBJ_586 /* FakeUsersQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* FakeUsersQueries.swift */; };
 		OBJ_588 /* Dobby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Dobby::Dobby::Product" /* Dobby.framework */; };
 		OBJ_589 /* TaskerServerLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "TaskerServer::TaskerServerLib::Product" /* TaskerServerLib.framework */; };
 		OBJ_590 /* PerfectSQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "PerfectSQLite::PerfectSQLite::Product" /* PerfectSQLite.framework */; };
@@ -295,8 +301,8 @@
 		OBJ_703 /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* Routes.swift */; };
 		OBJ_704 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* Task.swift */; };
 		OBJ_705 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* User.swift */; };
-		OBJ_706 /* TasksRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* TasksRepository.swift */; };
-		OBJ_707 /* UsersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* UsersRepository.swift */; };
+		OBJ_706 /* TasksQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* TasksQueries.swift */; };
+		OBJ_707 /* UsersQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* UsersQueries.swift */; };
 		OBJ_709 /* PerfectSQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "PerfectSQLite::PerfectSQLite::Product" /* PerfectSQLite.framework */; };
 		OBJ_710 /* PerfectCRUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "PerfectCRUD::PerfectCRUD::Product" /* PerfectCRUD.framework */; };
 		OBJ_711 /* Configuration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Configuration::Configuration::Product" /* Configuration.framework */; };
@@ -1011,11 +1017,17 @@
 		"Configuration::Configuration::Product" /* Configuration.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Configuration.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Dip::Dip::Product" /* Dip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Dip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Dobby::Dobby::Product" /* Dobby.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Dobby.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8F1AD7C2041BA7C005AC22A /* BaseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRepository.swift; sourceTree = "<group>"; };
+		F8D83EFA2042ACE700C9C9DE /* TaskValidations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskValidations.swift; path = Validations/TaskValidations.swift; sourceTree = "<group>"; };
+		F8D83EFC2042B76A00C9C9DE /* BaseCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BaseCommands.swift; path = Services/BaseCommands.swift; sourceTree = "<group>"; };
+		F8D83EFE2042BABC00C9C9DE /* FakeBaseCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeBaseCommands.swift; sourceTree = "<group>"; };
+		F8D83F002042BB1400C9C9DE /* FakeTasksCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeTasksCommands.swift; sourceTree = "<group>"; };
+		F8D83F022042BB4800C9C9DE /* FakeUsersCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeUsersCommands.swift; sourceTree = "<group>"; };
+		F8F1AD7C2041BA7C005AC22A /* BaseQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseQueries.swift; sourceTree = "<group>"; };
 		F8F1AD7F2041BBF3005AC22A /* EntityProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityProtocol.swift; sourceTree = "<group>"; };
-		F8F1AD812041E948005AC22A /* TasksService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TasksService.swift; path = Services/TasksService.swift; sourceTree = "<group>"; };
-		F8F1AD832041EADB005AC22A /* UsersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UsersService.swift; path = Services/UsersService.swift; sourceTree = "<group>"; };
-		F8F1AD852041EBC7005AC22A /* FakeBaseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeBaseRepository.swift; sourceTree = "<group>"; };
+		F8F1AD812041E948005AC22A /* TasksCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TasksCommands.swift; path = Services/TasksCommands.swift; sourceTree = "<group>"; };
+		F8F1AD832041EADB005AC22A /* UsersCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UsersCommands.swift; path = Services/UsersCommands.swift; sourceTree = "<group>"; };
+		F8F1AD852041EBC7005AC22A /* FakeBaseQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeBaseQueries.swift; sourceTree = "<group>"; };
+		F8F1AD882041F5D0005AC22A /* ValidationsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ValidationsError.swift; path = Validations/ValidationsError.swift; sourceTree = "<group>"; };
 		"FileKit::FileKit::Product" /* FileKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"LoggerAPI::LoggerAPI::Product" /* LoggerAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoggerAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
@@ -1205,7 +1217,7 @@
 		OBJ_287 /* e_ubsec_err.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = e_ubsec_err.c; sourceTree = "<group>"; };
 		OBJ_288 /* e_xcbc_d.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = e_xcbc_d.c; sourceTree = "<group>"; };
 		OBJ_289 /* ebcdic.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ebcdic.c; sourceTree = "<group>"; };
-		OBJ_29 /* TasksRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksRepository.swift; sourceTree = "<group>"; };
+		OBJ_29 /* TasksQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksQueries.swift; sourceTree = "<group>"; };
 		OBJ_290 /* ec2_.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ec2_.c; sourceTree = "<group>"; };
 		OBJ_291 /* ec_.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ec_.c; sourceTree = "<group>"; };
 		OBJ_292 /* ecb3_enc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ecb3_enc.c; sourceTree = "<group>"; };
@@ -1216,7 +1228,7 @@
 		OBJ_297 /* ecp_nist.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ecp_nist.c; sourceTree = "<group>"; };
 		OBJ_298 /* ecp_nistp224.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ecp_nistp224.c; sourceTree = "<group>"; };
 		OBJ_299 /* ecp_nistp256.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ecp_nistp256.c; sourceTree = "<group>"; };
-		OBJ_30 /* UsersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersRepository.swift; sourceTree = "<group>"; };
+		OBJ_30 /* UsersQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersQueries.swift; sourceTree = "<group>"; };
 		OBJ_300 /* ecp_nistp521.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ecp_nistp521.c; sourceTree = "<group>"; };
 		OBJ_301 /* ecp_nistputil.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ecp_nistputil.c; sourceTree = "<group>"; };
 		OBJ_302 /* ecp_oct.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ecp_oct.c; sourceTree = "<group>"; };
@@ -1343,7 +1355,7 @@
 		OBJ_417 /* th-lock.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "th-lock.c"; sourceTree = "<group>"; };
 		OBJ_418 /* tls_srp.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = tls_srp.c; sourceTree = "<group>"; };
 		OBJ_419 /* ts_.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ts_.c; sourceTree = "<group>"; };
-		OBJ_42 /* FakeTasksRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeTasksRepository.swift; sourceTree = "<group>"; };
+		OBJ_42 /* FakeTasksQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeTasksQueries.swift; sourceTree = "<group>"; };
 		OBJ_420 /* txt_db.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = txt_db.c; sourceTree = "<group>"; };
 		OBJ_421 /* ui_.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ui_.c; sourceTree = "<group>"; };
 		OBJ_422 /* uid.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = uid.c; sourceTree = "<group>"; };
@@ -1354,7 +1366,7 @@
 		OBJ_427 /* wrap128.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wrap128.c; sourceTree = "<group>"; };
 		OBJ_428 /* x509_.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = x509_.c; sourceTree = "<group>"; };
 		OBJ_429 /* x509cset.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = x509cset.c; sourceTree = "<group>"; };
-		OBJ_43 /* FakeUsersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeUsersRepository.swift; sourceTree = "<group>"; };
+		OBJ_43 /* FakeUsersQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeUsersQueries.swift; sourceTree = "<group>"; };
 		OBJ_430 /* x509name.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = x509name.c; sourceTree = "<group>"; };
 		OBJ_431 /* x509rset.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = x509rset.c; sourceTree = "<group>"; };
 		OBJ_432 /* x509spki.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = x509spki.c; sourceTree = "<group>"; };
@@ -1644,13 +1656,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F8F1AD7B2041BA03005AC22A /* Services */ = {
+		F8F1AD7B2041BA03005AC22A /* Commands */ = {
 			isa = PBXGroup;
 			children = (
-				F8F1AD812041E948005AC22A /* TasksService.swift */,
-				F8F1AD832041EADB005AC22A /* UsersService.swift */,
+				F8F1AD812041E948005AC22A /* TasksCommands.swift */,
+				F8F1AD832041EADB005AC22A /* UsersCommands.swift */,
+				F8D83EFC2042B76A00C9C9DE /* BaseCommands.swift */,
 			);
-			name = Services;
+			name = Commands;
+			sourceTree = "<group>";
+		};
+		F8F1AD872041F58D005AC22A /* Validations */ = {
+			isa = PBXGroup;
+			children = (
+				F8F1AD882041F5D0005AC22A /* ValidationsError.swift */,
+				F8D83EFA2042ACE700C9C9DE /* TaskValidations.swift */,
+			);
+			name = Validations;
 			sourceTree = "<group>";
 		};
 		OBJ_104 /* Dip 6.0.0 */ = {
@@ -2150,14 +2172,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		OBJ_28 /* Repositories */ = {
+		OBJ_28 /* Queries */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_29 /* TasksRepository.swift */,
-				OBJ_30 /* UsersRepository.swift */,
-				F8F1AD7C2041BA7C005AC22A /* BaseRepository.swift */,
+				OBJ_29 /* TasksQueries.swift */,
+				OBJ_30 /* UsersQueries.swift */,
+				F8F1AD7C2041BA7C005AC22A /* BaseQueries.swift */,
 			);
-			path = Repositories;
+			path = Queries;
 			sourceTree = "<group>";
 		};
 		OBJ_31 /* TaskerServerApp */ = {
@@ -2202,9 +2224,12 @@
 			children = (
 				OBJ_40 /* FakeHTTPRequest.swift */,
 				OBJ_41 /* FakeHTTPResponse.swift */,
-				OBJ_42 /* FakeTasksRepository.swift */,
-				OBJ_43 /* FakeUsersRepository.swift */,
-				F8F1AD852041EBC7005AC22A /* FakeBaseRepository.swift */,
+				F8D83F002042BB1400C9C9DE /* FakeTasksCommands.swift */,
+				OBJ_42 /* FakeTasksQueries.swift */,
+				F8D83F022042BB4800C9C9DE /* FakeUsersCommands.swift */,
+				OBJ_43 /* FakeUsersQueries.swift */,
+				F8F1AD852041EBC7005AC22A /* FakeBaseQueries.swift */,
+				F8D83EFE2042BABC00C9C9DE /* FakeBaseCommands.swift */,
 			);
 			path = Fakes;
 			sourceTree = "<group>";
@@ -2324,7 +2349,7 @@
 			path = ".build/checkouts/Perfect-SQLite.git-5064012669937639876/Sources/PerfectSQLite";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -2333,7 +2358,6 @@
 				OBJ_44 /* Dependencies */,
 				OBJ_459 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_50 /* PerfectCRUD 0.0.14 */ = {
@@ -2425,13 +2449,14 @@
 		OBJ_8 /* TaskerServerLib */ = {
 			isa = PBXGroup;
 			children = (
-				F8F1AD7B2041BA03005AC22A /* Services */,
+				F8F1AD872041F58D005AC22A /* Validations */,
+				F8F1AD7B2041BA03005AC22A /* Commands */,
 				OBJ_9 /* Configuration */,
 				OBJ_11 /* Controllers */,
 				OBJ_16 /* Database */,
 				OBJ_19 /* Extensions */,
 				OBJ_25 /* Model */,
-				OBJ_28 /* Repositories */,
+				OBJ_28 /* Queries */,
 			);
 			name = TaskerServerLib;
 			path = Sources/TaskerServerLib;
@@ -3138,7 +3163,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_459 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -3351,14 +3376,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				F8D83F032042BB4800C9C9DE /* FakeUsersCommands.swift in Sources */,
 				OBJ_580 /* HealthControllerTests.swift in Sources */,
 				OBJ_581 /* TasksControllerTests.swift in Sources */,
 				OBJ_582 /* UsersControllerTests.swift in Sources */,
+				F8D83F012042BB1400C9C9DE /* FakeTasksCommands.swift in Sources */,
 				OBJ_583 /* FakeHTTPRequest.swift in Sources */,
 				OBJ_584 /* FakeHTTPResponse.swift in Sources */,
-				F8F1AD862041EBC7005AC22A /* FakeBaseRepository.swift in Sources */,
-				OBJ_585 /* FakeTasksRepository.swift in Sources */,
-				OBJ_586 /* FakeUsersRepository.swift in Sources */,
+				F8F1AD862041EBC7005AC22A /* FakeBaseQueries.swift in Sources */,
+				F8D83EFF2042BABC00C9C9DE /* FakeBaseCommands.swift in Sources */,
+				OBJ_585 /* FakeTasksQueries.swift in Sources */,
+				OBJ_586 /* FakeUsersQueries.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3386,15 +3414,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				F8F1AD7E2041BBB6005AC22A /* BaseRepository.swift in Sources */,
+				F8F1AD7E2041BBB6005AC22A /* BaseQueries.swift in Sources */,
+				F8F1AD892041F5D0005AC22A /* ValidationsError.swift in Sources */,
 				OBJ_692 /* Configuration.swift in Sources */,
 				OBJ_693 /* Controller.swift in Sources */,
 				OBJ_694 /* HealthController.swift in Sources */,
 				OBJ_695 /* TasksController.swift in Sources */,
-				F8F1AD822041E948005AC22A /* TasksService.swift in Sources */,
+				F8F1AD822041E948005AC22A /* TasksCommands.swift in Sources */,
 				OBJ_696 /* UsersController.swift in Sources */,
 				OBJ_697 /* DatabaseContext.swift in Sources */,
-				F8F1AD842041EADB005AC22A /* UsersService.swift in Sources */,
+				F8D83EFB2042ACE700C9C9DE /* TaskValidations.swift in Sources */,
+				F8F1AD842041EADB005AC22A /* UsersCommands.swift in Sources */,
 				F8F1AD802041BBF3005AC22A /* EntityProtocol.swift in Sources */,
 				OBJ_698 /* SqlConnection.swift in Sources */,
 				OBJ_699 /* ConfigurationManager.swift in Sources */,
@@ -3404,8 +3434,9 @@
 				OBJ_703 /* Routes.swift in Sources */,
 				OBJ_704 /* Task.swift in Sources */,
 				OBJ_705 /* User.swift in Sources */,
-				OBJ_706 /* TasksRepository.swift in Sources */,
-				OBJ_707 /* UsersRepository.swift in Sources */,
+				F8D83EFD2042B76A00C9C9DE /* BaseCommands.swift in Sources */,
+				OBJ_706 /* TasksQueries.swift in Sources */,
+				OBJ_707 /* UsersQueries.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

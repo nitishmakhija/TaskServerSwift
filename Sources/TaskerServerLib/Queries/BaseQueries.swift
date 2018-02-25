@@ -1,5 +1,5 @@
 //
-//  BaseRepository.swift
+//  BaseQueries.swift
 //  TaskerServerApp
 //
 //  Created by Marcin Czachurski on 24.02.2018.
@@ -8,7 +8,7 @@
 import Foundation
 import PerfectCRUD
 
-public class BaseRepository<T: EntityProtocol> {
+public class BaseQueries<T: EntityProtocol> {
     
     internal let databaseContext: DatabaseContextProtocol
     
@@ -26,18 +26,5 @@ public class BaseRepository<T: EntityProtocol> {
     func get(byId id: Int) throws -> T? {
         let task = try self.databaseContext.set(T.self).where(\T.id == id).first()
         return task
-    }
-    
-    func add(entity: T) throws {
-        try self.databaseContext.set(T.self).insert(entity)
-    }
-    
-    func update(entity: T) throws {
-        try self.databaseContext.set(T.self).where(\T.id == entity.id).update(entity)
-        
-    }
-    
-    func delete(entityWithId id: Int) throws {
-        try self.databaseContext.set(T.self).where(\T.id == id).delete()
     }
 }
