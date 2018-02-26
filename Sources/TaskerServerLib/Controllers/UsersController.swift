@@ -17,11 +17,11 @@ class UsersController : Controller {
     }
     
     override func initRoutes() {
-        routes.add(method: .get, uri: "/users", handler: getUsers)
-        routes.add(method: .get, uri: "/users/{id}", handler: getUser)
-        routes.add(method: .post, uri: "/users", handler: postUser)
-        routes.add(method: .put, uri: "/users/{id}", handler: putUser)
-        routes.add(method: .delete, uri: "/users/{id}", handler: deleteUser)
+        self.add(method: .get, uri: "/users", authorization: .authorized, handler: getUsers)
+        self.add(method: .get, uri: "/users/{id}", authorization: .authorized, handler: getUser)
+        self.add(method: .post, uri: "/users", authorization: .authorized, handler: postUser)
+        self.add(method: .put, uri: "/users/{id}", authorization: .authorized, handler: putUser)
+        self.add(method: .delete, uri: "/users/{id}", authorization: .authorized, handler: deleteUser)
     }
     
     public func getUsers(request: HTTPRequest, response: HTTPResponse) {

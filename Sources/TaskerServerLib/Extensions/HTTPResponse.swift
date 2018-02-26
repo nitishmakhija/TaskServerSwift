@@ -28,6 +28,12 @@ extension HTTPResponse {
         self.completed()
     }
 
+    func sendUnauthorizedError() {
+        self.addHeader(.wwwAuthenticate, value: "Bearer realm=\"TaskerServer\"")
+        self.status = .unauthorized
+        self.completed()
+    }
+    
     func sendBadRequestError() {
         self.status = .badRequest
         let badRequestResponse = BadRequestResponseDto(message: "Error during parsing your request. Verify that all parameters and json was correct.")

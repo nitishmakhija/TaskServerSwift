@@ -11,7 +11,7 @@ import PerfectHTTP
 class HealthController : Controller {
         
     override func initRoutes() {
-        routes.add(method: .get, uri: "/health", handler: getHealth)
+        self.add(method: .get, uri: "/health", authorization: .anonymous, handler: getHealth)
     }
 
     func getHealth(request: HTTPRequest, response: HTTPResponse) {

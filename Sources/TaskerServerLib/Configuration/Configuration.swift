@@ -13,11 +13,13 @@ public class Configuration {
     public var serverPort: Int
     public var logFile: String
     public var connectionString: String
+    public var secret: String
     
     init(manager: ConfigurationManager) {
         self.serverName = manager["serverName"] as? String ?? ""
         self.serverPort = manager["serverPort"] as? Int ?? 0
         self.logFile = manager["logFile"] as? String ?? ""
         self.connectionString = manager["connectionString"] as? String ?? ""
+        self.secret = manager["secret"] as? String ?? ""
     }
 }

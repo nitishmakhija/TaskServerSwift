@@ -23,6 +23,14 @@ extension HTTPRequest {
         throw RequestError.BodyIsEmpty
     }
     
+    func add(userCredentials: UserCredentials) {
+        self.scratchPad["userCredentials"] = userCredentials
+    }
+    
+    func getUserCredentials() -> UserCredentials? {
+        return self.scratchPad["userCredentials"] as? UserCredentials
+    }
+    
     private func decode<T>(_ type: T.Type, _ json: String) throws -> T where T : Decodable {
         
         let jsonData = json.data(using: .utf8)!

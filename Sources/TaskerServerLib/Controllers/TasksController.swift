@@ -18,14 +18,22 @@ class TasksController : Controller {
     }
     
     override func initRoutes() {
-        routes.add(method: .get, uri: "/tasks", handler: getTasks)
-        routes.add(method: .get, uri: "/tasks/{id}", handler: getTask)
-        routes.add(method: .post, uri: "/tasks", handler: postTask)
-        routes.add(method: .put, uri: "/tasks/{id}", handler: putTask)
-        routes.add(method: .delete, uri: "/tasks/{id}", handler: deleteTask)
+        self.add(method: .get, uri: "/tasks", authorization: .authorized, handler: getTasks)
+        self.add(method: .get, uri: "/tasks/{id}", authorization: .authorized, handler: getTask)
+        self.add(method: .post, uri: "/tasks", authorization: .authorized, handler: postTask)
+        self.add(method: .put, uri: "/tasks/{id}", authorization: .authorized, handler: putTask)
+        self.add(method: .delete, uri: "/tasks/{id}", authorization: .authorized, handler: deleteTask)
     }
     
     public func getTasks(request: HTTPRequest, response: HTTPResponse) {
+        
+        if let userCredentials = request.getUserCredentials() {
+            print("User: \(userCredentials.name)")
+            for role in userCredentials.roles! {
+                print("Role: \(role)")
+            }
+        }
+        
         do {
             let tasks = try self.tasksService.get()
             response.sendJson(tasks)

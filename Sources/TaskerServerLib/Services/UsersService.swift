@@ -13,6 +13,7 @@ public protocol UsersServiceProtocol {
     func add(entity: User) throws
     func update(entity: User) throws
     func delete(entityWithId id: Int) throws
+    func get(byEmail email: String, andPassword password: String) throws -> User?
 }
 
 public class UsersService :  UsersServiceProtocol {
@@ -53,5 +54,9 @@ public class UsersService :  UsersServiceProtocol {
     
     public func delete(entityWithId id: Int) throws {
         try self.usersRepository.delete(entityWithId: id)
+    }
+    
+    public func get(byEmail email: String, andPassword password: String) throws -> User? {
+        return try self.usersRepository.get(byEmail:email, andPassword:password)
     }
 }

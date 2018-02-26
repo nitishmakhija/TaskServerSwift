@@ -21,17 +21,32 @@ container.configure(withConfiguration: configuration)
 let controllers = container.resolveAllControllers()
 
 // Routes and handlers.
-var routes = Routes()
-routes.configure(basedOnControllers: controllers)
+var allRoutes = Routes()
+allRoutes.configure(allRoutes: controllers)
 
 // Run migrations.
 let databaseContext = try! container.resolve() as DatabaseContextProtocol
 databaseContext.executeMigrations()
 
+
+// Authorization.
+var routesWithAuthorization = Routes()
+routesWithAuthorization.configure(routesWithAuthorization: controllers)
+
+let requestFilters: [(HTTPRequestFilter, HTTPFilterPriority)] = [
+    (AuthorizationFilter(secret: configuration.secret, routesWithAuthorization: routesWithAuthorization), HTTPFilterPriority.high)
+]
+
 do {
     // Launch the HTTP server.
     try HTTPServer.launch(
-        .server(name: configuration.serverName, port: configuration.serverPort, routes: routes))
+        .server(
+            name: configuration.serverName,
+            port: configuration.serverPort,
+            routes: allRoutes,
+            requestFilters: requestFilters
+        )
+    )
 } catch {
     fatalError("\(error)") // fatal error launching one of the servers
 }

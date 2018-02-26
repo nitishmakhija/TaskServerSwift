@@ -22,7 +22,8 @@ extension DependencyContainer {
         let controllers:[Controller] = [
             try! self.resolve() as HealthController,
             try! self.resolve() as TasksController,
-            try! self.resolve() as UsersController
+            try! self.resolve() as UsersController,
+            try! self.resolve() as AccountController
         ]
         
         return controllers
@@ -50,6 +51,7 @@ extension DependencyContainer {
     private func addControllers(toContainer container: DependencyContainer) {
         container.register { TasksController(tasksService: $0) }
         container.register { UsersController(usersService: $0) }
+        container.register { AccountController(configuration: $0, usersService: $1) }
         container.register { HealthController() }
     }
 }

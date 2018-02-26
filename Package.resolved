@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "CommonCrypto",
+        "repositoryURL": "https://github.com/kylef-archive/CommonCrypto.git",
+        "state": {
+          "branch": null,
+          "revision": "8080a04cab22f73276c81c92a6af2c39e15be094",
+          "version": "1.0.0"
+        }
+      },
+      {
         "package": "Configuration",
         "repositoryURL": "https://github.com/IBM-Swift/Configuration.git",
         "state": {
@@ -47,6 +56,15 @@
         }
       },
       {
+        "package": "JWT",
+        "repositoryURL": "https://github.com/kylef/JSONWebToken.swift.git",
+        "state": {
+          "branch": null,
+          "revision": "e5745f95a3e60d9ccee4900764ec79b4239c4ef9",
+          "version": "2.2.0"
+        }
+      },
+      {
         "package": "LoggerAPI",
         "repositoryURL": "https://github.com/IBM-Swift/LoggerAPI.git",
         "state": {
@@ -59,9 +77,9 @@
         "package": "PerfectCRUD",
         "repositoryURL": "https://github.com/PerfectlySoft/Perfect-CRUD.git",
         "state": {
-          "branch": null,
-          "revision": "db1a977284cff84cac2ee489a992d86a3d2ad75b",
-          "version": "0.0.14"
+          "branch": "master",
+          "revision": "74272e8d6150ed8d0f06be6be851589e1bc05098",
+          "version": null
         }
       },
       {
@@ -87,8 +105,8 @@
         "repositoryURL": "https://github.com/PerfectlySoft/Perfect-Crypto.git",
         "state": {
           "branch": null,
-          "revision": "a0565cd234faee0167f5f0540ad71516efc11a0b",
-          "version": "3.0.3"
+          "revision": "ed9fb3b6cbfd189a64fa61d830643cc613d5ba61",
+          "version": "3.0.6"
         }
       },
       {
@@ -105,8 +123,8 @@
         "repositoryURL": "https://github.com/PerfectlySoft/Perfect-HTTPServer.git",
         "state": {
           "branch": null,
-          "revision": "c7ca425d062dca86eab3d6d14e4d91f6dc222db7",
-          "version": "3.0.3"
+          "revision": "e0ef564ff223e8f6826b6b465ee0d4c7559da727",
+          "version": "3.0.6"
         }
       },
       {
@@ -131,9 +149,9 @@
         "package": "PerfectSQLite",
         "repositoryURL": "https://github.com/kjessup/Perfect-SQLite.git",
         "state": {
-          "branch": null,
-          "revision": "89f5e4dc81a2523b42381ee651945a3b6aad17d1",
-          "version": "3.0.1"
+          "branch": "master",
+          "revision": "6b4d6e55e2016d2bf093cb49a4ead5c46f0a5422",
+          "version": null
         }
       },
       {
