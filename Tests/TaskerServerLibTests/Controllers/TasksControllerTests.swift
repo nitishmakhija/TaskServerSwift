@@ -24,7 +24,7 @@ class TasksControllerTests: XCTestCase {
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         
         // Assert.
-        let requestHandler = tasksController.routes.navigator.findHandler(uri: "/tasks", webRequest: fakeHttpRequest)
+        let requestHandler = tasksController.allRoutes.navigator.findHandler(uri: "/tasks", webRequest: fakeHttpRequest)
         XCTAssertNotNil(requestHandler)
     }
     
@@ -38,7 +38,7 @@ class TasksControllerTests: XCTestCase {
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         
         // Assert.
-        let requestHandler = tasksController.routes.navigator.findHandler(uri: "/tasks/123", webRequest: fakeHttpRequest)
+        let requestHandler = tasksController.allRoutes.navigator.findHandler(uri: "/tasks/123", webRequest: fakeHttpRequest)
         XCTAssertNotNil(requestHandler)
     }
     
@@ -52,7 +52,7 @@ class TasksControllerTests: XCTestCase {
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         
         // Assert.
-        let requestHandler = tasksController.routes.navigator.findHandler(uri: "/tasks", webRequest: fakeHttpRequest)
+        let requestHandler = tasksController.allRoutes.navigator.findHandler(uri: "/tasks", webRequest: fakeHttpRequest)
         XCTAssertNotNil(requestHandler)
     }
     
@@ -66,7 +66,7 @@ class TasksControllerTests: XCTestCase {
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         
         // Assert.
-        let requestHandler = tasksController.routes.navigator.findHandler(uri: "/tasks/123", webRequest: fakeHttpRequest)
+        let requestHandler = tasksController.allRoutes.navigator.findHandler(uri: "/tasks/123", webRequest: fakeHttpRequest)
         XCTAssertNotNil(requestHandler)
     }
     
@@ -80,7 +80,7 @@ class TasksControllerTests: XCTestCase {
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         
         // Assert.
-        let requestHandler = tasksController.routes.navigator.findHandler(uri: "/tasks/123", webRequest: fakeHttpRequest)
+        let requestHandler = tasksController.allRoutes.navigator.findHandler(uri: "/tasks/123", webRequest: fakeHttpRequest)
         XCTAssertNotNil(requestHandler)
     }
     

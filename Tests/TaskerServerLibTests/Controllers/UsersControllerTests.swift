@@ -22,7 +22,7 @@ class UsersControllerTests: XCTestCase {
         let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Assert.
-        let requestHandler = usersController.routes.navigator.findHandler(uri: "/users", webRequest: fakeHttpRequest)
+        let requestHandler = usersController.allRoutes.navigator.findHandler(uri: "/users", webRequest: fakeHttpRequest)
         XCTAssertNotNil(requestHandler)
     }
     
@@ -36,7 +36,7 @@ class UsersControllerTests: XCTestCase {
         let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Assert.
-        let requestHandler = usersController.routes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
+        let requestHandler = usersController.allRoutes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
         XCTAssertNotNil(requestHandler)
     }
     
@@ -50,7 +50,7 @@ class UsersControllerTests: XCTestCase {
         let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Assert.
-        let requestHandler = usersController.routes.navigator.findHandler(uri: "/users", webRequest: fakeHttpRequest)
+        let requestHandler = usersController.allRoutes.navigator.findHandler(uri: "/users", webRequest: fakeHttpRequest)
         XCTAssertNotNil(requestHandler)
     }
     
@@ -64,7 +64,7 @@ class UsersControllerTests: XCTestCase {
         let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Assert.
-        let requestHandler = usersController.routes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
+        let requestHandler = usersController.allRoutes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
         XCTAssertNotNil(requestHandler)
     }
     
@@ -78,7 +78,7 @@ class UsersControllerTests: XCTestCase {
         let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Assert.
-        let requestHandler = usersController.routes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
+        let requestHandler = usersController.allRoutes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
         XCTAssertNotNil(requestHandler)
     }
     

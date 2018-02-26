@@ -1054,7 +1054,7 @@
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Configuration::Configuration::Product" /* Configuration.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Configuration.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Dip::Dip::Product" /* Dip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Dip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		"Dobby::Dobby::Product" /* Dobby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dobby.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"Dobby::Dobby::Product" /* Dobby.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Dobby.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"FileKit::FileKit::Product" /* FileKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"JWT::JWT::Product" /* JWT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"LoggerAPI::LoggerAPI::Product" /* LoggerAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoggerAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
