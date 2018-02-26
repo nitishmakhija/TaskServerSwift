@@ -13,7 +13,7 @@ public enum ClaimsNames : String {
     case name = "name", roles = "roles"
 }
 
-public class AuthorizationFilter: HTTPRequestFilter {
+public class AuthenticationFilter: HTTPRequestFilter {
     
     private let secret: Data
     private let routesWithAuthorization: Routes

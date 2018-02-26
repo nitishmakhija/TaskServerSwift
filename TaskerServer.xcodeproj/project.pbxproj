@@ -343,7 +343,7 @@
 		OBJ_711 /* PerfectThread.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "PerfectThread::PerfectThread::Product" /* PerfectThread.framework */; };
 		OBJ_712 /* PerfectLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "PerfectLib::PerfectLib::Product" /* PerfectLib.framework */; };
 		OBJ_713 /* PerfectCHTTPParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "PerfectHTTPServer::PerfectCHTTPParser::Product" /* PerfectCHTTPParser.framework */; };
-		OBJ_735 /* AuthorizationFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* AuthorizationFilter.swift */; };
+		OBJ_735 /* AuthenticationFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* AuthenticationFilter.swift */; };
 		OBJ_736 /* UserCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* UserCredentials.swift */; };
 		OBJ_737 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* Configuration.swift */; };
 		OBJ_738 /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* AccountController.swift */; };
@@ -1058,7 +1058,7 @@
 		"FileKit::FileKit::Product" /* FileKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"JWT::JWT::Product" /* JWT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"LoggerAPI::LoggerAPI::Product" /* LoggerAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoggerAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		OBJ_10 /* AuthorizationFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationFilter.swift; sourceTree = "<group>"; };
+		OBJ_10 /* AuthenticationFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFilter.swift; sourceTree = "<group>"; };
 		OBJ_100 /* Join.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Join.swift; sourceTree = "<group>"; };
 		OBJ_101 /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		OBJ_102 /* PerfectCRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfectCRUD.swift; sourceTree = "<group>"; };
@@ -2569,7 +2569,7 @@
 		OBJ_8 /* TaskerServerLib */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_9 /* Authorization */,
+				OBJ_9 /* Authentication */,
 				OBJ_12 /* Configuration */,
 				OBJ_14 /* Controllers */,
 				OBJ_20 /* DataTransferObjects */,
@@ -2627,13 +2627,13 @@
 			path = Coding;
 			sourceTree = "<group>";
 		};
-		OBJ_9 /* Authorization */ = {
+		OBJ_9 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_10 /* AuthorizationFilter.swift */,
+				OBJ_10 /* AuthenticationFilter.swift */,
 				OBJ_11 /* UserCredentials.swift */,
 			);
-			path = Authorization;
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		OBJ_92 /* Expression */ = {
@@ -3811,7 +3811,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_735 /* AuthorizationFilter.swift in Sources */,
+				OBJ_735 /* AuthenticationFilter.swift in Sources */,
 				OBJ_736 /* UserCredentials.swift in Sources */,
 				OBJ_737 /* Configuration.swift in Sources */,
 				OBJ_738 /* AccountController.swift in Sources */,
