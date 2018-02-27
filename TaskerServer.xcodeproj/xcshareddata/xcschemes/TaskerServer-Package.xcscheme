@@ -56,20 +56,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "JWT::JWT"
-               BuildableName = "JWT.framework"
-               BlueprintName = "JWT"
-               ReferencedContainer = "container:TaskerServer.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "PerfectSQLite::PerfectSQLite"
                BuildableName = "PerfectSQLite.framework"
                BlueprintName = "PerfectSQLite"

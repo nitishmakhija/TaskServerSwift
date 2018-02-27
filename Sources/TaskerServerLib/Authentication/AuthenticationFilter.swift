@@ -7,19 +7,19 @@
 
 import Foundation
 import PerfectHTTP
-import JWT
+import PerfectCrypto
 
 public enum ClaimsNames : String {
-    case name = "name", roles = "roles"
+    case name = "name", roles = "roles", issuer = "iss", issuedAt = "iat", expiration = "exp"
 }
 
 public class AuthenticationFilter: HTTPRequestFilter {
     
-    private let secret: Data
+    private let secret: String
     private let routesWithAuthorization: Routes
     
     public init(secret: String, routesWithAuthorization: Routes) {
-        self.secret = secret.data(using: .utf8)!
+        self.secret = secret
         self.routesWithAuthorization = routesWithAuthorization
     }
     
@@ -44,14 +44,20 @@ public class AuthenticationFilter: HTTPRequestFilter {
         
         do {
             header!.removeFirst(7)
-            let claims: ClaimSet = try JWT.decode(header!, algorithm: .hs256(self.secret))
             
-            if let name = claims[ClaimsNames.name.rawValue] as? String {
-                request.add(userCredentials: UserCredentials(name: name, roles: claims[ClaimsNames.roles.rawValue] as? [String]))
+            guard let jwt = JWTVerifier(header!) else {
+                throw AuthenticationError.verificationTokenError
             }
             
-        } catch let error as InvalidToken {
-            print("Not valid token: \(error)")
+            try jwt.verify(algo: .hs256, key: HMACKey(secret))
+            try jwt.verifyExpirationDate()
+
+            if let name = jwt.payload[ClaimsNames.name.rawValue] as? String {
+                request.add(userCredentials: UserCredentials(name: name, roles: jwt.payload[ClaimsNames.roles.rawValue] as? [String]))
+            }
+            
+        } catch is AuthenticationError {
+            print("Not valid token error.")
             response.sendUnauthorizedError()
             return callback(.halt(request, response))
         } catch {

@@ -7,7 +7,7 @@
 
 import Foundation
 import PerfectHTTP
-import JWT
+import PerfectCrypto
 
 class AccountController : Controller {
     
@@ -27,6 +27,8 @@ class AccountController : Controller {
     public func register(request: HTTPRequest, response: HTTPResponse) {
         do {
             let user = try request.getObjectFromRequest(User.self)
+            
+         
             try self.usersService.add(entity: user)
             return response.sendJson(user)
         }
@@ -51,7 +53,7 @@ class AccountController : Controller {
                 return response.sendNotFoundError()
             }
             
-            let tokenDto = self.prepareToken(user: user!)
+            let tokenDto = try self.prepareToken(user: user!)
             return response.sendJson(tokenDto)
         }
         catch let error where error is DecodingError || error is RequestError {
@@ -65,15 +67,21 @@ class AccountController : Controller {
         }
     }
     
-    private func prepareToken(user: User) -> JwtTokenResponseDto {
-        var claims = ClaimSet()
-        claims.issuer = "tasker-server"
-        claims.issuedAt = Date()
-        claims.expiration = Date().addingTimeInterval(36000)
-        claims[ClaimsNames.name.rawValue] = user.email
-        claims[ClaimsNames.roles.rawValue] = ["User", "Administrator"]
+    private func prepareToken(user: User) throws -> JwtTokenResponseDto {
         
-        let token = JWT.encode(claims: claims, algorithm: .hs256(self.configuration.secret.data(using: .utf8)!))
+        let payload = [
+            ClaimsNames.name.rawValue           : user.email,
+            ClaimsNames.roles.rawValue          : ["User", "Administrator"],
+            ClaimsNames.issuer.rawValue         : "tasker-server",
+            ClaimsNames.issuedAt.rawValue       : Date().timeIntervalSince1970,
+            ClaimsNames.expiration.rawValue     : Date().addingTimeInterval(36000).timeIntervalSince1970
+        ] as [String : Any]
+        
+        guard let jwt = JWTCreator(payload: payload) else {
+            throw AuthenticationError.generateTokenError
+        }
+        
+        let token = try jwt.sign(alg: .hs256, key: self.configuration.secret)
         
         let tokenDto = JwtTokenResponseDto(token: token)
         return tokenDto
