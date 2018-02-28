@@ -28,7 +28,13 @@ class TasksController : Controller {
     public func getTasks(request: HTTPRequest, response: HTTPResponse) {        
         do {
             let tasks = try self.tasksService.get()
-            response.sendJson(tasks)
+            
+            var tasksDtos:[TaskDto] = []
+            for task in tasks {
+                tasksDtos.append(TaskDto(task: task))
+            }
+            
+            response.sendJson(tasksDtos)
         }
         catch {
             response.sendInternalServerError(error: error)
@@ -39,7 +45,8 @@ class TasksController : Controller {
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
                 if let task = try self.tasksService.get(byId: id) {
-                    return response.sendJson(task)
+                    let taskDto = TaskDto(task: task)
+                    return response.sendJson(taskDto)
                 }
                 else {
                     return response.sendNotFoundError()
@@ -55,9 +62,13 @@ class TasksController : Controller {
     
     public func postTask(request: HTTPRequest, response: HTTPResponse) {
         do {
-            let task = try request.getObjectFromRequest(Task.self)
+            let taskDto = try request.getObjectFromRequest(TaskDto.self)
+            let task = taskDto.toTask()
+            
             try self.tasksService.add(entity: task)
-            return response.sendJson(task)
+            
+            let addedTaskDto = TaskDto(task: task)
+            return response.sendJson(addedTaskDto)
         }
         catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()
@@ -72,9 +83,13 @@ class TasksController : Controller {
     
     public func putTask(request: HTTPRequest, response: HTTPResponse) {
         do {
-            let task = try request.getObjectFromRequest(Task.self)
+            let taskDto = try request.getObjectFromRequest(TaskDto.self)
+            let task = taskDto.toTask()
+            
             try self.tasksService.update(entity: task)
-            return response.sendJson(task)
+            
+            let updatedTaskDto = TaskDto(task: task)
+            return response.sendJson(updatedTaskDto)
         }
         catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()

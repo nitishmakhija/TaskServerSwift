@@ -24,6 +24,9 @@
 		F8D3F0AC20473EDC00F187C6 /* Role.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3F0AB20473EDC00F187C6 /* Role.swift */; };
 		F8D3F0AE20473F3A00F187C6 /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3F0AD20473F3A00F187C6 /* UserRole.swift */; };
 		F8D3F0B1204741B700F187C6 /* Roles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3F0B0204741B700F187C6 /* Roles.swift */; };
+		F8D3F0B32047450D00F187C6 /* UserDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3F0B22047450D00F187C6 /* UserDto.swift */; };
+		F8D3F0B52047453E00F187C6 /* TaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3F0B42047453E00F187C6 /* TaskDto.swift */; };
+		F8D3F0B720474F3D00F187C6 /* RegisterUserDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3F0B620474F3D00F187C6 /* RegisterUserDto.swift */; };
 		OBJ_1000 /* bss_.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_239 /* bss_.c */; };
 		OBJ_1001 /* buf_.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_240 /* buf_.c */; };
 		OBJ_1002 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_241 /* buffer.c */; };
@@ -1031,6 +1034,9 @@
 		F8D3F0AB20473EDC00F187C6 /* Role.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Role.swift; sourceTree = "<group>"; };
 		F8D3F0AD20473F3A00F187C6 /* UserRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRole.swift; sourceTree = "<group>"; };
 		F8D3F0B0204741B700F187C6 /* Roles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Roles.swift; path = Seeds/Roles.swift; sourceTree = "<group>"; };
+		F8D3F0B22047450D00F187C6 /* UserDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDto.swift; sourceTree = "<group>"; };
+		F8D3F0B42047453E00F187C6 /* TaskDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDto.swift; sourceTree = "<group>"; };
+		F8D3F0B620474F3D00F187C6 /* RegisterUserDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserDto.swift; sourceTree = "<group>"; };
 		"FileKit::FileKit::Product" /* FileKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"LoggerAPI::LoggerAPI::Product" /* LoggerAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoggerAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* AuthenticationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationError.swift; sourceTree = "<group>"; };
@@ -1991,6 +1997,9 @@
 				OBJ_24 /* JwtTokenResponseDto.swift */,
 				OBJ_25 /* SignInDto.swift */,
 				OBJ_26 /* ValidationErrorResponseDto.swift */,
+				F8D3F0B22047450D00F187C6 /* UserDto.swift */,
+				F8D3F0B42047453E00F187C6 /* TaskDto.swift */,
+				F8D3F0B620474F3D00F187C6 /* RegisterUserDto.swift */,
 			);
 			path = DataTransferObjects;
 			sourceTree = "<group>";
@@ -3472,11 +3481,13 @@
 				OBJ_716 /* AuthenticationError.swift in Sources */,
 				OBJ_717 /* AuthenticationFilter.swift in Sources */,
 				OBJ_718 /* UserCredentials.swift in Sources */,
+				F8D3F0B720474F3D00F187C6 /* RegisterUserDto.swift in Sources */,
 				OBJ_719 /* Configuration.swift in Sources */,
 				OBJ_720 /* AccountController.swift in Sources */,
 				F8D3F0B1204741B700F187C6 /* Roles.swift in Sources */,
 				OBJ_721 /* Controller.swift in Sources */,
 				F8D3F0AE20473F3A00F187C6 /* UserRole.swift in Sources */,
+				F8D3F0B32047450D00F187C6 /* UserDto.swift in Sources */,
 				OBJ_722 /* HealthController.swift in Sources */,
 				OBJ_723 /* TasksController.swift in Sources */,
 				OBJ_724 /* UsersController.swift in Sources */,
@@ -3497,6 +3508,7 @@
 				OBJ_739 /* EntityProtocol.swift in Sources */,
 				OBJ_740 /* Task.swift in Sources */,
 				OBJ_741 /* User.swift in Sources */,
+				F8D3F0B52047453E00F187C6 /* TaskDto.swift in Sources */,
 				OBJ_742 /* BaseRepository.swift in Sources */,
 				OBJ_743 /* TasksRepository.swift in Sources */,
 				OBJ_744 /* UsersRepository.swift in Sources */,

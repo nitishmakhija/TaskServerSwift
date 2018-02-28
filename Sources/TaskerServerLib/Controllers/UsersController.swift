@@ -27,7 +27,13 @@ class UsersController : Controller {
     public func getUsers(request: HTTPRequest, response: HTTPResponse) {
         do {
             let users = try self.usersService.get()
-            response.sendJson(users)
+
+            var usersDtos: [UserDto] = []
+            for user in users {
+                usersDtos.append(UserDto(user: user))
+            }
+            
+            response.sendJson(usersDtos)
         }
         catch {
             response.sendInternalServerError(error: error)
@@ -39,7 +45,8 @@ class UsersController : Controller {
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
                 if let user = try self.usersService.get(byId: id) {
-                    return response.sendJson(user)
+                    let userDto = UserDto(user: user)
+                    return response.sendJson(userDto)
                 }
                 else {
                     return response.sendNotFoundError()
@@ -55,9 +62,13 @@ class UsersController : Controller {
     
     public func postUser(request: HTTPRequest, response: HTTPResponse) {
         do {
-            let user = try request.getObjectFromRequest(User.self)
+            let userDto = try request.getObjectFromRequest(UserDto.self)
+            let user = userDto.toUser()
+            
             try self.usersService.add(entity: user)
-            return response.sendJson(user)
+            
+            let addedUserDto = UserDto(user: user)
+            return response.sendJson(addedUserDto)
         }
         catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()
@@ -72,9 +83,13 @@ class UsersController : Controller {
     
     public func putUser(request: HTTPRequest, response: HTTPResponse) {
         do {
-            let user = try request.getObjectFromRequest(User.self)
+            let userDto = try request.getObjectFromRequest(UserDto.self)
+            let user = userDto.toUser()
+            
             try self.usersService.update(entity: user)
-            return response.sendJson(user)
+            
+            let updatedUserDto = UserDto(user: user)
+            return response.sendJson(updatedUserDto)
         }
         catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()

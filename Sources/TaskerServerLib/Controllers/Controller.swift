@@ -25,15 +25,6 @@ public class Controller {
     func initRoutes() {
     }
     
-    fileprivate func addToRoutesWithAutorization(_ authorization: AuthorizationPolicy, _ route: Route) {
-        switch authorization {
-        case AuthorizationPolicy.signedIn, AuthorizationPolicy.inRole(_):
-            self.routesWithAuthorization.add(route)
-        default:
-            break
-        }
-    }
-    
     public func add(method: HTTPMethod, uri: String, authorization: AuthorizationPolicy, handler: @escaping RequestHandler) {
         
         let route = Route(method: method, uri: uri, handler: { (request: HTTPRequest, response: HTTPResponse) -> Void in
@@ -44,6 +35,15 @@ public class Controller {
         
         self.allRoutes.add(route)
         addToRoutesWithAutorization(authorization, route)
+    }
+    
+    private func addToRoutesWithAutorization(_ authorization: AuthorizationPolicy, _ route: Route) {
+        switch authorization {
+        case AuthorizationPolicy.signedIn, AuthorizationPolicy.inRole(_):
+            self.routesWithAuthorization.add(route)
+        default:
+            break
+        }
     }
     
     private func isUserHasAccess(request: HTTPRequest, response: HTTPResponse, authorization: AuthorizationPolicy) -> Bool {

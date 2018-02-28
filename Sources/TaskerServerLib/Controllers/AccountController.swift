@@ -27,13 +27,16 @@ class AccountController : Controller {
     
     public func register(request: HTTPRequest, response: HTTPResponse) {
         do {
-            let user = try request.getObjectFromRequest(User.self)
-                        
+            let registerUserDto = try request.getObjectFromRequest(RegisterUserDto.self)
+            let user = registerUserDto.toUser()
+            
             user.salt = String(randomWithLength: 14)
-            user.password = try user.password.generateHash(salt: user.salt)
+            user.password = try registerUserDto.password.generateHash(salt: user.salt)
 
             try self.usersService.add(entity: user)
-            return response.sendJson(user)
+            
+            let registeredUserDto = UserDto(user: user)
+            return response.sendJson(registeredUserDto)
         }
         catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()
@@ -108,7 +111,7 @@ class AccountController : Controller {
         
         let payload = [
             ClaimsNames.name.rawValue           : user.email,
-            ClaimsNames.roles.rawValue          : ["User"],
+            ClaimsNames.roles.rawValue          : ["User", "Administrator"],
             ClaimsNames.issuer.rawValue         : "tasker-server",
             ClaimsNames.issuedAt.rawValue       : Date().timeIntervalSince1970,
             ClaimsNames.expiration.rawValue     : Date().addingTimeInterval(36000).timeIntervalSince1970
