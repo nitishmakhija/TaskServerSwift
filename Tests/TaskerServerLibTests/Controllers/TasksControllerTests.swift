@@ -217,6 +217,9 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeTasksRepository = FakeTasksRepository()
         
+        fakeTasksRepository.getByIdMock.expect(any())
+        fakeTasksRepository.getByIdStub.on(equals(1), return: Task(id: 1, name: "Before update", isFinished: true))
+        
         fakeHttpRequest.addObjectToRequestBody(Task(id: 1, name: "Create unit tests", isFinished: true))
         fakeTasksRepository.updateMock.expect(matches({(task) -> Bool in
             task.id == 1 && task.name == "Create unit tests" && task.isFinished == true
@@ -253,6 +256,8 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "1"])
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeTasksRepository = FakeTasksRepository()
+        fakeTasksRepository.getByIdMock.expect(any())
+        fakeTasksRepository.getByIdStub.on(equals(1), return: Task(id: 1, name: "Create unit tests", isFinished: false))
         fakeHttpRequest.addObjectToRequestBody(Task(id: 1, name: "", isFinished: true))
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         

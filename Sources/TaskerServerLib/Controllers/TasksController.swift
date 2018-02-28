@@ -44,13 +44,13 @@ class TasksController : Controller {
     public func getTask(request: HTTPRequest, response: HTTPResponse) {
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                if let task = try self.tasksService.get(byId: id) {
-                    let taskDto = TaskDto(task: task)
-                    return response.sendJson(taskDto)
-                }
-                else {
+                
+                guard let task = try self.tasksService.get(byId: id) else {
                     return response.sendNotFoundError()
                 }
+                
+                let taskDto = TaskDto(task: task)
+                return response.sendJson(taskDto)
             }
             
             response.sendBadRequestError()
@@ -84,7 +84,13 @@ class TasksController : Controller {
     public func putTask(request: HTTPRequest, response: HTTPResponse) {
         do {
             let taskDto = try request.getObjectFromRequest(TaskDto.self)
-            let task = taskDto.toTask()
+            
+            guard let task = try self.tasksService.get(byId: taskDto.id)  else {
+                return response.sendNotFoundError()
+            }
+            
+            task.isFinished = taskDto.isFinished
+            task.name = taskDto.name
             
             try self.tasksService.update(entity: task)
             
@@ -105,13 +111,12 @@ class TasksController : Controller {
     public func deleteTask(request: HTTPRequest, response: HTTPResponse) {
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                if let _ = try self.tasksService.get(byId: id) {
-                    try self.tasksService.delete(entityWithId: id)
-                    return response.sendOk();
-                }
-                else {
+                guard let _ = try self.tasksService.get(byId: id) else {
                     return response.sendNotFoundError()
                 }
+                
+                try self.tasksService.delete(entityWithId: id)
+                return response.sendOk();
             }
             
             response.sendBadRequestError()

@@ -24,6 +24,6 @@ public class RegisterUserDto : Codable {
     }
     
     public func toUser() -> User {
-        return User(id: self.id, name: self.name, email: self.email, password: "", salt: "", isLocked: self.isLocked)
+        return User(id: self.id, name: self.name, email: self.email, password: self.password, salt: "", isLocked: self.isLocked)
     }
 }

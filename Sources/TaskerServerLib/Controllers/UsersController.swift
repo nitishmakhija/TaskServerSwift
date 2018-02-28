@@ -44,13 +44,12 @@ class UsersController : Controller {
         
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                if let user = try self.usersService.get(byId: id) {
-                    let userDto = UserDto(user: user)
-                    return response.sendJson(userDto)
-                }
-                else {
+                guard let user = try self.usersService.get(byId: id) else {
                     return response.sendNotFoundError()
                 }
+                
+                let userDto = UserDto(user: user)
+                return response.sendJson(userDto)
             }
             
             response.sendBadRequestError()
@@ -62,8 +61,8 @@ class UsersController : Controller {
     
     public func postUser(request: HTTPRequest, response: HTTPResponse) {
         do {
-            let userDto = try request.getObjectFromRequest(UserDto.self)
-            let user = userDto.toUser()
+            let createUserDto = try request.getObjectFromRequest(RegisterUserDto.self)
+            let user = createUserDto.toUser()
             
             try self.usersService.add(entity: user)
             
@@ -84,7 +83,13 @@ class UsersController : Controller {
     public func putUser(request: HTTPRequest, response: HTTPResponse) {
         do {
             let userDto = try request.getObjectFromRequest(UserDto.self)
-            let user = userDto.toUser()
+            
+            guard let user = try self.usersService.get(byId: userDto.id) else {
+                return response.sendNotFoundError()
+            }
+            
+            user.name = userDto.name
+            user.isLocked = userDto.isLocked
             
             try self.usersService.update(entity: user)
             
@@ -105,13 +110,12 @@ class UsersController : Controller {
     public func deleteUser(request: HTTPRequest, response: HTTPResponse) {
         do {
             if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                if let _ = try self.usersService.get(byId: id) {
-                    try self.usersService.delete(entityWithId: id)
-                    return response.sendOk();
-                }
-                else {
+                guard let _ = try self.usersService.get(byId: id) else {
                     return response.sendNotFoundError()
                 }
+                
+                try self.usersService.delete(entityWithId: id)
+                return response.sendOk()
             }
             
             response.sendBadRequestError()

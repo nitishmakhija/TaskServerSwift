@@ -34,6 +34,9 @@ public class UsersService :  UsersServiceProtocol {
     
     public func add(entity: User) throws {
         
+        entity.salt = String(randomWithLength: 14)
+        entity.password = try entity.password.generateHash(salt: entity.salt)
+        
         if !entity.isValid() {
             let errors = entity.getValidationErrors()
             throw ValidationsError(errors: errors)

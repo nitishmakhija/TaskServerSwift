@@ -30,9 +30,6 @@ class AccountController : Controller {
             let registerUserDto = try request.getObjectFromRequest(RegisterUserDto.self)
             let user = registerUserDto.toUser()
             
-            user.salt = String(randomWithLength: 14)
-            user.password = try registerUserDto.password.generateHash(salt: user.salt)
-
             try self.usersService.add(entity: user)
             
             let registeredUserDto = UserDto(user: user)
