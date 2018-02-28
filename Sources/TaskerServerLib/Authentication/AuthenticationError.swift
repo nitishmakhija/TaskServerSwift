@@ -8,5 +8,10 @@
 import Foundation
 
 enum AuthenticationError : Error {
-    case generateTokenError, verificationTokenError, tokenExpiredError, expiredDateNotExistsError, incorrectExpiredDateError
+    case generateTokenError, 
+        generatePasswordError,
+        verificationTokenError, 
+        tokenExpiredError, 
+        expiredDateNotExistsError, 
+        incorrectExpiredDateError
 }

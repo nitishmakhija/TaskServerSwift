@@ -2,5 +2,7 @@ import XCTest
 @testable import TaskerServerLib
 
 XCTMain([
-    testCase(TaskerServerLibTests.allTests),
+    testCase(HealthController.allTests),
+    testCase(TasksController.allTests),
+    testCase(UsersController.allTests)
 ])

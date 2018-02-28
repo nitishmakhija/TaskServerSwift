@@ -22,15 +22,48 @@ class AccountController : Controller {
     override func initRoutes() {
         self.add(method: .post, uri: "/account/register", authorization: .anonymous, handler: register)
         self.add(method: .post, uri: "/account/signIn", authorization: .anonymous, handler: signIn)
+        self.add(method: .post, uri: "/account/changePassword", authorization: .authorized, handler: changePassword)
     }
     
     public func register(request: HTTPRequest, response: HTTPResponse) {
         do {
             let user = try request.getObjectFromRequest(User.self)
-            
-         
+                        
+            user.salt = String(randomWithLength: 14)
+            user.password = try user.password.generateHash(salt: user.salt)
+
             try self.usersService.add(entity: user)
             return response.sendJson(user)
+        }
+        catch let error where error is DecodingError || error is RequestError {
+            response.sendBadRequestError()
+        }
+        catch let error as ValidationsError {
+            response.sendValidationsError(error: error)
+        }
+        catch let error as AuthenticationError {
+            response.sendInternalServerError(error: error)
+        } 
+        catch {
+            response.sendInternalServerError(error: error)
+        }
+    }
+    
+    public func signIn(request: HTTPRequest, response: HTTPResponse) {
+        do {
+            let signIn = try request.getObjectFromRequest(SignInDto.self)
+
+            guard let user = try self.usersService.get(byEmail: signIn.email) else {
+                return response.sendNotFoundError()
+            }
+            
+            let password = try signIn.password.generateHash(salt: user.salt)
+            if password != user.password {
+                return response.sendNotFoundError()
+            }
+            
+            let tokenDto = try self.prepareToken(user: user)
+            return response.sendJson(tokenDto)
         }
         catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()
@@ -42,19 +75,20 @@ class AccountController : Controller {
             response.sendInternalServerError(error: error)
         }
     }
-    
-    public func signIn(request: HTTPRequest, response: HTTPResponse) {
-        
+
+    public func changePassword(request: HTTPRequest, response: HTTPResponse) {
         do {
-            let signIn = try request.getObjectFromRequest(SignInDto.self)
-            let user = try self.usersService.get(byEmail: signIn.email, andPassword: signIn.password)
-            
-            if user == nil {
+            let changePasswordDto = try request.getObjectFromRequest(ChangePasswordRequestDto.self)
+
+            guard let user = try self.usersService.get(byEmail: changePasswordDto.email) else {
                 return response.sendNotFoundError()
             }
             
-            let tokenDto = try self.prepareToken(user: user!)
-            return response.sendJson(tokenDto)
+            user.salt = String(randomWithLength: 14)
+            user.password = try changePasswordDto.password.generateHash(salt: user.salt)
+            
+            try self.usersService.update(entity: user)
+            return response.sendOk()
         }
         catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()
@@ -62,6 +96,9 @@ class AccountController : Controller {
         catch let error as ValidationsError {
             response.sendValidationsError(error: error)
         }
+        catch let error as AuthenticationError {
+            response.sendInternalServerError(error: error)
+        } 
         catch {
             response.sendInternalServerError(error: error)
         }

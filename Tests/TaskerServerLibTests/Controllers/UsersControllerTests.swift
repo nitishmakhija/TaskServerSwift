@@ -91,8 +91,8 @@ class UsersControllerTests: XCTestCase {
         
         fakeUsersRepository.getMock.expect(any())
         fakeUsersRepository.getStub.on(any(), return: [
-                User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: false),
-                User(id: 2, name: "Victor Doe", email: "victor.doe@emailx.com", isLocked: false)
+                User(id: 1, name: "John Doe", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: false),
+                User(id: 2, name: "Victor Doe", email: "victor.doe@emailx.com", password: "pass", salt: "123", isLocked: false)
         ])
         let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
@@ -117,7 +117,7 @@ class UsersControllerTests: XCTestCase {
         
         fakeUsersRepository.getByIdMock.expect(any())
         fakeUsersRepository.getByIdStub.on(equals(1), return:
-            User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: false)
+            User(id: 1, name: "John Doe", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: false)
         )
         let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
@@ -157,7 +157,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeUsersRepository = FakeUsersRepository()
         
-        fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: true))
+        fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "John Doe", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: true))
         fakeUsersRepository.addMock.expect(matches({(user) -> Bool in
             user.id == 1 &&
             user.email == "john.doe@emailx.com" &&
@@ -196,7 +196,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeUsersRepository = FakeUsersRepository()
-        fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "", email: "john.doe@emailx.com", isLocked: true))
+        fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: true))
         let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Act.
@@ -217,7 +217,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeUsersRepository = FakeUsersRepository()
-        fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "John Doe", email: "", isLocked: true))
+        fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "John Doe", email: "", password: "pass", salt: "123", isLocked: true))
         let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Act.
@@ -239,7 +239,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeUsersRepository = FakeUsersRepository()
         
-        fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: true))
+        fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "John Doe", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: true))
         fakeUsersRepository.updateMock.expect(matches({(user) -> Bool in
             user.id == 1 &&
                 user.email == "john.doe@emailx.com" &&
@@ -278,7 +278,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "1"])
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeUsersRepository = FakeUsersRepository()
-        fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "", email: "john.doe@emailx.com", isLocked: true))
+        fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: true))
         let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Act.
@@ -299,7 +299,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "1"])
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeUsersRepository = FakeUsersRepository()
-        fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "John Doe", email: "", isLocked: true))
+        fakeHttpRequest.addObjectToRequestBody(User(id: 1, name: "John Doe", email: "", password: "pass", salt: "123", isLocked: true))
         let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         
         // Act.
@@ -322,7 +322,7 @@ class UsersControllerTests: XCTestCase {
         let fakeUsersRepository = FakeUsersRepository()
         
         fakeUsersRepository.getByIdMock.expect(any())
-        fakeUsersRepository.getByIdStub.on(any(), return: User(id: 1, name: "John Doe", email: "john.doe@emailx.com", isLocked: false))
+        fakeUsersRepository.getByIdStub.on(any(), return: User(id: 1, name: "John Doe", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: false))
         fakeUsersRepository.deleteMock.expect(matches({(id) -> Bool in id == 1 }))
         let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository))
         

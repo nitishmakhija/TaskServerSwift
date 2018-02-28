@@ -14,13 +14,13 @@ public protocol UsersRepositoryProtocol {
     func add(entity: User) throws
     func update(entity: User) throws
     func delete(entityWithId: Int) throws
-    func get(byEmail email: String, andPassword password: String) throws -> User?
+    func get(byEmail email: String) throws -> User?
 }
 
 class UsersRepository : BaseRepository<User>, UsersRepositoryProtocol {
     
-    public func get(byEmail email: String, andPassword password: String) throws -> User? {
-        let user = try self.databaseContext.set(User.self).where(\User.email == email && \User.password == password).first()
+    public func get(byEmail email: String) throws -> User? {
+        let user = try self.databaseContext.set(User.self).where(\User.email == email).first()
         return user
     }
 }
