@@ -26,7 +26,7 @@ allRoutes.configure(allRoutes: controllers)
 
 // Run migrations.
 let databaseContext = try! container.resolve() as DatabaseContextProtocol
-databaseContext.executeMigrations()
+try databaseContext.executeMigrations()
 
 
 // Authorization.

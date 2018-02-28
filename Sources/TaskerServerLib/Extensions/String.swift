@@ -45,7 +45,7 @@ extension String {
             srandom(UInt32(time(nil)))
             return Int(random())
         #else
-            return Int(arc4random_uniform())
+            return Int(arc4random())
         #endif
     }
 

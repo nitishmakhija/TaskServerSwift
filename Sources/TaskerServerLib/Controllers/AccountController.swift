@@ -22,7 +22,7 @@ class AccountController : Controller {
     override func initRoutes() {
         self.add(method: .post, uri: "/account/register", authorization: .anonymous, handler: register)
         self.add(method: .post, uri: "/account/signIn", authorization: .anonymous, handler: signIn)
-        self.add(method: .post, uri: "/account/changePassword", authorization: .authorized, handler: changePassword)
+        self.add(method: .post, uri: "/account/changePassword", authorization: .signedIn, handler: changePassword)
     }
     
     public func register(request: HTTPRequest, response: HTTPResponse) {
@@ -108,7 +108,7 @@ class AccountController : Controller {
         
         let payload = [
             ClaimsNames.name.rawValue           : user.email,
-            ClaimsNames.roles.rawValue          : ["User", "Administrator"],
+            ClaimsNames.roles.rawValue          : ["User"],
             ClaimsNames.issuer.rawValue         : "tasker-server",
             ClaimsNames.issuedAt.rawValue       : Date().timeIntervalSince1970,
             ClaimsNames.expiration.rawValue     : Date().addingTimeInterval(36000).timeIntervalSince1970

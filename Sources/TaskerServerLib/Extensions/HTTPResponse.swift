@@ -28,6 +28,11 @@ extension HTTPResponse {
         self.completed()
     }
 
+    func sendForbiddenError() {
+        self.status = .forbidden
+        self.completed()
+    }
+    
     func sendUnauthorizedError() {
         self.addHeader(.wwwAuthenticate, value: "Bearer realm=\"TaskerServer\"")
         self.status = .unauthorized

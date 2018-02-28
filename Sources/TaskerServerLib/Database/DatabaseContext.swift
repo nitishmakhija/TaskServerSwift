@@ -10,7 +10,7 @@ import PerfectCRUD
 import PerfectSQLite
 
 public protocol DatabaseContextProtocol {
-    func executeMigrations()
+    func executeMigrations() throws
     func set<T: Codable>(_ type: T.Type) -> Table<T, Database<SQLiteDatabaseConfiguration>>
 }
 
@@ -45,10 +45,14 @@ public class DatabaseContext: DatabaseContextProtocol {
         lock.unlock()
     }
     
-    public func executeMigrations() {
+    public func executeMigrations() throws {
         self.validateConnection()
         
-        try! self.database.create(Task.self, policy: .reconcileTable)
-        try! self.database.create(User.self, policy: .reconcileTable)
+        try self.database.create(Task.self, policy: .reconcileTable)
+        try self.database.create(User.self, policy: .reconcileTable)
+        try self.database.create(Role.self, policy: .reconcileTable)
+        try self.database.create(UserRole.self, policy: .reconcileTable)
+        
+        try Roles.seed(databaseContext: self)
     }
 }

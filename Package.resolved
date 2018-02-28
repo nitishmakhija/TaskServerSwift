@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "COpenSSL",
+        "repositoryURL": "https://github.com/PerfectlySoft/Perfect-COpenSSL-Linux.git",
+        "state": {
+          "branch": null,
+          "revision": "6c75ce4b9e6218d6405a203ef789fbb6f5e72df8",
+          "version": "3.0.1"
+        }
+      },
+      {
         "package": "CommonCrypto",
         "repositoryURL": "https://github.com/kylef-archive/CommonCrypto.git",
         "state": {
@@ -16,15 +25,6 @@
         "state": {
           "branch": null,
           "revision": "a5e3ce4619089069697bbef5abfe3687f6830b9d",
-          "version": "3.0.1"
-        }
-      },
-      {
-        "package": "COpenSSL",
-        "repositoryURL": "https://github.com/PerfectlySoft/Perfect-COpenSSL-Linux.git",
-        "state": {
-          "branch": null,
-          "revision": "6c75ce4b9e6218d6405a203ef789fbb6f5e72df8",
           "version": "3.0.1"
         }
       },
@@ -110,15 +110,6 @@
         }
       },
       {
-        "package": "PerfectCrypto",
-        "repositoryURL": "https://github.com/PerfectlySoft/Perfect-Crypto.git",
-        "state": {
-          "branch": null,
-          "revision": "ed9fb3b6cbfd189a64fa61d830643cc613d5ba61",
-          "version": "3.0.6"
-        }
-      },
-      {
         "package": "PerfectCSQLite3",
         "repositoryURL": "https://github.com/PerfectlySoft/Perfect-sqlite3-support.git",
         "state": {
@@ -134,6 +125,15 @@
           "branch": null,
           "revision": "b63e46909aad937c6434766f8f8c6720d8f3bd05",
           "version": "0.0.4"
+        }
+      },
+      {
+        "package": "PerfectCrypto",
+        "repositoryURL": "https://github.com/PerfectlySoft/Perfect-Crypto.git",
+        "state": {
+          "branch": null,
+          "revision": "ed9fb3b6cbfd189a64fa61d830643cc613d5ba61",
+          "version": "3.0.6"
         }
       },
       {
