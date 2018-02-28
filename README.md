@@ -5,10 +5,12 @@ This is a simple project with server side code written in Swift. It contais few 
  - Unit tests - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-mvc-unit-tests-13232c56de56)
  - Configuration files - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-configuration-files-c5d9fe740357)
  - Data access (ORM) - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-object-relational-mapping-orm-68879d9a1aa3)
- - Services - todo
- - Data validation - todo
+ - Services, Repositories & Data validation - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-services-repositories-data-validation-d6988c24e720)
+ - Authentication (JWT) - todo
  - Authorization - todo
  - Logging system - todo
+ - Docker - todo
+ - Deploying to Azure - todo
  
 ## Getting started
 
