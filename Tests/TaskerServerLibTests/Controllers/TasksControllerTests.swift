@@ -93,13 +93,13 @@ class TasksControllerTests: XCTestCase {
         
         fakeTasksRepository.getMock.expect(any())
         fakeTasksRepository.getStub.on(any(), return: [
-            Task(id: 1, name: "Create unit tests", isFinished: false),
-            Task(id: 2, name: "Create article", isFinished: true)
+            Task(id: UUID(), name: "Create unit tests", isFinished: false),
+            Task(id: UUID(), name: "Create article", isFinished: true)
             ])
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         
         // Act.
-        tasksController.getTasks(request: fakeHttpRequest, response: fakeHttpResponse)
+        tasksController.all(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         let tasks = try! fakeHttpResponse.getObjectFromResponseBody(Array<Task>.self)
@@ -113,40 +113,42 @@ class TasksControllerTests: XCTestCase {
     func testGetTaskShouldReturnTaskWhenWeProvideCorrectId() {
         
         // Arrange.
-        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "1"])
+        let taskId = UUID()
+        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": taskId.uuidString])
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeTasksRepository = FakeTasksRepository()
         
         fakeTasksRepository.getByIdMock.expect(any())
-        fakeTasksRepository.getByIdStub.on(equals(1), return:
-            Task(id: 1, name: "Create unit tests", isFinished: false)
+        fakeTasksRepository.getByIdStub.on(equals(taskId), return:
+            Task(id: taskId, name: "Create unit tests", isFinished: false)
         )
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         
         // Act.
-        tasksController.getTask(request: fakeHttpRequest, response: fakeHttpResponse)
+        tasksController.get(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         let task = try! fakeHttpResponse.getObjectFromResponseBody(Task.self)
         fakeTasksRepository.getByIdMock.verify()
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
-        XCTAssertEqual(1, task.id)
+        XCTAssertEqual(taskId, task.id)
         XCTAssertEqual("Create unit tests", task.name)
     }
     
     func testGetTaskShouldReturnNotFoundStatusCodeWhenWeProvideIncorrectId() {
         
         // Arrange.
-        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "2"])
+        let taskId = UUID()
+        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": taskId.uuidString])
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeTasksRepository = FakeTasksRepository()
         
         fakeTasksRepository.getByIdMock.expect(any())
-        fakeTasksRepository.getByIdStub.on(equals(2), return: nil)
+        fakeTasksRepository.getByIdStub.on(equals(taskId), return: nil)
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         
         // Act.
-        tasksController.getTask(request: fakeHttpRequest, response: fakeHttpResponse)
+        tasksController.get(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.notFound.code, fakeHttpResponse.status.code)
@@ -159,15 +161,16 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeTasksRepository = FakeTasksRepository()
         
-        fakeHttpRequest.addObjectToRequestBody(Task(id: 1, name: "Create unit tests", isFinished: true))
+        let taskId = UUID()
+        fakeHttpRequest.addObjectToRequestBody(Task(id: taskId, name: "Create unit tests", isFinished: true))
         fakeTasksRepository.addMock.expect(matches({(task) -> Bool in
-            task.id == 1 && task.name == "Create unit tests" && task.isFinished == true
+            task.id == taskId && task.name == "Create unit tests" && task.isFinished == true
         }))
         
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         
         // Act.
-        tasksController.postTask(request: fakeHttpRequest, response: fakeHttpResponse)
+        tasksController.post(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
@@ -183,7 +186,7 @@ class TasksControllerTests: XCTestCase {
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         
         // Act.
-        tasksController.postTask(request: fakeHttpRequest, response: fakeHttpResponse)
+        tasksController.post(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -195,11 +198,11 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeTasksRepository = FakeTasksRepository()
-        fakeHttpRequest.addObjectToRequestBody(Task(id: 1, name: "", isFinished: true))
+        fakeHttpRequest.addObjectToRequestBody(Task(id: UUID(), name: "", isFinished: true))
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         
         // Act.
-        tasksController.postTask(request: fakeHttpRequest, response: fakeHttpResponse)
+        tasksController.post(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -213,22 +216,23 @@ class TasksControllerTests: XCTestCase {
     func testPutTaskShouldUpdateUserInStoreWhenWeProvideCorrectTaskData() {
         
         // Arrange.
-        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "1"])
+        let taskId = UUID()
+        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": taskId.uuidString])
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeTasksRepository = FakeTasksRepository()
         
         fakeTasksRepository.getByIdMock.expect(any())
-        fakeTasksRepository.getByIdStub.on(equals(1), return: Task(id: 1, name: "Before update", isFinished: true))
+        fakeTasksRepository.getByIdStub.on(equals(taskId), return: Task(id: taskId, name: "Before update", isFinished: true))
         
-        fakeHttpRequest.addObjectToRequestBody(Task(id: 1, name: "Create unit tests", isFinished: true))
+        fakeHttpRequest.addObjectToRequestBody(Task(id: taskId, name: "Create unit tests", isFinished: true))
         fakeTasksRepository.updateMock.expect(matches({(task) -> Bool in
-            task.id == 1 && task.name == "Create unit tests" && task.isFinished == true
+            task.id == taskId && task.name == "Create unit tests" && task.isFinished == true
         }))
         
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         
         // Act.
-        tasksController.putTask(request: fakeHttpRequest, response: fakeHttpResponse)
+        tasksController.put(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
@@ -244,7 +248,7 @@ class TasksControllerTests: XCTestCase {
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         
         // Act.
-        tasksController.putTask(request: fakeHttpRequest, response: fakeHttpResponse)
+        tasksController.put(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -253,16 +257,17 @@ class TasksControllerTests: XCTestCase {
     func testPutTaskShouldReturnValidationErrorWhenWeProvideEmptyName() {
         
         // Arrange.
-        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "1"])
+        let taskId = UUID()
+        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": taskId.uuidString])
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeTasksRepository = FakeTasksRepository()
         fakeTasksRepository.getByIdMock.expect(any())
-        fakeTasksRepository.getByIdStub.on(equals(1), return: Task(id: 1, name: "Create unit tests", isFinished: false))
-        fakeHttpRequest.addObjectToRequestBody(Task(id: 1, name: "", isFinished: true))
+        fakeTasksRepository.getByIdStub.on(equals(taskId), return: Task(id: taskId, name: "Create unit tests", isFinished: false))
+        fakeHttpRequest.addObjectToRequestBody(Task(id: taskId, name: "", isFinished: true))
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         
         // Act.
-        tasksController.putTask(request: fakeHttpRequest, response: fakeHttpResponse)
+        tasksController.put(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -276,17 +281,18 @@ class TasksControllerTests: XCTestCase {
     func testDeleteTaskShouldDeleteTaskFromStoreWhenWeProvideCorrectUserId() {
         
         // Arrange.
-        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "1"])
+        let taskId = UUID();
+        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": taskId.uuidString])
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeTasksRepository = FakeTasksRepository()
         
         fakeTasksRepository.getByIdMock.expect(any())
-        fakeTasksRepository.getByIdStub.on(any(), return: Task(id: 1, name: "Create article", isFinished: true))
-        fakeTasksRepository.deleteMock.expect(matches({(id) -> Bool in id == 1 }))
+        fakeTasksRepository.getByIdStub.on(any(), return: Task(id: taskId, name: "Create article", isFinished: true))
+        fakeTasksRepository.deleteMock.expect(matches({(id) -> Bool in id == taskId }))
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         
         // Act.
-        tasksController.deleteTask(request: fakeHttpRequest, response: fakeHttpResponse)
+        tasksController.delete(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
@@ -296,7 +302,8 @@ class TasksControllerTests: XCTestCase {
     func testDeleteTaskShouldReturnNotFoundStatusCodeWhenWeNotProvideCorrectId() {
         
         // Arrange.
-        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": "1001"])
+        let taskId = UUID()
+        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": taskId.uuidString])
         let fakeHttpResponse = FakeHTTPResponse()
         let fakeTasksRepository = FakeTasksRepository()
         
@@ -305,7 +312,7 @@ class TasksControllerTests: XCTestCase {
         let tasksController = TasksController(tasksService: TasksService(tasksRepository: fakeTasksRepository))
         
         // Act.
-        tasksController.deleteTask(request: fakeHttpRequest, response: fakeHttpResponse)
+        tasksController.delete(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.notFound.code, fakeHttpResponse.status.code)

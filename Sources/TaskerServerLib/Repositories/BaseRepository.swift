@@ -17,15 +17,19 @@ public class BaseRepository<T: EntityProtocol> {
     }
     
     public func get() throws -> [T] {
-        let tasks = try self.databaseContext.set(T.self).select()
-        return tasks.sorted { (entity1, entity2) -> Bool in
-            return entity1.id < entity2.id
+        let entities = try self.databaseContext.set(T.self).select()
+
+        var list: [T] = []
+        for entity in entities {
+            list.append(entity)
         }
+
+        return list
     }
     
-    public func get(byId id: Int) throws -> T? {
-        let task = try self.databaseContext.set(T.self).where(\T.id == id).first()
-        return task
+    public func get(byId id: UUID) throws -> T? {
+        let entity = try self.databaseContext.set(T.self).where(\T.id == id).first()
+        return entity
     }
     
     public func add(entity: T) throws {
@@ -37,7 +41,7 @@ public class BaseRepository<T: EntityProtocol> {
         
     }
     
-    public func delete(entityWithId id: Int) throws {
+    public func delete(entityWithId id: UUID) throws {
         try self.databaseContext.set(T.self).where(\T.id == id).delete()
     }
 }

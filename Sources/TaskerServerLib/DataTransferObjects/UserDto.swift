@@ -9,12 +9,12 @@ import Foundation
 
 struct UserDto : Codable {
 
-    public var id: Int
+    public var id: UUID?
     public var name: String
     public var email: String
     public var isLocked: Bool
     
-    init(id: Int, name: String, email: String, isLocked: Bool) {
+    init(id: UUID, name: String, email: String, isLocked: Bool) {
         self.id = id
         self.name = name
         self.email = email
@@ -29,6 +29,6 @@ struct UserDto : Codable {
     }
     
     public func toUser() -> User {
-        return User(id: self.id, name: self.name, email: self.email, password: "", salt: "", isLocked: self.isLocked)
+        return User(id: self.id != nil ? self.id! : UUID(), name: self.name, email: self.email, password: "", salt: "", isLocked: self.isLocked)
     }
 }

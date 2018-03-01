@@ -9,10 +9,10 @@ import Foundation
 
 public protocol TasksServiceProtocol {
     func get() throws -> [Task]
-    func get(byId id: Int) throws -> Task?
+    func get(byId id: UUID) throws -> Task?
     func add(entity: Task) throws
     func update(entity: Task) throws
-    func delete(entityWithId id: Int) throws
+    func delete(entityWithId id: UUID) throws
 }
 
 public class TasksService : TasksServiceProtocol {
@@ -27,7 +27,7 @@ public class TasksService : TasksServiceProtocol {
         return try self.tasksRepository.get()
     }
     
-    public func get(byId id: Int) throws -> Task? {
+    public func get(byId id: UUID) throws -> Task? {
         return try self.tasksRepository.get(byId: id)
     }
     
@@ -51,7 +51,7 @@ public class TasksService : TasksServiceProtocol {
         try self.tasksRepository.update(entity: entity)
     }
     
-    public func delete(entityWithId id: Int) throws {
+    public func delete(entityWithId id: UUID) throws {
         try self.tasksRepository.delete(entityWithId: id)
     }
 }

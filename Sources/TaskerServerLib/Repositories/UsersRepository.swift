@@ -10,10 +10,10 @@ import PerfectCRUD
 
 public protocol UsersRepositoryProtocol {
     func get() throws -> [User]
-    func get(byId id: Int) throws -> User?
+    func get(byId id: UUID) throws -> User?
     func add(entity: User) throws
     func update(entity: User) throws
-    func delete(entityWithId: Int) throws
+    func delete(entityWithId: UUID) throws
     func get(byEmail email: String) throws -> User?
 }
 

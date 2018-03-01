@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol EntityProtocol : Codable {
-    var id: Int { get set }
+    var id: UUID { get set }
 }

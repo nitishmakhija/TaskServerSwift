@@ -17,14 +17,14 @@ class UsersController : Controller {
     }
     
     override func initRoutes() {
-        self.add(method: .get, uri: "/users", authorization: .inRole(["Administrator"]), handler: getUsers)
-        self.add(method: .get, uri: "/users/{id}", authorization: .inRole(["Administrator"]), handler: getUser)
-        self.add(method: .post, uri: "/users", authorization: .inRole(["Administrator"]), handler: postUser)
-        self.add(method: .put, uri: "/users/{id}", authorization: .inRole(["Administrator"]), handler: putUser)
-        self.add(method: .delete, uri: "/users/{id}", authorization: .inRole(["Administrator"]), handler: deleteUser)
+        self.add(method: .get, uri: "/users", authorization: .inRole(["Administrator"]), handler: all)
+        self.add(method: .get, uri: "/users/{id}", authorization: .inRole(["Administrator"]), handler: get)
+        self.add(method: .post, uri: "/users", authorization: .inRole(["Administrator"]), handler: post)
+        self.add(method: .put, uri: "/users/{id}", authorization: .inRole(["Administrator"]), handler: put)
+        self.add(method: .delete, uri: "/users/{id}", authorization: .inRole(["Administrator"]), handler: delete)
     }
     
-    public func getUsers(request: HTTPRequest, response: HTTPResponse) {
+    public func all(request: HTTPRequest, response: HTTPResponse) {
         do {
             let users = try self.usersService.get()
 
@@ -40,10 +40,10 @@ class UsersController : Controller {
         }
     }
     
-    public func getUser(request: HTTPRequest, response: HTTPResponse) {
+    public func get(request: HTTPRequest, response: HTTPResponse) {
         
         do {
-            guard let stringId = request.urlVariables["id"], let id = Int(stringId) else {
+            guard let stringId = request.urlVariables["id"], let id = UUID(uuidString: stringId) else {
                 return response.sendBadRequestError()
             }
 
@@ -59,7 +59,7 @@ class UsersController : Controller {
         }
     }
     
-    public func postUser(request: HTTPRequest, response: HTTPResponse) {
+    public func post(request: HTTPRequest, response: HTTPResponse) {
         do {
             let createUserDto = try request.getObjectFromRequest(RegisterUserDto.self)
             let user = createUserDto.toUser()
@@ -80,11 +80,15 @@ class UsersController : Controller {
         }
     }
     
-    public func putUser(request: HTTPRequest, response: HTTPResponse) {
+    public func put(request: HTTPRequest, response: HTTPResponse) {
         do {
             let userDto = try request.getObjectFromRequest(UserDto.self)
             
-            guard let user = try self.usersService.get(byId: userDto.id) else {
+            guard let userId = userDto.id else {
+                return response.sendNotFoundError()
+            }
+
+            guard let user = try self.usersService.get(byId: userId) else {
                 return response.sendNotFoundError()
             }
             
@@ -107,9 +111,9 @@ class UsersController : Controller {
         }
     }
     
-    public func deleteUser(request: HTTPRequest, response: HTTPResponse) {
+    public func delete(request: HTTPRequest, response: HTTPResponse) {
         do {
-            guard let stringId = request.urlVariables["id"], let id = Int(stringId) else {
+            guard let stringId = request.urlVariables["id"], let id = UUID(uuidString: stringId) else {
                 return response.sendBadRequestError()
             }
 

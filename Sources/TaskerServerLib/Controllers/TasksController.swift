@@ -18,14 +18,14 @@ class TasksController : Controller {
     }
     
     override func initRoutes() {
-        self.add(method: .get, uri: "/tasks", authorization: .signedIn, handler: getTasks)
-        self.add(method: .get, uri: "/tasks/{id}", authorization: .signedIn, handler: getTask)
-        self.add(method: .post, uri: "/tasks", authorization: .signedIn, handler: postTask)
-        self.add(method: .put, uri: "/tasks/{id}", authorization: .signedIn, handler: putTask)
-        self.add(method: .delete, uri: "/tasks/{id}", authorization: .signedIn, handler: deleteTask)
+        self.add(method: .get, uri: "/tasks", authorization: .signedIn, handler: all)
+        self.add(method: .get, uri: "/tasks/{id}", authorization: .signedIn, handler: get)
+        self.add(method: .post, uri: "/tasks", authorization: .signedIn, handler: post)
+        self.add(method: .put, uri: "/tasks/{id}", authorization: .signedIn, handler: put)
+        self.add(method: .delete, uri: "/tasks/{id}", authorization: .signedIn, handler: delete)
     }
     
-    public func getTasks(request: HTTPRequest, response: HTTPResponse) {        
+    public func all(request: HTTPRequest, response: HTTPResponse) {        
         do {
             let tasks = try self.tasksService.get()
             
@@ -41,9 +41,9 @@ class TasksController : Controller {
         }
     }
     
-    public func getTask(request: HTTPRequest, response: HTTPResponse) {
+    public func get(request: HTTPRequest, response: HTTPResponse) {
         do {
-            guard let stringId = request.urlVariables["id"], let id = Int(stringId) else {
+            guard let stringId = request.urlVariables["id"], let id = UUID(uuidString: stringId) else {
                 return response.sendBadRequestError()
             }
                 
@@ -59,7 +59,7 @@ class TasksController : Controller {
         }
     }
     
-    public func postTask(request: HTTPRequest, response: HTTPResponse) {
+    public func post(request: HTTPRequest, response: HTTPResponse) {
         do {
             let taskDto = try request.getObjectFromRequest(TaskDto.self)
             let task = taskDto.toTask()
@@ -80,11 +80,15 @@ class TasksController : Controller {
         }
     }
     
-    public func putTask(request: HTTPRequest, response: HTTPResponse) {
+    public func put(request: HTTPRequest, response: HTTPResponse) {
         do {
             let taskDto = try request.getObjectFromRequest(TaskDto.self)
             
-            guard let task = try self.tasksService.get(byId: taskDto.id)  else {
+            guard let taskId = taskDto.id else {
+                return response.sendNotFoundError()
+            }
+
+            guard let task = try self.tasksService.get(byId: taskId)  else {
                 return response.sendNotFoundError()
             }
             
@@ -107,9 +111,9 @@ class TasksController : Controller {
         }
     }
     
-    public func deleteTask(request: HTTPRequest, response: HTTPResponse) {
+    public func delete(request: HTTPRequest, response: HTTPResponse) {
         do {
-            guard let stringId = request.urlVariables["id"], let id = Int(stringId) else {
+            guard let stringId = request.urlVariables["id"], let id = UUID(uuidString: stringId) else {
                 return response.sendBadRequestError()
             }
 

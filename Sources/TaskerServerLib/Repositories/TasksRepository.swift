@@ -10,10 +10,10 @@ import PerfectCRUD
 
 public protocol TasksRepositoryProtocol {
     func get() throws -> [Task]
-    func get(byId id: Int) throws -> Task?
+    func get(byId id: UUID) throws -> Task?
     func add(entity: Task) throws
     func update(entity: Task) throws
-    func delete(entityWithId: Int) throws
+    func delete(entityWithId: UUID) throws
 }
 
 class TasksRepository : BaseRepository<Task>, TasksRepositoryProtocol {

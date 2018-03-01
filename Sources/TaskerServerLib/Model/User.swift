@@ -9,14 +9,14 @@ import Foundation
 
 public class User : EntityProtocol {
     
-    public var id: Int
+    public var id: UUID
     public var name: String
     public var email: String
     public var password: String
     public var salt: String
     public var isLocked: Bool
 
-    init(id: Int, name: String, email: String, password: String, salt: String, isLocked: Bool) {
+    init(id: UUID, name: String, email: String, password: String, salt: String, isLocked: Bool) {
         self.id = id
         self.name = name
         self.email = email

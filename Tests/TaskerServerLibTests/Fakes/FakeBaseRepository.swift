@@ -14,19 +14,19 @@ class FakeBaseRepository<T: EntityProtocol> {
     let getMock = Mock<()>()
     let getStub = Stub<(), [T]>()
     
-    let getByIdMock = Mock<Int>()
-    let getByIdStub = Stub<Int, T?>()
+    let getByIdMock = Mock<UUID>()
+    let getByIdStub = Stub<UUID, T?>()
     
     let addMock = Mock<T>()
     let updateMock = Mock<T>()
-    let deleteMock = Mock<Int>()
+    let deleteMock = Mock<UUID>()
     
     func get() -> [T] {
         getMock.record(())
         return try! getStub.invoke(())
     }
     
-    func get(byId id: Int) -> T? {
+    func get(byId id: UUID) -> T? {
         getByIdMock.record(id)
         return try! getByIdStub.invoke((id))
     }
@@ -39,7 +39,7 @@ class FakeBaseRepository<T: EntityProtocol> {
         updateMock.record(entity)
     }
     
-    func delete(entityWithId id: Int) {
+    func delete(entityWithId id: UUID) {
         deleteMock.record(id)
     }
 }

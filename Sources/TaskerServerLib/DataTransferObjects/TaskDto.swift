@@ -9,11 +9,11 @@ import Foundation
 
 struct TaskDto : Codable {
 
-    public var id: Int
+    public var id: UUID?
     public var name: String
     public var isFinished: Bool
     
-    init(id: Int, name: String, isFinished: Bool) {
+    init(id: UUID, name: String, isFinished: Bool) {
         self.id = id
         self.name = name
         self.isFinished = isFinished
@@ -26,6 +26,6 @@ struct TaskDto : Codable {
     }
     
     public func toTask() -> Task {
-        return Task(id: self.id, name: self.name, isFinished: self.isFinished)
+        return Task(id: self.id != nil ? self.id! : UUID(), name: self.name, isFinished: self.isFinished)
     }
 }

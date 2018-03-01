@@ -9,10 +9,10 @@ import Foundation
 
 public protocol UsersServiceProtocol {
     func get() throws -> [User]
-    func get(byId id: Int) throws -> User?
+    func get(byId id: UUID) throws -> User?
     func add(entity: User) throws
     func update(entity: User) throws
-    func delete(entityWithId id: Int) throws
+    func delete(entityWithId id: UUID) throws
     func get(byEmail email: String) throws -> User?
 }
 
@@ -28,7 +28,7 @@ public class UsersService :  UsersServiceProtocol {
         return try self.usersRepository.get()
     }
     
-    public func get(byId id: Int) throws -> User? {
+    public func get(byId id: UUID) throws -> User? {
         return try self.usersRepository.get(byId: id)
     }
     
@@ -55,7 +55,7 @@ public class UsersService :  UsersServiceProtocol {
         try self.usersRepository.update(entity: entity)
     }
     
-    public func delete(entityWithId id: Int) throws {
+    public func delete(entityWithId id: UUID) throws {
         try self.usersRepository.delete(entityWithId: id)
     }
     

@@ -9,11 +9,11 @@ import Foundation
 
 public class UserRole : EntityProtocol {
     
-    public var id: Int
+    public var id: UUID
     public var userId: Int
     public var roleId: Int
     
-    init(id: Int, userId: Int, roleId: Int) {
+    init(id: UUID, userId: Int, roleId: Int) {
         self.id = id
         self.userId = userId
         self.roleId = roleId
