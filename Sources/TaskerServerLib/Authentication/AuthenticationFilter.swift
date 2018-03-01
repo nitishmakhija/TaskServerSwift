@@ -9,10 +9,6 @@ import Foundation
 import PerfectHTTP
 import PerfectCrypto
 
-public enum ClaimsNames : String {
-    case name = "name", roles = "roles", issuer = "iss", issuedAt = "iat", expiration = "exp"
-}
-
 public class AuthenticationFilter: HTTPRequestFilter {
     
     private let secret: String
@@ -30,34 +26,31 @@ public class AuthenticationFilter: HTTPRequestFilter {
             return callback(.continue(request, response))
         }
         
-        var header = request.header(.authorization)
-        if header == nil {
+        guard var header = request.header(.authorization) else {
             response.sendUnauthorizedError()
             return callback(.halt(request, response))
         }
         
-        let hasBearerPrefix = header!.starts(with: "Bearer ")
-        if !hasBearerPrefix {
+        guard header.starts(with: "Bearer ") else {
             response.sendUnauthorizedError()
             return callback(.halt(request, response))
         }
         
         do {
-            header!.removeFirst(7)
+            header.removeFirst(7)
             
-            guard let jwt = JWTVerifier(header!) else {
-                throw AuthenticationError.verificationTokenError
+            guard let jwt = JWTVerifier(header) else {
+                response.sendUnauthorizedError()
+                return callback(.halt(request, response))
             }
             
             try jwt.verify(algo: .hs256, key: HMACKey(secret))
             try jwt.verifyExpirationDate()
 
-            if let name = jwt.payload[ClaimsNames.name.rawValue] as? String {
-                request.add(userCredentials: UserCredentials(name: name, roles: jwt.payload[ClaimsNames.roles.rawValue] as? [String]))
-            }
+            self.addUserCredentialsToRequest(request: request, jwt: jwt)
             
-        } catch is AuthenticationError {
-            print("Not valid token error.")
+        } catch is JWTTokenExpirationDateError {
+            print("Token expiration date error.")
             response.sendUnauthorizedError()
             return callback(.halt(request, response))
         } catch {
@@ -67,5 +60,15 @@ public class AuthenticationFilter: HTTPRequestFilter {
         }
         
         callback(.continue(request, response))
+    }
+
+    private func addUserCredentialsToRequest(request: HTTPRequest, jwt: JWTVerifier) {
+        if let name = jwt.payload[ClaimsNames.name.rawValue] as? String {
+            let userCredentials = UserCredentials(
+                name: name, 
+                roles: jwt.payload[ClaimsNames.roles.rawValue] as? [String]
+            )
+            request.add(userCredentials: userCredentials)
+        }
     }
 }

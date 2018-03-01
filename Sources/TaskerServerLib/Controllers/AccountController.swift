@@ -41,9 +41,6 @@ class AccountController : Controller {
         catch let error as ValidationsError {
             response.sendValidationsError(error: error)
         }
-        catch let error as AuthenticationError {
-            response.sendInternalServerError(error: error)
-        } 
         catch {
             response.sendInternalServerError(error: error)
         }
@@ -96,9 +93,6 @@ class AccountController : Controller {
         catch let error as ValidationsError {
             response.sendValidationsError(error: error)
         }
-        catch let error as AuthenticationError {
-            response.sendInternalServerError(error: error)
-        } 
         catch {
             response.sendInternalServerError(error: error)
         }
@@ -115,7 +109,7 @@ class AccountController : Controller {
         ] as [String : Any]
         
         guard let jwt = JWTCreator(payload: payload) else {
-            throw AuthenticationError.generateTokenError
+            throw PrepareTokenError()
         }
         
         let token = try jwt.sign(alg: .hs256, key: self.configuration.secret)

@@ -12,15 +12,15 @@ extension JWTVerifier {
     
     public func verifyExpirationDate() throws {
         if self.payload[ClaimsNames.expiration.rawValue] == nil {
-            throw AuthenticationError.expiredDateNotExistsError
+            throw JWTTokenExpirationDateError.expiredDateNotExists
         }
         
         guard let date = extractDate() else {
-            throw AuthenticationError.incorrectExpiredDateError
+            throw JWTTokenExpirationDateError.incorrectExpiredDate
         }
         
         if date.compare(Date()) == ComparisonResult.orderedAscending {
-            throw AuthenticationError.tokenExpiredError
+            throw JWTTokenExpirationDateError.tokenExpired
         }
     }
     
@@ -39,5 +39,4 @@ extension JWTVerifier {
         
         return nil
     }
-    
 }

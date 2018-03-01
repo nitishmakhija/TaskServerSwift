@@ -30,11 +30,11 @@ extension String {
         let stringWithSalt = salt + self
         
         guard let stringArray = stringWithSalt.digest(.sha256)?.encode(.base64) else {
-            throw AuthenticationError.generatePasswordError
+            throw GeneratePasswordError()
         }
 
         guard let stringHash = String(data: Data(bytes: stringArray, count: stringArray.count), encoding: .utf8) else {
-            throw AuthenticationError.generatePasswordError
+            throw GeneratePasswordError()
         }
 
         return stringHash
