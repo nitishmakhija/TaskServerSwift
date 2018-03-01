@@ -7,8 +7,8 @@
 
 import Foundation
 
-public class UserDto : Codable {
-    
+struct UserDto : Codable {
+
     public var id: Int
     public var name: String
     public var email: String

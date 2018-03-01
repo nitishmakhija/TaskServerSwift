@@ -43,17 +43,16 @@ class TasksController : Controller {
     
     public func getTask(request: HTTPRequest, response: HTTPResponse) {
         do {
-            if let stringId = request.urlVariables["id"], let id = Int(stringId) {
+            guard let stringId = request.urlVariables["id"], let id = Int(stringId) else {
+                return response.sendBadRequestError()
+            }
                 
-                guard let task = try self.tasksService.get(byId: id) else {
-                    return response.sendNotFoundError()
-                }
-                
-                let taskDto = TaskDto(task: task)
-                return response.sendJson(taskDto)
+            guard let task = try self.tasksService.get(byId: id) else {
+                return response.sendNotFoundError()
             }
             
-            response.sendBadRequestError()
+            let taskDto = TaskDto(task: task)
+            return response.sendJson(taskDto)
         }
         catch {
             response.sendInternalServerError(error: error)
@@ -110,16 +109,16 @@ class TasksController : Controller {
     
     public func deleteTask(request: HTTPRequest, response: HTTPResponse) {
         do {
-            if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                guard let _ = try self.tasksService.get(byId: id) else {
-                    return response.sendNotFoundError()
-                }
-                
-                try self.tasksService.delete(entityWithId: id)
-                return response.sendOk();
+            guard let stringId = request.urlVariables["id"], let id = Int(stringId) else {
+                return response.sendBadRequestError()
+            }
+
+            guard let _ = try self.tasksService.get(byId: id) else {
+                return response.sendNotFoundError()
             }
             
-            response.sendBadRequestError()
+            try self.tasksService.delete(entityWithId: id)
+            return response.sendOk();
         }
         catch {
             response.sendInternalServerError(error: error)

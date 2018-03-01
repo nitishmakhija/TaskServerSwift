@@ -8,8 +8,10 @@
 import Foundation
 
 struct ValidationErrorResponseDto : Codable {
-    let message: String
-    let errors: [String: String]
+
+    public var message: String
+    public var errors: [String: String]
+
     init(message: String, errors: [String: String]) {
         self.message = message
         self.errors = errors

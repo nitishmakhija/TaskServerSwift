@@ -21,8 +21,7 @@ public class AuthenticationFilter: HTTPRequestFilter {
     
     public func filter(request: HTTPRequest, response: HTTPResponse, callback: (HTTPRequestFilterResult) -> ()) {
         
-        let handler = self.routesWithAuthorization.navigator.findHandler(uri: request.uri, webRequest: request)
-        if handler == nil {
+        guard let _ = self.routesWithAuthorization.navigator.findHandler(uri: request.uri, webRequest: request) else {
             return callback(.continue(request, response))
         }
         

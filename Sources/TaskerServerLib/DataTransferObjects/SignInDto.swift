@@ -8,11 +8,9 @@
 import Foundation
 
 struct SignInDto : Codable {
-    var email: String = ""
-    var password: String = ""
-    
-    init() {
-    }
+
+    public var email: String
+    public var password: String
     
     init(email: String, password: String) {
         self.email = email

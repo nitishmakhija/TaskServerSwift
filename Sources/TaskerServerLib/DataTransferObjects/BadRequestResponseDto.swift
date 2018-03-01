@@ -8,7 +8,9 @@
 import Foundation
 
 struct BadRequestResponseDto : Codable {
-    let message: String
+
+    public var message: String
+
     init(message: String) {
         self.message = message
     }

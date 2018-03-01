@@ -7,8 +7,8 @@
 
 import Foundation
 
-public class TaskDto : Codable {
-    
+struct TaskDto : Codable {
+
     public var id: Int
     public var name: String
     public var isFinished: Bool

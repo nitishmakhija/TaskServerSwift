@@ -43,16 +43,16 @@ class UsersController : Controller {
     public func getUser(request: HTTPRequest, response: HTTPResponse) {
         
         do {
-            if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                guard let user = try self.usersService.get(byId: id) else {
-                    return response.sendNotFoundError()
-                }
-                
-                let userDto = UserDto(user: user)
-                return response.sendJson(userDto)
+            guard let stringId = request.urlVariables["id"], let id = Int(stringId) else {
+                return response.sendBadRequestError()
+            }
+
+            guard let user = try self.usersService.get(byId: id) else {
+                return response.sendNotFoundError()
             }
             
-            response.sendBadRequestError()
+            let userDto = UserDto(user: user)
+            return response.sendJson(userDto)
         }
         catch {
             response.sendInternalServerError(error: error)
@@ -109,16 +109,16 @@ class UsersController : Controller {
     
     public func deleteUser(request: HTTPRequest, response: HTTPResponse) {
         do {
-            if let stringId = request.urlVariables["id"], let id = Int(stringId) {
-                guard let _ = try self.usersService.get(byId: id) else {
-                    return response.sendNotFoundError()
-                }
-                
-                try self.usersService.delete(entityWithId: id)
-                return response.sendOk()
+            guard let stringId = request.urlVariables["id"], let id = Int(stringId) else {
+                return response.sendBadRequestError()
+            }
+
+            guard let _ = try self.usersService.get(byId: id) else {
+                return response.sendNotFoundError()
             }
             
-            response.sendBadRequestError()
+            try self.usersService.delete(entityWithId: id)
+            return response.sendOk()
         }
         catch {
             response.sendInternalServerError(error: error)

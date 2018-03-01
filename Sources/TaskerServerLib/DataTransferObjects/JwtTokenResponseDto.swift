@@ -8,7 +8,9 @@
 import Foundation
 
 struct JwtTokenResponseDto : Codable {
-    let token: String
+
+    public var token: String
+
     init(token: String) {
         self.token = token
     }

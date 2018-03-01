@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class RegisterUserDto : Codable {
+struct RegisterUserDto : Codable {
     
     public var id: Int
     public var name: String

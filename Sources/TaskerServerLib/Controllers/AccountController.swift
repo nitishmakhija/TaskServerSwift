@@ -54,7 +54,7 @@ class AccountController : Controller {
                 return response.sendNotFoundError()
             }
             
-            let password = try signIn.password.generateHash(salt: user.salt)
+            guard let password = try signIn.password.generateHash(salt: user.salt) else {
             if password != user.password {
                 return response.sendNotFoundError()
             }
