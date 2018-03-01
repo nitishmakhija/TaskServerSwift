@@ -33,6 +33,7 @@ public class BaseRepository<T: EntityProtocol> {
     }
     
     public func add(entity: T) throws {
+        entity.id = UUID()
         try self.databaseContext.set(T.self).insert(entity)
     }
     

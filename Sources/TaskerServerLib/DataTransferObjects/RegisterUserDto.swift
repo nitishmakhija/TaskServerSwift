@@ -24,6 +24,6 @@ struct RegisterUserDto : Codable {
     }
     
     public func toUser() -> User {
-        return User(id: self.id != nil ? self.id! : UUID() , name: self.name, email: self.email, password: self.password, salt: "", isLocked: self.isLocked)
+        return User(id: self.id != nil ? self.id! : UUID.empty(), name: self.name, email: self.email, password: self.password, salt: "", isLocked: self.isLocked)
     }
 }

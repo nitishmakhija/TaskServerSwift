@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol EntityProtocol : Codable {
+public protocol EntityProtocol : class, Codable {
     var id: UUID { get set }
 }
