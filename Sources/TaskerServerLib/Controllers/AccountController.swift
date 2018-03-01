@@ -32,7 +32,11 @@ class AccountController : Controller {
             
             try self.usersService.add(entity: user)
             
-            let registeredUserDto = UserDto(user: user)
+            guard let registeredUser = try self.usersService.get(byId: user.id) else {
+                return response.sendNotFoundError()
+            }
+            
+            let registeredUserDto = UserDto(user: registeredUser)
             return response.sendJson(registeredUserDto)
         }
         catch let error where error is DecodingError || error is RequestError {
@@ -99,11 +103,11 @@ class AccountController : Controller {
     }
     
     private func prepareToken(user: User) throws -> JwtTokenResponseDto {
-        
+                
         let payload = [
             ClaimsNames.name.rawValue           : user.email,
-            ClaimsNames.roles.rawValue          : ["User", "Administrator"],
-            ClaimsNames.issuer.rawValue         : "tasker-server",
+            ClaimsNames.roles.rawValue          : user.getRolesNames(),
+            ClaimsNames.issuer.rawValue         : self.configuration.issuer,
             ClaimsNames.issuedAt.rawValue       : Date().timeIntervalSince1970,
             ClaimsNames.expiration.rawValue     : Date().addingTimeInterval(36000).timeIntervalSince1970
         ] as [String : Any]

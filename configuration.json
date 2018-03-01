@@ -3,5 +3,6 @@
     "serverPort": 8181,
     "logFile": "logs/log.txt",
     "connectionString": "database.sql",
-    "secret": "jwt-token-secret-key"
+    "secret": "jwt-token-secret-key",
+    "issuer": "tasker-server-issuer"
 }

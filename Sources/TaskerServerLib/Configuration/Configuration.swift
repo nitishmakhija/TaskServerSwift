@@ -14,6 +14,7 @@ public class Configuration {
     public var logFile: String
     public var connectionString: String
     public var secret: String
+    public var issuer: String
     
     init(manager: ConfigurationManager) {
         self.serverName = manager["serverName"] as? String ?? ""
@@ -21,5 +22,6 @@ public class Configuration {
         self.logFile = manager["logFile"] as? String ?? ""
         self.connectionString = manager["connectionString"] as? String ?? ""
         self.secret = manager["secret"] as? String ?? ""
+        self.issuer = manager["issuer"] as? String ?? ""
     }
 }

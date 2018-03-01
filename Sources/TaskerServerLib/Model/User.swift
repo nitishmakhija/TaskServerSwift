@@ -31,4 +31,15 @@ public class User : EntityProtocol {
         
         self.roles = roles
     }
+    
+    func getRolesNames() -> [String] {
+        var roles:[String] = []
+        if let userRoles = self.roles {
+            for role in userRoles {
+                roles.append(role.name)
+            }
+        }
+        
+        return roles
+    }
 }

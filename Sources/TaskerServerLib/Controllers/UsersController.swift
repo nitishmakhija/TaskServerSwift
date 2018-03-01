@@ -66,7 +66,11 @@ class UsersController : Controller {
             
             try self.usersService.add(entity: user)
             
-            let addedUserDto = UserDto(user: user)
+            guard let addedUser = try self.usersService.get(byId: user.id) else {
+                return response.sendNotFoundError()
+            }
+            
+            let addedUserDto = UserDto(user: addedUser)
             return response.sendJson(addedUserDto)
         }
         catch let error where error is DecodingError || error is RequestError {
@@ -83,21 +87,26 @@ class UsersController : Controller {
     public func put(request: HTTPRequest, response: HTTPResponse) {
         do {
             let userDto = try request.getObjectFromRequest(UserDto.self)
-            
-            guard let userId = userDto.id else {
-                return response.sendNotFoundError()
+
+            guard let stringId = request.urlVariables["id"], let id = UUID(uuidString: stringId) else {
+                return response.sendBadRequestError()
             }
 
-            guard let user = try self.usersService.get(byId: userId) else {
+            guard let user = try self.usersService.get(byId: id) else {
                 return response.sendNotFoundError()
             }
             
             user.name = userDto.name
             user.isLocked = userDto.isLocked
+            user.roles = userDto.getRoles()
             
             try self.usersService.update(entity: user)
             
-            let updatedUserDto = UserDto(user: user)
+            guard let updatedUser = try self.usersService.get(byId: user.id) else {
+                return response.sendNotFoundError()
+            }
+            
+            let updatedUserDto = UserDto(user: updatedUser)
             return response.sendJson(updatedUserDto)
         }
         catch let error where error is DecodingError || error is RequestError {

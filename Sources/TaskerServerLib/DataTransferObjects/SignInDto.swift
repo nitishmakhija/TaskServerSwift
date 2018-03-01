@@ -17,4 +17,3 @@ struct SignInDto : Codable {
         self.password = password
     }
 }
-

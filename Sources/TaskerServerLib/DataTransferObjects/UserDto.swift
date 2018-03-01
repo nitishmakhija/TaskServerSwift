@@ -32,34 +32,30 @@ struct UserDto : Codable {
         self.name = user.name
         self.email = user.email
         self.isLocked = user.isLocked
-
-        if user.roles != nil {
-            self.roles = []
-            for role in user.roles! {
-                self.roles!.append(role.name)
-            }
-        }
-
+        self.roles = user.getRolesNames()
     }
     
     public func toUser() -> User {
-
-        var roles: [Role]?
-        if self.roles != nil {
-            roles = []
-            for role in self.roles! {
-                roles!.append(Role(id: UUID(), name: role))
-            }
-        }
-
         return User(
-            id: self.id != nil ? self.id! : UUID(), 
+            id: self.id != nil ? self.id! : UUID.empty(), 
             name: self.name, 
             email: self.email, 
             password: "", 
             salt: "", 
             isLocked: self.isLocked,
-            roles: roles
+            roles: self.getRoles()
         )
+    }
+    
+    public func getRoles() -> [Role]? {
+        var roles: [Role]?
+        if let userRoles = self.roles {
+            roles = []
+            for role in userRoles {
+                roles!.append(Role(id: UUID.empty(), name: role))
+            }
+        }
+        
+        return roles
     }
 }
