@@ -17,9 +17,11 @@ public protocol TasksServiceProtocol {
 
 public class TasksService : TasksServiceProtocol {
 
+    private let taskValidator: TaskValidatorProtocol
     private let tasksRepository: TasksRepositoryProtocol
     
-    init(tasksRepository: TasksRepositoryProtocol) {
+    init(taskValidator: TaskValidatorProtocol, tasksRepository: TasksRepositoryProtocol) {
+        self.taskValidator = taskValidator
         self.tasksRepository = tasksRepository
     }
 
@@ -33,8 +35,7 @@ public class TasksService : TasksServiceProtocol {
     
     public func add(entity: Task) throws {
         
-        if !entity.isValid() {
-            let errors = entity.getValidationErrors()
+        if let errors = self.taskValidator.getValidationErrors(entity) {
             throw ValidationsError(errors: errors)
         }
         
@@ -43,8 +44,7 @@ public class TasksService : TasksServiceProtocol {
     
     public func update(entity: Task) throws {
         
-        if !entity.isValid() {
-            let errors = entity.getValidationErrors()
+        if let errors = self.taskValidator.getValidationErrors(entity) {
             throw ValidationsError(errors: errors)
         }
         

@@ -376,8 +376,8 @@
 		OBJ_766 /* UsersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_57 /* UsersRepository.swift */; };
 		OBJ_767 /* TasksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_59 /* TasksService.swift */; };
 		OBJ_768 /* UsersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_60 /* UsersService.swift */; };
-		OBJ_769 /* TaskValidations.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_62 /* TaskValidations.swift */; };
-		OBJ_770 /* UsersValidations.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_63 /* UsersValidations.swift */; };
+		OBJ_769 /* TaskValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_62 /* TaskValidator.swift */; };
+		OBJ_770 /* UserValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_63 /* UserValidator.swift */; };
 		OBJ_771 /* ValidationsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_64 /* ValidationsError.swift */; };
 		OBJ_773 /* PerfectSQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "PerfectSQLite::PerfectSQLite::Product" /* PerfectSQLite.framework */; };
 		OBJ_774 /* PerfectCRUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "PerfectCRUD::PerfectCRUD::Product" /* PerfectCRUD.framework */; };
@@ -1446,8 +1446,8 @@
 		OBJ_59 /* TasksService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksService.swift; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		OBJ_60 /* UsersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersService.swift; sourceTree = "<group>"; };
-		OBJ_62 /* TaskValidations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskValidations.swift; sourceTree = "<group>"; };
-		OBJ_63 /* UsersValidations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersValidations.swift; sourceTree = "<group>"; };
+		OBJ_62 /* TaskValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskValidator.swift; sourceTree = "<group>"; };
+		OBJ_63 /* UserValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserValidator.swift; sourceTree = "<group>"; };
 		OBJ_64 /* ValidationsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationsError.swift; sourceTree = "<group>"; };
 		OBJ_66 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		OBJ_70 /* HealthControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthControllerTests.swift; sourceTree = "<group>"; };
@@ -2411,7 +2411,7 @@
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -2420,7 +2420,6 @@
 				OBJ_79 /* Dependencies */,
 				OBJ_494 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_53 /* Repositories */ = {
@@ -2443,14 +2442,14 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		OBJ_61 /* Validations */ = {
+		OBJ_61 /* Validators */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_62 /* TaskValidations.swift */,
-				OBJ_63 /* UsersValidations.swift */,
+				OBJ_62 /* TaskValidator.swift */,
+				OBJ_63 /* UserValidator.swift */,
 				OBJ_64 /* ValidationsError.swift */,
 			);
-			path = Validations;
+			path = Validators;
 			sourceTree = "<group>";
 		};
 		OBJ_65 /* TaskerServerApp */ = {
@@ -2547,7 +2546,7 @@
 				OBJ_47 /* Model */,
 				OBJ_53 /* Repositories */,
 				OBJ_58 /* Services */,
-				OBJ_61 /* Validations */,
+				OBJ_61 /* Validators */,
 			);
 			name = TaskerServerLib;
 			path = Sources/TaskerServerLib;
@@ -3256,7 +3255,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_494 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -3786,8 +3785,8 @@
 				OBJ_766 /* UsersRepository.swift in Sources */,
 				OBJ_767 /* TasksService.swift in Sources */,
 				OBJ_768 /* UsersService.swift in Sources */,
-				OBJ_769 /* TaskValidations.swift in Sources */,
-				OBJ_770 /* UsersValidations.swift in Sources */,
+				OBJ_769 /* TaskValidator.swift in Sources */,
+				OBJ_770 /* UserValidator.swift in Sources */,
 				OBJ_771 /* ValidationsError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

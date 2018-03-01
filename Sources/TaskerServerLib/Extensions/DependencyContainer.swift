@@ -16,6 +16,7 @@ extension DependencyContainer {
         self.addRepositories(toContainer: self)
         self.addServices(toContainer: self)
         self.addControllers(toContainer: self)
+        self.addValidators(toContainer: self)
     }
     
     public func resolveAllControllers() -> [Controller] {
@@ -45,8 +46,8 @@ extension DependencyContainer {
     }
     
     private func addServices(toContainer container: DependencyContainer) {
-        container.register { TasksService(tasksRepository: $0) as TasksServiceProtocol }
-        container.register { UsersService(usersRepository: $0, userRolesRepository: $1) as UsersServiceProtocol }
+        container.register { TasksService(taskValidator: $0, tasksRepository: $1) as TasksServiceProtocol }
+        container.register { UsersService(userValidator: $0, usersRepository: $1, userRolesRepository: $2) as UsersServiceProtocol }
     }
     
     private func addControllers(toContainer container: DependencyContainer) {
@@ -54,6 +55,11 @@ extension DependencyContainer {
         container.register { UsersController(usersService: $0) }
         container.register { AccountController(configuration: $0, usersService: $1) }
         container.register { HealthController() }
+    }
+    
+    private func addValidators(toContainer container: DependencyContainer) {
+        container.register { TaskValidator() as TaskValidatorProtocol }
+        container.register { UserValidator(usersRepository: $0) as UserValidatorProtocol }
     }
 }
 

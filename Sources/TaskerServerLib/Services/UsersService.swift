@@ -20,8 +20,10 @@ public class UsersService :  UsersServiceProtocol {
     
     private let usersRepository: UsersRepositoryProtocol
     private let userRolesRepository: UserRolesRepositoryProtocol
+    private let userValidator: UserValidatorProtocol
     
-    init(usersRepository: UsersRepositoryProtocol, userRolesRepository: UserRolesRepositoryProtocol) {
+    init(userValidator: UserValidatorProtocol, usersRepository: UsersRepositoryProtocol, userRolesRepository: UserRolesRepositoryProtocol) {
+        self.userValidator = userValidator
         self.usersRepository = usersRepository
         self.userRolesRepository = userRolesRepository
     }
@@ -41,8 +43,7 @@ public class UsersService :  UsersServiceProtocol {
         entity.salt = String(randomWithLength: 14)
         entity.password = try entity.password.generateHash(salt: entity.salt)
         
-        if !entity.isValid() {
-            let errors = entity.getValidationErrors()
+        if let errors = self.userValidator.getValidationErrors(entity) {
             throw ValidationsError(errors: errors)
         }
         
@@ -52,8 +53,7 @@ public class UsersService :  UsersServiceProtocol {
     
     public func update(entity: User) throws {
         
-        if !entity.isValid() {
-            let errors = entity.getValidationErrors()
+        if let errors = self.userValidator.getValidationErrors(entity) {
             throw ValidationsError(errors: errors)
         }
         
