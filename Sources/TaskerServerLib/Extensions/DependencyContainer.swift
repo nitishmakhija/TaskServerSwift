@@ -41,11 +41,12 @@ extension DependencyContainer {
     private func addRepositories(toContainer container: DependencyContainer) {
         container.register { TasksRepository(databaseContext: $0) as TasksRepositoryProtocol }
         container.register { UsersRepository(databaseContext: $0) as UsersRepositoryProtocol }
+        container.register { UserRolesRepository(databaseContext: $0) as UserRolesRepositoryProtocol }
     }
     
     private func addServices(toContainer container: DependencyContainer) {
         container.register { TasksService(tasksRepository: $0) as TasksServiceProtocol }
-        container.register { UsersService(usersRepository: $0) as UsersServiceProtocol }
+        container.register { UsersService(usersRepository: $0, userRolesRepository: $1) as UsersServiceProtocol }
     }
     
     private func addControllers(toContainer container: DependencyContainer) {

@@ -11,10 +11,10 @@ import PerfectHTTP
 class HealthController : Controller {
         
     override func initRoutes() {
-        self.add(method: .get, uri: "/health", authorization: .anonymous, handler: getHealth)
+        self.add(method: .get, uri: "/health", authorization: .anonymous, handler: get)
     }
 
-    func getHealth(request: HTTPRequest, response: HTTPResponse) {
+    func get(request: HTTPRequest, response: HTTPResponse) {
         
         let scoreArray: [String:Any] = ["message": "I'm fine and running!"]
         let encoded = try! scoreArray.jsonEncodedString()

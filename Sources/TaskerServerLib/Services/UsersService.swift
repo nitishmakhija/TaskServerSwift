@@ -19,9 +19,11 @@ public protocol UsersServiceProtocol {
 public class UsersService :  UsersServiceProtocol {
     
     private let usersRepository: UsersRepositoryProtocol
+    private let userRolesRepository: UserRolesRepositoryProtocol
     
-    init(usersRepository: UsersRepositoryProtocol) {
+    init(usersRepository: UsersRepositoryProtocol, userRolesRepository: UserRolesRepositoryProtocol) {
         self.usersRepository = usersRepository
+        self.userRolesRepository = userRolesRepository
     }
     
     public func get() throws -> [User] {
@@ -29,7 +31,9 @@ public class UsersService :  UsersServiceProtocol {
     }
     
     public func get(byId id: UUID) throws -> User? {
-        return try self.usersRepository.get(byId: id)
+        let user =  try self.usersRepository.get(byId: id)
+        try self.assignUserRoles(forUser: user)
+        return user
     }
     
     public func add(entity: User) throws {
@@ -43,6 +47,7 @@ public class UsersService :  UsersServiceProtocol {
         }
         
         try self.usersRepository.add(entity: entity)
+        try self.userRolesRepository.set(roles: entity.roles, forUserId: entity.id)
     }
     
     public func update(entity: User) throws {
@@ -53,6 +58,7 @@ public class UsersService :  UsersServiceProtocol {
         }
         
         try self.usersRepository.update(entity: entity)
+        try self.userRolesRepository.set(roles: entity.roles, forUserId: entity.id)
     }
     
     public func delete(entityWithId id: UUID) throws {
@@ -60,6 +66,15 @@ public class UsersService :  UsersServiceProtocol {
     }
     
     public func get(byEmail email: String) throws -> User? {
-        return try self.usersRepository.get(byEmail:email)
+        let user = try self.usersRepository.get(byEmail:email)
+        try self.assignUserRoles(forUser: user)
+        return user
+    }
+
+    private func assignUserRoles(forUser user: User?) throws {
+        if user != nil {
+            let userRoles = try self.userRolesRepository.get(forUserId: user!.id)
+            user!.roles = userRoles
+        }
     }
 }

@@ -10,10 +10,10 @@ import Foundation
 public class UserRole : EntityProtocol {
     
     public var id: UUID
-    public var userId: Int
-    public var roleId: Int
+    public var userId: UUID
+    public var roleId: UUID
     
-    init(id: UUID, userId: Int, roleId: Int) {
+    init(id: UUID, userId: UUID, roleId: UUID) {
         self.id = id
         self.userId = userId
         self.roleId = roleId
