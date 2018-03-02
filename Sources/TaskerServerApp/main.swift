@@ -34,7 +34,7 @@ var routesWithAuthorization = Routes()
 routesWithAuthorization.configure(routesWithAuthorization: controllers)
 
 let requestFilters: [(HTTPRequestFilter, HTTPFilterPriority)] = [
-    (AuthenticationFilter(secret: configuration.secret, routesWithAuthorization: routesWithAuthorization), HTTPFilterPriority.high)
+    (AuthorizationFilter(secret: configuration.secret, routesWithAuthorization: routesWithAuthorization), HTTPFilterPriority.high)
 ]
 
 do {

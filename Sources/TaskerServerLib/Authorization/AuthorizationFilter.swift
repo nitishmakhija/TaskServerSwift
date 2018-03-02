@@ -9,7 +9,7 @@ import Foundation
 import PerfectHTTP
 import PerfectCrypto
 
-public class AuthenticationFilter: HTTPRequestFilter {
+public class AuthorizationFilter: HTTPRequestFilter {
     
     private let secret: String
     private let routesWithAuthorization: Routes
