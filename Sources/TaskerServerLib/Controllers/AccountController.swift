@@ -105,6 +105,7 @@ class AccountController : Controller {
     private func prepareToken(user: User) throws -> JwtTokenResponseDto {
                 
         let payload = [
+            ClaimsNames.uid.rawValue            : user.id.uuidString,
             ClaimsNames.name.rawValue           : user.email,
             ClaimsNames.roles.rawValue          : user.getRolesNames(),
             ClaimsNames.issuer.rawValue         : self.configuration.issuer,

@@ -26,6 +26,6 @@ struct TaskDto : Codable {
     }
     
     public func toTask() -> Task {
-        return Task(id: self.id != nil ? self.id! : UUID.empty(), name: self.name, isFinished: self.isFinished)
+        return Task(id: self.id != nil ? self.id! : UUID.empty(), name: self.name, isFinished: self.isFinished, userId: UUID.empty())
     }
 }

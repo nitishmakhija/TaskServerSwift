@@ -46,12 +46,13 @@ extension DependencyContainer {
     }
     
     private func addServices(toContainer container: DependencyContainer) {
+        container.register(.singleton) { AuthorizationService() as AuthorizationServiceProtocol }
         container.register { TasksService(taskValidator: $0, tasksRepository: $1) as TasksServiceProtocol }
         container.register { UsersService(userValidator: $0, usersRepository: $1, userRolesRepository: $2) as UsersServiceProtocol }
     }
     
     private func addControllers(toContainer container: DependencyContainer) {
-        container.register { TasksController(tasksService: $0) }
+        container.register { TasksController(tasksService: $0, authorizationService: $1) }
         container.register { UsersController(usersService: $0) }
         container.register { AccountController(configuration: $0, usersService: $1) }
         container.register { HealthController() }

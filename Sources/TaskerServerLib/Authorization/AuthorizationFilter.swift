@@ -62,8 +62,9 @@ public class AuthorizationFilter: HTTPRequestFilter {
     }
 
     private func addUserCredentialsToRequest(request: HTTPRequest, jwt: JWTVerifier) {
-        if let name = jwt.payload[ClaimsNames.name.rawValue] as? String {
+        if let name = jwt.payload[ClaimsNames.name.rawValue] as? String, let id = jwt.payload[ClaimsNames.uid.rawValue] as? String {
             let userCredentials = UserCredentials(
+                id: UUID(uuidString: id)!,
                 name: name, 
                 roles: jwt.payload[ClaimsNames.roles.rawValue] as? [String]
             )

@@ -11,10 +11,12 @@ import PerfectHTTP
 
 class TasksController : Controller {
     
-    private let tasksService: TasksServiceProtocol!
+    private let tasksService: TasksServiceProtocol
+    private let authorizationService: AuthorizationServiceProtocol
     
-    init(tasksService: TasksServiceProtocol) {
+    init(tasksService: TasksServiceProtocol, authorizationService: AuthorizationServiceProtocol) {
         self.tasksService = tasksService
+        self.authorizationService = authorizationService
     }
     
     override func initRoutes() {
@@ -51,6 +53,16 @@ class TasksController : Controller {
                 return response.sendNotFoundError()
             }
             
+            guard let user = request.getUserCredentials() else {
+                return response.sendUnauthorizedError()
+            }
+            
+            if try !self.authorizationService.authorize(user: user,
+                                                        resource: task,
+                                                        requirement: OperationAuthorizationRequirement(operation: .read)) {
+                return response.sendForbiddenError()
+            }
+            
             let taskDto = TaskDto(task: task)
             return response.sendJson(taskDto)
         }
@@ -64,6 +76,11 @@ class TasksController : Controller {
             let taskDto = try request.getObjectFromRequest(TaskDto.self)
             let task = taskDto.toTask()
             
+            guard let user = request.getUserCredentials() else {
+                return response.sendUnauthorizedError()
+            }
+            
+            task.userId = user.id
             try self.tasksService.add(entity: task)
             
             let addedTaskDto = TaskDto(task: task)

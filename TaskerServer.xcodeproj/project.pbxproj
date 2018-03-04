@@ -21,6 +21,12 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		F83B46E9204B26B200678429 /* AuthorizationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83B46E8204B26B200678429 /* AuthorizationHandler.swift */; };
+		F83B46EB204B3E4D00678429 /* AuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83B46EA204B3E4D00678429 /* AuthorizationService.swift */; };
+		F83B46ED204B3EA300678429 /* AuthorizationRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83B46EC204B3EA300678429 /* AuthorizationRequirement.swift */; };
+		F8C07A9D204BCF81006235D4 /* TaskOwnerAuthorizationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C07A9C204BCF81006235D4 /* TaskOwnerAuthorizationHandler.swift */; };
+		F8C07AA1204BD18F006235D4 /* OperationAuthorizationRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C07AA0204BD18F006235D4 /* OperationAuthorizationRequirement.swift */; };
+		F8C07AA3204BD345006235D4 /* AuthorizationTypeMismatchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C07AA2204BD345006235D4 /* AuthorizationTypeMismatchError.swift */; };
 		OBJ_1000 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_235 /* JWT.swift */; };
 		OBJ_1001 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_236 /* Keys.swift */; };
 		OBJ_1002 /* OpenSSLInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_237 /* OpenSSLInternal.swift */; };
@@ -1037,6 +1043,12 @@
 		"Configuration::Configuration::Product" /* Configuration.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Configuration.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Dip::Dip::Product" /* Dip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Dip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Dobby::Dobby::Product" /* Dobby.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Dobby.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F83B46E8204B26B200678429 /* AuthorizationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationHandler.swift; sourceTree = "<group>"; };
+		F83B46EA204B3E4D00678429 /* AuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationService.swift; sourceTree = "<group>"; };
+		F83B46EC204B3EA300678429 /* AuthorizationRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequirement.swift; sourceTree = "<group>"; };
+		F8C07A9C204BCF81006235D4 /* TaskOwnerAuthorizationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskOwnerAuthorizationHandler.swift; sourceTree = "<group>"; };
+		F8C07AA0204BD18F006235D4 /* OperationAuthorizationRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationAuthorizationRequirement.swift; sourceTree = "<group>"; };
+		F8C07AA2204BD345006235D4 /* AuthorizationTypeMismatchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationTypeMismatchError.swift; sourceTree = "<group>"; };
 		"FileKit::FileKit::Product" /* FileKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"LoggerAPI::LoggerAPI::Product" /* LoggerAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoggerAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* AuthorizationFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationFilter.swift; sourceTree = "<group>"; };
@@ -2411,7 +2423,7 @@
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -2420,7 +2432,6 @@
 				OBJ_81 /* Dependencies */,
 				OBJ_496 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_54 /* Repositories */ = {
@@ -2621,6 +2632,12 @@
 				OBJ_10 /* AuthorizationFilter.swift */,
 				OBJ_11 /* ClaimsNames.swift */,
 				OBJ_12 /* UserCredentials.swift */,
+				F83B46E8204B26B200678429 /* AuthorizationHandler.swift */,
+				F83B46EA204B3E4D00678429 /* AuthorizationService.swift */,
+				F83B46EC204B3EA300678429 /* AuthorizationRequirement.swift */,
+				F8C07A9C204BCF81006235D4 /* TaskOwnerAuthorizationHandler.swift */,
+				F8C07AA0204BD18F006235D4 /* OperationAuthorizationRequirement.swift */,
+				F8C07AA2204BD345006235D4 /* AuthorizationTypeMismatchError.swift */,
 			);
 			path = Authorization;
 			sourceTree = "<group>";
@@ -3256,7 +3273,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_496 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -3751,20 +3768,25 @@
 				OBJ_735 /* AccountController.swift in Sources */,
 				OBJ_736 /* Controller.swift in Sources */,
 				OBJ_737 /* HealthController.swift in Sources */,
+				F8C07A9D204BCF81006235D4 /* TaskOwnerAuthorizationHandler.swift in Sources */,
 				OBJ_738 /* TasksController.swift in Sources */,
 				OBJ_739 /* UsersController.swift in Sources */,
 				OBJ_740 /* BadRequestResponseDto.swift in Sources */,
 				OBJ_741 /* ChangePasswordRequestDto.swift in Sources */,
+				F83B46ED204B3EA300678429 /* AuthorizationRequirement.swift in Sources */,
 				OBJ_742 /* JwtTokenResponseDto.swift in Sources */,
 				OBJ_743 /* RegisterUserDto.swift in Sources */,
 				OBJ_744 /* SignInDto.swift in Sources */,
 				OBJ_745 /* TaskDto.swift in Sources */,
+				F8C07AA1204BD18F006235D4 /* OperationAuthorizationRequirement.swift in Sources */,
 				OBJ_746 /* UserDto.swift in Sources */,
 				OBJ_747 /* ValidationErrorResponseDto.swift in Sources */,
 				OBJ_748 /* DatabaseContext.swift in Sources */,
+				F83B46E9204B26B200678429 /* AuthorizationHandler.swift in Sources */,
 				OBJ_749 /* Roles.swift in Sources */,
 				OBJ_750 /* SqlConnection.swift in Sources */,
 				OBJ_751 /* GeneratePasswordError.swift in Sources */,
+				F8C07AA3204BD345006235D4 /* AuthorizationTypeMismatchError.swift in Sources */,
 				OBJ_752 /* JWTTokenExpirationDateError.swift in Sources */,
 				OBJ_753 /* PrepareTokenError.swift in Sources */,
 				OBJ_754 /* ConfigurationManager.swift in Sources */,
@@ -3782,6 +3804,7 @@
 				OBJ_766 /* UserRole.swift in Sources */,
 				OBJ_767 /* BaseRepository.swift in Sources */,
 				OBJ_768 /* TasksRepository.swift in Sources */,
+				F83B46EB204B3E4D00678429 /* AuthorizationService.swift in Sources */,
 				OBJ_769 /* UserRolesRepository.swift in Sources */,
 				OBJ_770 /* UsersRepository.swift in Sources */,
 				OBJ_771 /* TasksService.swift in Sources */,

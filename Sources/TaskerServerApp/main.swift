@@ -28,7 +28,6 @@ allRoutes.configure(allRoutes: controllers)
 let databaseContext = try! container.resolve() as DatabaseContextProtocol
 try databaseContext.executeMigrations()
 
-
 // Authorization.
 var routesWithAuthorization = Routes()
 routesWithAuthorization.configure(routesWithAuthorization: controllers)
@@ -36,6 +35,11 @@ routesWithAuthorization.configure(routesWithAuthorization: controllers)
 let requestFilters: [(HTTPRequestFilter, HTTPFilterPriority)] = [
     (AuthorizationFilter(secret: configuration.secret, routesWithAuthorization: routesWithAuthorization), HTTPFilterPriority.high)
 ]
+
+// Resource-based authorization.
+let authorizationService = try! container.resolve() as AuthorizationServiceProtocol
+authorizationService.add(authorizationHandler: TaskOwnerAuthorizationHandler())
+
 
 do {
     // Launch the HTTP server.
