@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class TaskOwnerAuthorizationHandler : AuthorizationHandlerProtocol {
+public class TaskOperationAuthorizationHandler : AuthorizationHandlerProtocol {
     
     public var requirementType: AuthorizationRequirementProtocol.Type   = OperationAuthorizationRequirement.self
     public var resourceType: EntityProtocol.Type                        = Task.self

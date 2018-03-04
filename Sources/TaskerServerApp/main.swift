@@ -38,7 +38,7 @@ let requestFilters: [(HTTPRequestFilter, HTTPFilterPriority)] = [
 
 // Resource-based authorization.
 let authorizationService = try! container.resolve() as AuthorizationServiceProtocol
-authorizationService.add(authorizationHandler: TaskOwnerAuthorizationHandler())
+authorizationService.add(authorizationHandler: TaskOperationAuthorizationHandler())
 
 
 do {
