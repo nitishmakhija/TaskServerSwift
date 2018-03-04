@@ -37,7 +37,7 @@ struct UserDto : Codable {
     
     public func toUser() -> User {
         return User(
-            id: self.id != nil ? self.id! : UUID.empty(), 
+            id: self.id ?? UUID.empty(), 
             name: self.name, 
             email: self.email, 
             password: "", 

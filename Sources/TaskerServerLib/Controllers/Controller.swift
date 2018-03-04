@@ -35,6 +35,9 @@ public class Controller {
         
         self.allRoutes.add(route)
         addToRoutesWithAutorization(authorization, route)
+        
+        //let controllerName = String(describing: type(of: self))
+        //print("Controller: \(controllerName), method: \(method), uri: \(uri)")
     }
     
     private func addToRoutesWithAutorization(_ authorization: AuthorizationPolicy, _ route: Route) {
