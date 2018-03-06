@@ -7,8 +7,7 @@ This is a simple project with server side code written in Swift. It contais few 
  - Data access (ORM) - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-object-relational-mapping-orm-68879d9a1aa3)
  - Services, Repositories & Data validation - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-services-repositories-data-validation-d6988c24e720)
  - Authentication & Authorization - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-authentication-authorization-cc6ea70ccd5f)
- - Resource based authorization - todo
- - Logging system - todo
+ - Resource based authorization - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-resource-based-authorization-62ef4e006e77)
  - Docker - todo
  - Deploying to Azure - todo
  
