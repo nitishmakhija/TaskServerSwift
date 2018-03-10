@@ -384,10 +384,204 @@ curl -X DELETE \
   -H 'Cache-Control: no-cache'
 ```
 
-### Users
+### Users controller
 
-self.add(method: .get, uri: "/users", authorization: .inRole(["Administrator"]), handler: all)
-self.add(method: .get, uri: "/users/{id}", authorization: .inRole(["Administrator"]), handler: get)
-self.add(method: .post, uri: "/users", authorization: .inRole(["Administrator"]), handler: post)
-self.add(method: .put, uri: "/users/{id}", authorization: .inRole(["Administrator"]), handler: put)
-self.add(method: .delete, uri: "/users/{id}", authorization: .inRole(["Administrator"]), handler: delete)
+Controller with actions for managing users.
+
+#### Users list
+
+Endpoint returns users registered into the system.
+
+|               |                           |
+|---------------|---------------------------|
+| Method        | GET                       |
+| Uri           | /users                    |
+| Authorization | signed in (Administrator) |
+
+Response example:
+
+```json
+[
+    {
+        "email": "john.doe@some-email.com",
+        "id": "35945765-4A61-4661-9EAA-8570F65E4598",
+        "name": "John Doe",
+        "isLocked": false
+    },
+    {
+        "email": "emma.doe@some-email.com",
+        "id": "8A267133-E50F-442D-AEFF-6C388E4D87C7",
+        "name": "Emma Doe",
+        "isLocked": false
+    }
+]
+```
+
+Curl:
+
+```bash
+curl -X GET \
+  http://localhost:8181/users \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiam9obi5kb2VAc29tZS1lbWFpbC5jb20iLCJpc3MiOiJ0YXNrZXItc2VydmVyLWlzc3VlciIsImlhdCI6MTUyMDY3MTI2Ny40NDQ4OCwiZXhwIjoxNTIwNzA3MjY3LjQ0NDg4LCJyb2xlcyI6WyJVc2VyIiwiQWRtaW5pc3RyYXRvciJdLCJ1aWQiOiIzNTk0NTc2NS00QTYxLTQ2NjEtOUVBQS04NTcwRjY1RTQ1OTgifQ.JrWb8ePBO1zBKDApXnYF4hJzZxkrTOjZ9fbUMUEvrYc' \
+  -H 'Cache-Control: no-cache'
+```
+
+#### Get user by id
+
+Endpoint returns specific user by his identifier (id).
+
+|               |                           |
+|---------------|---------------------------|
+| Method        | GET                       |
+| Uri           | /users/{id}               |
+| Authorization | signed in (Administrator) |
+
+Response example:
+
+```json
+{
+    "email": "john.doe@some-email.com",
+    "id": "35945765-4A61-4661-9EAA-8570F65E4598",
+    "roles": [
+        "User",
+        "Administrator"
+    ],
+    "name": "John Doe",
+    "isLocked": false
+}
+```
+
+Curl:
+
+```bash
+curl -X GET \
+  http://localhost:8181/users/35945765-4A61-4661-9EAA-8570F65E4598 \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiam9obi5kb2VAc29tZS1lbWFpbC5jb20iLCJpc3MiOiJ0YXNrZXItc2VydmVyLWlzc3VlciIsImlhdCI6MTUyMDY3MTI2Ny40NDQ4OCwiZXhwIjoxNTIwNzA3MjY3LjQ0NDg4LCJyb2xlcyI6WyJVc2VyIiwiQWRtaW5pc3RyYXRvciJdLCJ1aWQiOiIzNTk0NTc2NS00QTYxLTQ2NjEtOUVBQS04NTcwRjY1RTQ1OTgifQ.JrWb8ePBO1zBKDApXnYF4hJzZxkrTOjZ9fbUMUEvrYc' \
+  -H 'Cache-Control: no-cache'
+```
+
+#### Create a new user
+
+Endpoint for creating new user.
+
+|               |                           |
+|---------------|---------------------------|
+| Method        | POST                      |
+| Uri           | /users                    |
+| Authorization | signed in (Administrator) |
+
+Request example:
+
+```json
+{
+    "name": "Victor Doe",
+    "email": "victor.doe@some-email.com",
+    "password": "p@ssw0rd",
+    "isLocked": false
+}
+```
+
+Response example:
+
+```json
+{
+    "email": "victor.doe@some-email.com",
+    "id": "58ABCB3F-21D3-44AE-8B85-07D4AC1174B6",
+    "roles": [],
+    "name": "Victor Doe",
+    "isLocked": false
+}
+```
+
+Curl:
+
+```bash
+curl -X POST \
+  http://localhost:8181/users \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiam9obi5kb2VAc29tZS1lbWFpbC5jb20iLCJpc3MiOiJ0YXNrZXItc2VydmVyLWlzc3VlciIsImlhdCI6MTUyMDY3MTI2Ny40NDQ4OCwiZXhwIjoxNTIwNzA3MjY3LjQ0NDg4LCJyb2xlcyI6WyJVc2VyIiwiQWRtaW5pc3RyYXRvciJdLCJ1aWQiOiIzNTk0NTc2NS00QTYxLTQ2NjEtOUVBQS04NTcwRjY1RTQ1OTgifQ.JrWb8ePBO1zBKDApXnYF4hJzZxkrTOjZ9fbUMUEvrYc' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Victor Doe",
+    "email": "victor.doe@some-email.com",
+    "password": "p@ssw0rd",
+    "isLocked": false
+}'
+```
+
+#### Update user data
+
+Endpoint for updating user data.
+
+|               |                           |
+|---------------|---------------------------|
+| Method        | PUT                       |
+| Uri           | /users/{id}               |
+| Authorization | signed in (Administrator) |
+
+Request example:
+
+```json
+{
+    "email": "victor.doe@some-email.com",
+    "id": "58ABCB3F-21D3-44AE-8B85-07D4AC1174B6",
+    "name": "Victor Doe",
+    "isLocked": false,
+    "roles": [
+      "User", "Administrator"
+    ]
+}
+```
+
+Response example:
+
+```json
+{
+    "email": "victor.doe@some-email.com",
+    "id": "58ABCB3F-21D3-44AE-8B85-07D4AC1174B6",
+    "name": "Victor Doe",
+    "isLocked": false,
+    "roles": [
+      "User", "Administrator"
+    ]
+}
+```
+
+Curl:
+
+```bash
+curl -X PUT \
+  http://localhost:8181/users/58ABCB3F-21D3-44AE-8B85-07D4AC1174B6 \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiam9obi5kb2VAc29tZS1lbWFpbC5jb20iLCJpc3MiOiJ0YXNrZXItc2VydmVyLWlzc3VlciIsImlhdCI6MTUyMDY3MTI2Ny40NDQ4OCwiZXhwIjoxNTIwNzA3MjY3LjQ0NDg4LCJyb2xlcyI6WyJVc2VyIiwiQWRtaW5pc3RyYXRvciJdLCJ1aWQiOiIzNTk0NTc2NS00QTYxLTQ2NjEtOUVBQS04NTcwRjY1RTQ1OTgifQ.JrWb8ePBO1zBKDApXnYF4hJzZxkrTOjZ9fbUMUEvrYc' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "email": "victor.doe@some-email.com",
+    "id": "58ABCB3F-21D3-44AE-8B85-07D4AC1174B6",
+    "name": "Victor Doe",
+    "isLocked": false,
+    "roles": [
+      "User", "Administrator"
+    ]
+}'
+```
+
+#### Deleting users
+
+Endpoint for deleting users from the system.
+
+|               |                           |
+|---------------|---------------------------|
+| Method        | DELETE                    |
+| Uri           | /users/{id}               |
+| Authorization | signed in (Administrator) |
+
+
+Curl:
+
+```bash
+curl -X DELETE \
+  http://localhost:8181/users/58ABCB3F-21D3-44AE-8B85-07D4AC1174B6 \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiam9obi5kb2VAc29tZS1lbWFpbC5jb20iLCJpc3MiOiJ0YXNrZXItc2VydmVyLWlzc3VlciIsImlhdCI6MTUyMDY3MTI2Ny40NDQ4OCwiZXhwIjoxNTIwNzA3MjY3LjQ0NDg4LCJyb2xlcyI6WyJVc2VyIiwiQWRtaW5pc3RyYXRvciJdLCJ1aWQiOiIzNTk0NTc2NS00QTYxLTQ2NjEtOUVBQS04NTcwRjY1RTQ1OTgifQ.JrWb8ePBO1zBKDApXnYF4hJzZxkrTOjZ9fbUMUEvrYc' \
+  -H 'Cache-Control: no-cache'
+```
