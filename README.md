@@ -8,8 +8,7 @@ This is a simple project with server side code written in Swift. It contais few 
  - Services, Repositories & Data validation - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-services-repositories-data-validation-d6988c24e720)
  - Authentication & Authorization - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-authentication-authorization-cc6ea70ccd5f)
  - Resource based authorization - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-resource-based-authorization-62ef4e006e77)
- - Docker - todo
- - Deploying to Azure - todo
+ - Docker on Azure - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-docker-on-azure-5778be8f207)
  
 ## Getting started
 
