@@ -24,6 +24,7 @@
 		F83B46E9204B26B200678429 /* AuthorizationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83B46E8204B26B200678429 /* AuthorizationHandler.swift */; };
 		F83B46EB204B3E4D00678429 /* AuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83B46EA204B3E4D00678429 /* AuthorizationService.swift */; };
 		F83B46ED204B3EA300678429 /* AuthorizationRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83B46EC204B3EA300678429 /* AuthorizationRequirement.swift */; };
+		F844827D20541F17009C7479 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = F844827C20541F17009C7479 /* Users.swift */; };
 		F8C07A9D204BCF81006235D4 /* TaskOperationAuthorizationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C07A9C204BCF81006235D4 /* TaskOperationAuthorizationHandler.swift */; };
 		F8C07AA1204BD18F006235D4 /* OperationAuthorizationRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C07AA0204BD18F006235D4 /* OperationAuthorizationRequirement.swift */; };
 		F8C07AA3204BD345006235D4 /* AuthorizationTypeMismatchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C07AA2204BD345006235D4 /* AuthorizationTypeMismatchError.swift */; };
@@ -1046,6 +1047,7 @@
 		F83B46E8204B26B200678429 /* AuthorizationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationHandler.swift; sourceTree = "<group>"; };
 		F83B46EA204B3E4D00678429 /* AuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationService.swift; sourceTree = "<group>"; };
 		F83B46EC204B3EA300678429 /* AuthorizationRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequirement.swift; sourceTree = "<group>"; };
+		F844827C20541F17009C7479 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		F8C07A9C204BCF81006235D4 /* TaskOperationAuthorizationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskOperationAuthorizationHandler.swift; sourceTree = "<group>"; };
 		F8C07AA0204BD18F006235D4 /* OperationAuthorizationRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationAuthorizationRequirement.swift; sourceTree = "<group>"; };
 		F8C07AA2204BD345006235D4 /* AuthorizationTypeMismatchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationTypeMismatchError.swift; sourceTree = "<group>"; };
@@ -2308,6 +2310,7 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_33 /* Roles.swift */,
+				F844827C20541F17009C7479 /* Users.swift */,
 			);
 			path = Seeds;
 			sourceTree = "<group>";
@@ -3809,6 +3812,7 @@
 				OBJ_770 /* UsersRepository.swift in Sources */,
 				OBJ_771 /* TasksService.swift in Sources */,
 				OBJ_772 /* UsersService.swift in Sources */,
+				F844827D20541F17009C7479 /* Users.swift in Sources */,
 				OBJ_773 /* TaskValidator.swift in Sources */,
 				OBJ_774 /* UserValidator.swift in Sources */,
 				OBJ_775 /* ValidationsError.swift in Sources */,

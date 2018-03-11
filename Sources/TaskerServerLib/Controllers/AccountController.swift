@@ -21,8 +21,8 @@ class AccountController : Controller {
     
     override func initRoutes() {
         self.add(method: .post, uri: "/account/register", authorization: .anonymous, handler: register)
-        self.add(method: .post, uri: "/account/signIn", authorization: .anonymous, handler: signIn)
-        self.add(method: .post, uri: "/account/changePassword", authorization: .signedIn, handler: changePassword)
+        self.add(method: .post, uri: "/account/sign-in", authorization: .anonymous, handler: signIn)
+        self.add(method: .post, uri: "/account/change-password", authorization: .signedIn, handler: changePassword)
     }
     
     public func register(request: HTTPRequest, response: HTTPResponse) {

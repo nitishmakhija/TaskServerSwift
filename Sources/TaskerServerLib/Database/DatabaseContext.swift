@@ -54,5 +54,6 @@ public class DatabaseContext: DatabaseContextProtocol {
         try self.database.create(UserRole.self, policy: .reconcileTable)
         
         try Roles.seed(databaseContext: self)
+        try Users.seed(databaseContext: self)
     }
 }

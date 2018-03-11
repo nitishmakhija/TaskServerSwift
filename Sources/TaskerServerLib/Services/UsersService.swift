@@ -40,12 +40,12 @@ public class UsersService :  UsersServiceProtocol {
     
     public func add(entity: User) throws {
         
-        entity.salt = String(randomWithLength: 14)
-        entity.password = try entity.password.generateHash(salt: entity.salt)
-        
         if let errors = self.userValidator.getValidationErrors(entity) {
             throw ValidationsError(errors: errors)
         }
+        
+        entity.salt = String(randomWithLength: 14)
+        entity.password = try entity.password.generateHash(salt: entity.salt)
         
         try self.usersRepository.add(entity: entity)
         try self.userRolesRepository.set(roles: entity.roles, forUserId: entity.id)
