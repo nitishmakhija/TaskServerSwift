@@ -3,5 +3,7 @@ os: osx
 osx_image: xcode9.2
 script: 
 - swift package generate-xcodeproj
-- xcodebuild build -quiet -scheme TaskerServerApp
-- xcodebuild test -quiet -scheme TaskerServerPackageTests -enableCodeCoverage YES
+- xcodebuild -quiet -scheme TaskerServerApp build
+- xcodebuild -quiet -scheme TaskerServerPackageTests -enableCodeCoverage YES build test
+after_success:
+- bash <(curl -s https://codecov.io/bash) -J 'TaskerServerLib'
