@@ -17,7 +17,7 @@ public class BaseRepository<T: EntityProtocol> {
     }
     
     public func get() throws -> [T] {
-        let entities = try self.databaseContext.set(T.self).select()
+        let entities = try self.databaseContext.set(T.self).order(by: \.createDate).select()
 
         var list: [T] = []
         for entity in entities {

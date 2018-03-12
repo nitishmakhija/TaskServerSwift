@@ -10,6 +10,7 @@ import Foundation
 public class User : EntityProtocol {
     
     public var id: UUID
+    public var createDate: Date
     public var name: String
     public var email: String
     public var password: String
@@ -17,8 +18,9 @@ public class User : EntityProtocol {
     public var isLocked: Bool
     public var roles: [Role]?
 
-    init(id: UUID, name: String, email: String, password: String, salt: String, isLocked: Bool) {
+    init(id: UUID, createDate: Date, name: String, email: String, password: String, salt: String, isLocked: Bool) {
         self.id = id
+        self.createDate = createDate
         self.name = name
         self.email = email
         self.password = password
@@ -26,8 +28,8 @@ public class User : EntityProtocol {
         self.isLocked = isLocked
     }
 
-    convenience init(id: UUID, name: String, email: String, password: String, salt: String, isLocked: Bool, roles: [Role]?) {
-        self.init(id: id, name: name, email: email, password: password, salt: salt, isLocked: isLocked)
+    convenience init(id: UUID, createDate: Date, name: String, email: String, password: String, salt: String, isLocked: Bool, roles: [Role]?) {
+        self.init(id: id, createDate: createDate, name: name, email: email, password: password, salt: salt, isLocked: isLocked)
         
         self.roles = roles
     }

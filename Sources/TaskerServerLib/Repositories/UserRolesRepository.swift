@@ -51,7 +51,7 @@ class UserRolesRepository : BaseRepository<User>, UserRolesRepositoryProtocol {
 
         let rolesQuery = try self.databaseContext.set(Role.self).where(\Role.name ~ roleNames).select()
         for role in rolesQuery {
-            try self.databaseContext.set(UserRole.self).insert(UserRole(id: UUID(), userId: userId, roleId: role.id))
+            try self.databaseContext.set(UserRole.self).insert(UserRole(id: UUID(), createDate: Date(), userId: userId, roleId: role.id))
         }
     }
 }

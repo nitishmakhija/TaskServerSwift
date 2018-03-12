@@ -12,18 +12,17 @@ import Dobby
 
 class UsersControllerTests: XCTestCase {
     
+    let serverContext = TestServerContext()
+    
     func testInitRoutesShouldInitializeGetAllUsersRoute() {
         
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest(method: .get)
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
-        
+   
         // Act.
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
+        let requestHandler = serverContext.usersController.allRoutes.navigator.findHandler(uri: "/users", webRequest: fakeHttpRequest)
         
         // Assert.
-        let requestHandler = usersController.allRoutes.navigator.findHandler(uri: "/users", webRequest: fakeHttpRequest)
         XCTAssertNotNil(requestHandler)
     }
     
@@ -31,14 +30,11 @@ class UsersControllerTests: XCTestCase {
         
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest(method: .get)
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
         
         // Act.
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
+        let requestHandler = serverContext.usersController.allRoutes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
         
         // Assert.
-        let requestHandler = usersController.allRoutes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
         XCTAssertNotNil(requestHandler)
     }
     
@@ -46,14 +42,11 @@ class UsersControllerTests: XCTestCase {
         
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest(method: .post)
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
         
         // Act.
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
+        let requestHandler = serverContext.usersController.allRoutes.navigator.findHandler(uri: "/users", webRequest: fakeHttpRequest)
         
         // Assert.
-        let requestHandler = usersController.allRoutes.navigator.findHandler(uri: "/users", webRequest: fakeHttpRequest)
         XCTAssertNotNil(requestHandler)
     }
     
@@ -61,14 +54,11 @@ class UsersControllerTests: XCTestCase {
         
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest(method: .put)
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
         
         // Act.
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
+        let requestHandler = serverContext.usersController.allRoutes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
         
         // Assert.
-        let requestHandler = usersController.allRoutes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
         XCTAssertNotNil(requestHandler)
     }
     
@@ -76,14 +66,11 @@ class UsersControllerTests: XCTestCase {
         
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest(method: .delete)
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
         
         // Act.
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
+        let requestHandler = serverContext.usersController.allRoutes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
         
         // Assert.
-        let requestHandler = usersController.allRoutes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
         XCTAssertNotNil(requestHandler)
     }
     
@@ -92,73 +79,41 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
-        
-        fakeUsersRepository.getMock.expect(any())
-        fakeUsersRepository.getStub.on(any(), return: [
-                User(id: UUID(), name: "John Doe", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: false),
-                User(id: UUID(), name: "Victor Doe", email: "victor.doe@emailx.com", password: "pass", salt: "123", isLocked: false)
-        ])
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
         
         // Act.
-        usersController.all(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.all(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         let users = try! fakeHttpResponse.getObjectFromResponseBody(Array<UserDto>.self)
-        fakeUsersRepository.getMock.verify()
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
-        XCTAssertEqual(2, users.count)
-        XCTAssertEqual("john.doe@emailx.com", users[0].email)
-        XCTAssertEqual("victor.doe@emailx.com", users[1].email)
+        XCTAssertTrue(users.count > 0)
     }
     
     func testGetUserShouldReturnUserWhenWeProvideCorrectId() {
         
         // Arrange.
-        let userId = UUID()
-        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": userId.uuidString])
+        let user = TestUsers.getJohnDoe()
+        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": user.id.uuidString])
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
-        
-        fakeUsersRepository.getByIdMock.expect(any())
-        fakeUsersRepository.getByIdStub.on(equals(userId), return:
-            User(id: userId, name: "John Doe", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: false)
-        )
-        
-        fakeUserRolesRepository.getForUserMock.expect(any())
-        fakeUserRolesRepository.getForUserStub.on(any(), return: [])
-        
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
         
         // Act.
-        usersController.get(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.get(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
-        let users = try! fakeHttpResponse.getObjectFromResponseBody(UserDto.self)
-        fakeUsersRepository.getByIdMock.verify()
+        let userDto = try! fakeHttpResponse.getObjectFromResponseBody(UserDto.self)
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
-        XCTAssertEqual(userId, users.id)
-        XCTAssertEqual("john.doe@emailx.com", users.email)
+        XCTAssertEqual(user.id, userDto.id)
+        XCTAssertEqual(user.email, userDto.email)
     }
     
     func testGetUserShouldReturnNotFoundStatusCodeWhenWeProvideIncorrectId() {
         
         // Arrange.
-        let userId = UUID()
-        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": userId.uuidString])
+        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": UUID().uuidString])
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
-        
-        fakeUsersRepository.getByIdMock.expect(any())
-        fakeUsersRepository.getByIdStub.on(equals(userId), return: nil)
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
         
         // Act.
-        usersController.get(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.get(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.notFound.code, fakeHttpResponse.status.code)
@@ -167,36 +122,17 @@ class UsersControllerTests: XCTestCase {
     func testPostUserShouldAddUserToStoreWhenWeProvideCorrectUserData() {
         
         // Arrange.
-        let userId = UUID()
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
-        
-        fakeUserRolesRepository.setForUserMock.expect(any())
-        fakeHttpRequest.addObjectToRequestBody(User(id: userId, name: "John Doe", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: true))
-        fakeUsersRepository.addMock.expect(matches({(user) -> Bool in
-            user.email == "john.doe@emailx.com" &&
-            user.name == "John Doe" &&
-            user.isLocked == true
-        }))
-        
-        fakeUsersRepository.getByIdMock.expect(any())
-        fakeUsersRepository.getByIdStub.on(any(), return:
-            User(id: userId, name: "John Doe", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: false)
-        )
-        
-        fakeUserRolesRepository.getForUserMock.expect(any())
-        fakeUserRolesRepository.getForUserStub.on(any(), return: [])
-        
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
-        
+        let user = User(id: UUID(), createDate: Date(), name: "Martin Schmidt",
+                        email: "martin.schmidt@emailx.com", password: "p@ssword", salt: "123", isLocked: true)
+        fakeHttpRequest.addObjectToRequestBody(user)
+
         // Act.
-        usersController.post(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.post(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
-        fakeUsersRepository.addMock.verify()
     }
     
     func testPostUserShouldReturnBadRequestStatusCodeWhenWeNotProvideJson() {
@@ -204,12 +140,9 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
         
         // Act.
-        usersController.post(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.post(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -220,13 +153,12 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
-        fakeHttpRequest.addObjectToRequestBody(User(id: UUID(), name: "", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: true))
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
+        let user = User(id: UUID(), createDate: Date(), name: "",
+                        email: "robin.schmidt@emailx.com", password: "p@ssword", salt: "123", isLocked: true)
+        fakeHttpRequest.addObjectToRequestBody(user)
         
         // Act.
-        usersController.post(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.post(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -242,13 +174,12 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
-        fakeHttpRequest.addObjectToRequestBody(User(id: UUID(), name: "John Doe", email: "", password: "pass", salt: "123", isLocked: true))
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
+        let user = User(id: UUID(), createDate: Date(), name: "Robin Schmidt",
+                        email: "", password: "p@ssword", salt: "123", isLocked: true)
+        fakeHttpRequest.addObjectToRequestBody(user)
         
         // Act.
-        usersController.post(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.post(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -262,37 +193,16 @@ class UsersControllerTests: XCTestCase {
     func testPutUserShouldUpdateUserInStoreWhenWeProvideCorrectUserData() {
         
         // Arrange.
-        let userId = UUID()
-        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": userId.uuidString])
+        let user = TestUsers.getVikiDoe()
+        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": user.id.uuidString], withAuthorization: user)
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
-        
-        fakeHttpRequest.addObjectToRequestBody(User(id: userId, name: "John Doe", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: true))
-        
-        fakeUserRolesRepository.setForUserMock.expect(any())
-        fakeUserRolesRepository.getForUserMock.expect(any())
-        fakeUserRolesRepository.getForUserStub.on(any(), return: [])
-        
-        fakeUsersRepository.getByIdMock.expect(equals(userId))
-        fakeUsersRepository.getByIdStub.on(equals(userId), return:
-            User(id: userId, name: "John Doe", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: true)
-        )
-        
-        fakeUsersRepository.updateMock.expect(matches({(user) -> Bool in
-            user.email == "john.doe@emailx.com" &&
-            user.name == "John Doe" &&
-            user.isLocked == true
-        }))
-        
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
+        fakeHttpRequest.addObjectToRequestBody(user)
         
         // Act.
-        usersController.put(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.put(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
-        fakeUsersRepository.updateMock.verify()
     }
     
     func testPutUserShouldReturnBadRequestStatusCodeWhenWeNotProvideJson() {
@@ -300,12 +210,9 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
         
         // Act.
-        usersController.put(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.put(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -314,23 +221,14 @@ class UsersControllerTests: XCTestCase {
     func testPutUserShouldReturnValidationErrorWhenWeProvideEmptyName() {
         
         // Arrange.
-        let userId = UUID()
-        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": userId.uuidString])
+        let user = TestUsers.getSamanthaDoe()
+        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": user.id.uuidString])
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
-        
-        fakeUsersRepository.getByIdMock.expect(any())
-        fakeUsersRepository.getByIdStub.on(any(), return: User(id: userId, name: "John Doe", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: false))
-        
-        fakeUserRolesRepository.getForUserMock.expect(any())
-        fakeUserRolesRepository.getForUserStub.on(any(), return: [])
-        
-        fakeHttpRequest.addObjectToRequestBody(User(id: userId, name: "", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: true))
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
+        user.name = ""
+        fakeHttpRequest.addObjectToRequestBody(user)
         
         // Act.
-        usersController.put(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.put(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -344,44 +242,25 @@ class UsersControllerTests: XCTestCase {
     func testDeleteUserShouldDeleteUserFromStoreWhenWeProvideCorrectUserId() {
         
         // Arrange.
-        let userId = UUID()
-        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": userId.uuidString])
+        let user = TestUsers.getNorbiDoe()
+        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": user.id.uuidString])
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
-        
-        fakeUsersRepository.getByIdMock.expect(any())
-        fakeUsersRepository.getByIdStub.on(any(), return: User(id: userId, name: "John Doe", email: "john.doe@emailx.com", password: "pass", salt: "123", isLocked: false))
-        fakeUsersRepository.deleteMock.expect(matches({(id) -> Bool in id == userId }))
-        
-        fakeUserRolesRepository.getForUserMock.expect(any())
-        fakeUserRolesRepository.getForUserStub.on(any(), return: [])
-        
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
         
         // Act.
-        usersController.delete(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.delete(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
-        fakeUsersRepository.deleteMock.verify()
     }
     
     func testDeleteUserShouldReturnNotFoundStatusCodeWhenWeNotProvideCorrectId() {
         
         // Arrange.
-        let userId = UUID()
-        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": userId.uuidString])
+        let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": UUID().uuidString])
         let fakeHttpResponse = FakeHTTPResponse()
-        let fakeUsersRepository = FakeUsersRepository()
-        let fakeUserRolesRepository = FakeUserRolesRepository()
-        
-        fakeUsersRepository.getByIdMock.expect(any())
-        fakeUsersRepository.getByIdStub.on(any(), return: nil)
-        let usersController = UsersController(usersService: UsersService(usersRepository: fakeUsersRepository, userRolesRepository: fakeUserRolesRepository))
         
         // Act.
-        usersController.delete(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.delete(request: fakeHttpRequest, response: fakeHttpResponse)
         
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.notFound.code, fakeHttpResponse.status.code)
@@ -398,8 +277,11 @@ class UsersControllerTests: XCTestCase {
         ("testGetUserShouldReturnNotFoundStatusCodeWhenWeProvideIncorrectId", testGetUserShouldReturnNotFoundStatusCodeWhenWeProvideIncorrectId),
         ("testPostUserShouldAddUserToStoreWhenWeProvideCorrectUserData", testPostUserShouldAddUserToStoreWhenWeProvideCorrectUserData),
         ("testPostUserShouldReturnBadRequestStatusCodeWhenWeNotProvideJson", testPostUserShouldReturnBadRequestStatusCodeWhenWeNotProvideJson),
+        ("testPostUserShouldReturnValidationErrorWhenWeProvideEmptyName", testPostUserShouldReturnValidationErrorWhenWeProvideEmptyName),
+        ("testPostUserShouldReturnValidationErrorWhenWeProvideEmptyEmail", testPostUserShouldReturnValidationErrorWhenWeProvideEmptyEmail),
         ("testPutUserShouldUpdateUserInStoreWhenWeProvideCorrectUserData", testPutUserShouldUpdateUserInStoreWhenWeProvideCorrectUserData),
         ("testPutUserShouldReturnBadRequestStatusCodeWhenWeNotProvideJson", testPutUserShouldReturnBadRequestStatusCodeWhenWeNotProvideJson),
+        ("testPutUserShouldReturnValidationErrorWhenWeProvideEmptyName", testPutUserShouldReturnValidationErrorWhenWeProvideEmptyName),
         ("testDeleteUserShouldDeleteUserFromStoreWhenWeProvideCorrectUserId", testDeleteUserShouldDeleteUserFromStoreWhenWeProvideCorrectUserId),
         ("testDeleteUserShouldReturnNotFoundStatusCodeWhenWeNotProvideCorrectId", testDeleteUserShouldReturnNotFoundStatusCodeWhenWeNotProvideCorrectId)
     ]

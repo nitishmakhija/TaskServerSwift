@@ -8,6 +8,7 @@
 import Foundation
 import PerfectCRUD
 import PerfectSQLite
+import FileKit
 
 public protocol SqlConnectionProtocol {
     func getDatabaseConfiguration() -> DatabaseConfigurationProtocol
@@ -28,7 +29,8 @@ class SQLiteConnection : SqlConnectionProtocol {
         
         lock.lock()
         if self.configuration == nil {
-            self.configuration = try! SQLiteDatabaseConfiguration(connectionString)
+            let databaseUrl = self.getDatabaseFileUrl()
+            self.configuration = try! SQLiteDatabaseConfiguration(databaseUrl)
         }
         lock.unlock()
         
@@ -42,6 +44,21 @@ class SQLiteConnection : SqlConnectionProtocol {
     public func isValidConnection() -> Bool {
         // Here we should verify state of connection.
         return true
+    }
+    
+    private func getDatabaseFileUrl() -> String {
+        let fn = NSString(string: self.connectionString)
+        let pathUrl: URL
+        let isAbsolutePath = fn.isAbsolutePath
+        
+        if isAbsolutePath {
+            pathUrl = URL(fileURLWithPath: fn.expandingTildeInPath)
+        }
+        else {
+            pathUrl = URL(fileURLWithPath: FileKit.workingDirectory).appendingPathComponent(connectionString).standardized
+        }
+        
+        return pathUrl.absoluteString
     }
 }
 

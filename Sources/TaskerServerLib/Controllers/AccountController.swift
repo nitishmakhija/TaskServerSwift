@@ -7,7 +7,6 @@
 
 import Foundation
 import PerfectHTTP
-import PerfectCrypto
 
 class AccountController : Controller {
     
@@ -63,8 +62,9 @@ class AccountController : Controller {
                 return response.sendNotFoundError()
             }
             
-            let tokenDto = try self.prepareToken(user: user)
-            return response.sendJson(tokenDto)
+            let tokenProvider = TokenProvider(issuer: self.configuration.issuer, secret: self.configuration.secret)
+            let token = try tokenProvider.prepareToken(user: user)
+            return response.sendJson(JwtTokenResponseDto(token: token))
         }
         catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()
@@ -100,26 +100,5 @@ class AccountController : Controller {
         catch {
             response.sendInternalServerError(error: error)
         }
-    }
-    
-    private func prepareToken(user: User) throws -> JwtTokenResponseDto {
-                
-        let payload = [
-            ClaimsNames.uid.rawValue            : user.id.uuidString,
-            ClaimsNames.name.rawValue           : user.email,
-            ClaimsNames.roles.rawValue          : user.getRolesNames(),
-            ClaimsNames.issuer.rawValue         : self.configuration.issuer,
-            ClaimsNames.issuedAt.rawValue       : Date().timeIntervalSince1970,
-            ClaimsNames.expiration.rawValue     : Date().addingTimeInterval(36000).timeIntervalSince1970
-        ] as [String : Any]
-        
-        guard let jwt = JWTCreator(payload: payload) else {
-            throw PrepareTokenError()
-        }
-        
-        let token = try jwt.sign(alg: .hs256, key: self.configuration.secret)
-        
-        let tokenDto = JwtTokenResponseDto(token: token)
-        return tokenDto
     }
 }

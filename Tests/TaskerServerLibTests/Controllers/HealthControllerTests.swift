@@ -3,15 +3,17 @@ import PerfectHTTP
 @testable import TaskerServerLib
 
 class HealthControllerTests: XCTestCase {
+    
+    let serverContext = TestServerContext()
+    
     func testGetHealthShouldReturnMessageAboutHealth() {
         
         // Arrange.
-        let healthController = HealthController()
         let fakeRequest = FakeHTTPRequest()
         let fakeResponse = FakeHTTPResponse()
         
         // Act.
-        healthController.get(request: fakeRequest, response: fakeResponse)
+        serverContext.healthController.get(request: fakeRequest, response: fakeResponse)
         
         // Assert.
         XCTAssert(fakeResponse.status.code == HTTPResponseStatus.ok.code)

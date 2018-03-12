@@ -9,6 +9,7 @@ import Foundation
 import PerfectHTTP
 import PerfectNet
 import Dobby
+@testable import TaskerServerLib
 
 class FakeHTTPRequest : HTTPRequest {
     
@@ -41,15 +42,28 @@ class FakeHTTPRequest : HTTPRequest {
         addHeaderMock.expect(any())
         setHeaderMock.expect(any())
     }
-    
+
     convenience init(method: HTTPMethod) {
         self.init()
         self.method = method
     }
     
+    convenience init(withAuthorization user: User) {
+        self.init()
+        
+        self.addAuthorization(user: user)
+    }
+        
     convenience init(urlVariables:[String:String]) {
         self.init()
         self.urlVariables = urlVariables
+    }
+    
+    convenience init(urlVariables:[String:String], withAuthorization user: User) {
+        self.init()
+        self.urlVariables = urlVariables
+        
+        self.addAuthorization(user: user)
     }
     
     func header(_ named: HTTPRequestHeader.Name) -> String? {
@@ -63,6 +77,15 @@ class FakeHTTPRequest : HTTPRequest {
     
     func setHeader(_ named: HTTPRequestHeader.Name, value: String) {
         setHeaderMock.record((named, value))
+    }
+    
+    private func addAuthorization(user: User) {
+        let userCredentials = UserCredentials(
+            id: user.id,
+            name: user.email,
+            roles: []
+        )
+        self.add(userCredentials: userCredentials)
     }
 }
 

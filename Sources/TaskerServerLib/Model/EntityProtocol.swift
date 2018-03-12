@@ -9,4 +9,5 @@ import Foundation
 
 public protocol EntityProtocol : class, Codable {
     var id: UUID { get set }
+    var createDate: Date { get set }
 }
