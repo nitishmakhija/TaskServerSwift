@@ -3,4 +3,4 @@ os: osx
 osx_image: xcode9.2
 script: 
 - swift package generate-xcodeproj
-- xcodebuild build -scheme TaskerServerApp
+- xcodebuild build -quiet -scheme TaskerServerApp
