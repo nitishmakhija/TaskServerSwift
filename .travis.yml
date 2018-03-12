@@ -4,3 +4,4 @@ osx_image: xcode9.2
 script: 
 - swift package generate-xcodeproj
 - xcodebuild build -quiet -scheme TaskerServerApp
+- xcodebuild test -quiet -scheme TaskerServerPackageTests -enableCodeCoverage YES
