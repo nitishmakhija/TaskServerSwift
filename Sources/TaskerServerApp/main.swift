@@ -1,9 +1,5 @@
 import PerfectHTTP
-import PerfectHTTPServer
-import PerfectLib
-import Dip
 import TaskerServerLib
-import Configuration
 
 do {
     let serverContext = ServerContext()
