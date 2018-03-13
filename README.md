@@ -1,6 +1,6 @@
 # TaskerServer
 
-[![Build Status](https://travis-ci.org/mczachurski/TaskServerSwift.svg?branch=master)](https://travis-ci.org/mczachurski/TaskServerSwift)
+[![Build Status](https://travis-ci.org/mczachurski/TaskServerSwift.svg?branch=master)](https://travis-ci.org/mczachurski/TaskServerSwift) [![codecov](https://codecov.io/gh/mczachurski/TaskServerSwift/branch/master/graph/badge.svg)](https://codecov.io/gh/mczachurski/TaskServerSwift) 
 
 This is a simple project with server side code written in Swift. It contains few concepts which can/should have production ready server side application. Especially it focuses on:
  - MVC pattern - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-mvc-f52b833ef84b)
