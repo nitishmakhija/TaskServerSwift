@@ -1,9 +1,7 @@
 language: swift
 os: osx
 osx_image: xcode9.2
-script: 
+xcode_project: TaskerServer.xcodeproj
+xcode_scheme: TaskerServerPackageTests
+before_script: 
 - swift package generate-xcodeproj
-- xcodebuild -quiet -scheme TaskerServerApp build
-- xcodebuild -quiet -scheme TaskerServerPackageTests -enableCodeCoverage YES build test
-after_success:
-- bash <(curl -s https://codecov.io/bash) -J 'TaskerServerLib'
