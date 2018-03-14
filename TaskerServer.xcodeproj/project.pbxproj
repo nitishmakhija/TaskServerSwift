@@ -24,6 +24,7 @@
 		F85D661920558F6D003F6D6C /* TestTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85D661820558F6D003F6D6C /* TestTasks.swift */; };
 		F85D661B20559BAB003F6D6C /* TestUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85D661A20559BAB003F6D6C /* TestUsers.swift */; };
 		F85D661D2055A991003F6D6C /* TokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85D661C2055A991003F6D6C /* TokenProvider.swift */; };
+		F8E9728F20596AC100C612C2 /* AuthorizationFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E9728E20596AC100C612C2 /* AuthorizationFilterTests.swift */; };
 		OBJ_1000 /* NetNamedPipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_236 /* NetNamedPipe.swift */; };
 		OBJ_1001 /* NetTCP.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_237 /* NetTCP.swift */; };
 		OBJ_1002 /* NetTCPSSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_238 /* NetTCPSSL.swift */; };
@@ -1053,6 +1054,7 @@
 		F85D661820558F6D003F6D6C /* TestTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TestTasks.swift; path = Seeds/TestTasks.swift; sourceTree = "<group>"; };
 		F85D661A20559BAB003F6D6C /* TestUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TestUsers.swift; path = Seeds/TestUsers.swift; sourceTree = "<group>"; };
 		F85D661C2055A991003F6D6C /* TokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProvider.swift; sourceTree = "<group>"; };
+		F8E9728E20596AC100C612C2 /* AuthorizationFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthorizationFilterTests.swift; path = Authorization/AuthorizationFilterTests.swift; sourceTree = "<group>"; };
 		"FileKit::FileKit::Product" /* FileKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"LoggerAPI::LoggerAPI::Product" /* LoggerAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoggerAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* AuthorizationFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationFilter.swift; sourceTree = "<group>"; };
@@ -1729,6 +1731,14 @@
 				F85D661A20559BAB003F6D6C /* TestUsers.swift */,
 			);
 			name = Seeds;
+			sourceTree = "<group>";
+		};
+		F8E9728D20596A7600C612C2 /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				F8E9728E20596AC100C612C2 /* AuthorizationFilterTests.swift */,
+			);
+			name = Authorization;
 			sourceTree = "<group>";
 		};
 		OBJ_109 /* Expression */ = {
@@ -2422,7 +2432,7 @@
 			path = ".build/checkouts/PerfectLib.git-3712999737848873669/Sources/PerfectLib";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -2431,7 +2441,6 @@
 				OBJ_91 /* Dependencies */,
 				OBJ_506 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_506 /* Products */ = {
@@ -2531,6 +2540,7 @@
 		OBJ_77 /* TaskerServerLibTests */ = {
 			isa = PBXGroup;
 			children = (
+				F8E9728D20596A7600C612C2 /* Authorization */,
 				F85D661720558F43003F6D6C /* Seeds */,
 				OBJ_78 /* Controllers */,
 				OBJ_82 /* Fakes */,
@@ -3303,7 +3313,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_506 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -3772,6 +3782,7 @@
 				OBJ_627 /* HealthControllerTests.swift in Sources */,
 				OBJ_628 /* TasksControllerTests.swift in Sources */,
 				OBJ_629 /* UsersControllerTests.swift in Sources */,
+				F8E9728F20596AC100C612C2 /* AuthorizationFilterTests.swift in Sources */,
 				OBJ_630 /* FakeAuthorizationService.swift in Sources */,
 				F85D661920558F6D003F6D6C /* TestTasks.swift in Sources */,
 				OBJ_631 /* FakeBaseRepository.swift in Sources */,

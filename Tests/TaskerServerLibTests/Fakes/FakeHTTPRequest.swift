@@ -43,6 +43,11 @@ class FakeHTTPRequest : HTTPRequest {
         setHeaderMock.expect(any())
     }
 
+    convenience init(path: String) {
+        self.init()
+        self.path = path
+    }
+    
     convenience init(method: HTTPMethod) {
         self.init()
         self.method = method
