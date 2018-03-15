@@ -14,7 +14,7 @@ class Roles {
         if roleAdministrator == nil {
             try databaseContext.set(Role.self).insert(Role(id: UUID(), createDate: Date(), name: "Administrator"))
         }
-        
+
         let roleUser = try databaseContext.set(Role.self).where(\Role.name == "User").first()
         if roleUser == nil {
             try databaseContext.set(Role.self).insert(Role(id: UUID(), createDate: Date(), name: "User"))

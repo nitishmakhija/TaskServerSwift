@@ -4,7 +4,7 @@ import TaskerServerLib
 
 do {
     let serverContext = ServerContext()
-        
+
     // Launch the HTTP server.
     try HTTPServer.launch(
         .server(

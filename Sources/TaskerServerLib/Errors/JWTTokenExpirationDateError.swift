@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum JWTTokenExpirationDateError : Error {
+enum JWTTokenExpirationDateError: Error {
     case tokenExpired
     case expiredDateNotExists
     case incorrectExpiredDate

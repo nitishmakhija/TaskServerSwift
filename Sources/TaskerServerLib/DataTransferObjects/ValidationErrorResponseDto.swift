@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ValidationErrorResponseDto : Codable {
+struct ValidationErrorResponseDto: Codable {
 
     public var message: String
     public var errors: [String: String]

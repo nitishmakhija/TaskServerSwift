@@ -9,7 +9,7 @@ import Foundation
 import Configuration
 
 extension ConfigurationManager {
-    
+
     public func build() -> Configuration {
         let configuration = Configuration(manager: self)
         return configuration

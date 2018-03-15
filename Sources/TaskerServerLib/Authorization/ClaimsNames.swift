@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ClaimsNames : String {
+public enum ClaimsNames: String {
     case uid = "uid"
     case name = "name"
     case roles = "roles"

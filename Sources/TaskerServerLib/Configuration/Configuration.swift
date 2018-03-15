@@ -15,7 +15,7 @@ public class Configuration {
     public var connectionString: String
     public var secret: String
     public var issuer: String
-    
+
     init(manager: ConfigurationManager) {
         self.serverName = manager["serverName"] as? String ?? ""
         self.serverPort = manager["serverPort"] as? Int ?? 0

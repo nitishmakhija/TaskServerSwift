@@ -16,7 +16,7 @@ extension String {
     }
 
     public func randomString(length: Int) -> String {
-        let charactersArray : [Character] = Array(self)
+        let charactersArray: [Character] = Array(self)
 
         var string = ""
         for _ in 0..<length {
@@ -28,7 +28,7 @@ extension String {
 
     public func generateHash(salt: String) throws -> String {
         let stringWithSalt = salt + self
-        
+
         guard let stringArray = stringWithSalt.digest(.sha256)?.encode(.base64) else {
             throw GeneratePasswordError()
         }

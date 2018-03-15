@@ -7,9 +7,9 @@
 
 import Foundation
 
-public class ValidationsError : Error {
+public class ValidationsError: Error {
     let errors: [String: String]
-    
+
     init(errors: [String: String]) {
         self.errors = errors
     }

@@ -8,9 +8,10 @@
 import Foundation
 
 public protocol AuthorizationHandlerProtocol {
-    
+
     var requirementType: AuthorizationRequirementProtocol.Type { get }
     var resourceType: EntityProtocol.Type { get }
-    
-    func handle(user: UserCredentials, resource: EntityProtocol, requirement: AuthorizationRequirementProtocol) throws -> Bool
+
+    func handle(user: UserCredentials, resource: EntityProtocol,
+                requirement: AuthorizationRequirementProtocol) throws -> Bool
 }

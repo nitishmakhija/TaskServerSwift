@@ -9,16 +9,16 @@ import Foundation
 import PerfectCRUD
 import PerfectHTTP
 
-class TasksController : Controller {
-    
+class TasksController: Controller {
+
     private let tasksService: TasksServiceProtocol
     private let authorizationService: AuthorizationServiceProtocol
-    
+
     init(tasksService: TasksServiceProtocol, authorizationService: AuthorizationServiceProtocol) {
         self.tasksService = tasksService
         self.authorizationService = authorizationService
     }
-    
+
     override func initRoutes() {
         self.add(method: .get, uri: "/tasks", authorization: .signedIn, handler: all)
         self.add(method: .get, uri: "/tasks/{id}", authorization: .signedIn, handler: get)
@@ -26,81 +26,76 @@ class TasksController : Controller {
         self.add(method: .put, uri: "/tasks/{id}", authorization: .signedIn, handler: put)
         self.add(method: .delete, uri: "/tasks/{id}", authorization: .signedIn, handler: delete)
     }
-    
-    public func all(request: HTTPRequest, response: HTTPResponse) {        
+
+    public func all(request: HTTPRequest, response: HTTPResponse) {
         do {
             let tasks = try self.tasksService.get()
-            
-            var tasksDtos:[TaskDto] = []
+
+            var tasksDtos: [TaskDto] = []
             for task in tasks {
                 tasksDtos.append(TaskDto(task: task))
             }
-            
+
             response.sendJson(tasksDtos)
-        }
-        catch {
+        } catch {
             response.sendInternalServerError(error: error)
         }
     }
-    
+
     public func get(request: HTTPRequest, response: HTTPResponse) {
         do {
             guard let stringId = request.urlVariables["id"], let id = UUID(uuidString: stringId) else {
                 return response.sendBadRequestError()
             }
-                
+
             guard let task = try self.tasksService.get(byId: id) else {
                 return response.sendNotFoundError()
             }
-            
+
             guard let user = request.getUserCredentials() else {
                 return response.sendUnauthorizedError()
             }
-            
+
             if try !self.authorizationService.authorize(user: user,
                                                         resource: task,
                                                         requirement: OperationAuthorizationRequirement(operation: .read)) {
                 return response.sendForbiddenError()
             }
-            
+
             let taskDto = TaskDto(task: task)
             return response.sendJson(taskDto)
-        }
-        catch {
+        } catch {
             response.sendInternalServerError(error: error)
         }
     }
-    
+
     public func post(request: HTTPRequest, response: HTTPResponse) {
         do {
             let taskDto = try request.getObjectFromRequest(TaskDto.self)
             let task = taskDto.toTask()
-            
+
             guard let user = request.getUserCredentials() else {
                 return response.sendUnauthorizedError()
             }
-            
+
             task.userId = user.id
             try self.tasksService.add(entity: task)
-            
+
             let addedTaskDto = TaskDto(task: task)
             return response.sendJson(addedTaskDto)
-        }
-        catch let error where error is DecodingError || error is RequestError {
+        } catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()
-        }
-        catch let error as ValidationsError {
+        } catch let error as ValidationsError {
             response.sendValidationsError(error: error)
-        }
-        catch {
+        } catch {
             response.sendInternalServerError(error: error)
         }
     }
-    
+
     public func put(request: HTTPRequest, response: HTTPResponse) {
         do {
             let taskDto = try request.getObjectFromRequest(TaskDto.self)
-            
+
             guard let taskId = taskDto.id else {
                 return response.sendNotFoundError()
             }
@@ -108,40 +103,36 @@ class TasksController : Controller {
             guard let task = try self.tasksService.get(byId: taskId)  else {
                 return response.sendNotFoundError()
             }
-            
+
             task.isFinished = taskDto.isFinished
             task.name = taskDto.name
-            
+
             try self.tasksService.update(entity: task)
-            
+
             let updatedTaskDto = TaskDto(task: task)
             return response.sendJson(updatedTaskDto)
-        }
-        catch let error where error is DecodingError || error is RequestError {
+        } catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()
-        }
-        catch let error as ValidationsError {
+        } catch let error as ValidationsError {
             response.sendValidationsError(error: error)
-        }
-        catch {
+        } catch {
             response.sendInternalServerError(error: error)
         }
     }
-    
+
     public func delete(request: HTTPRequest, response: HTTPResponse) {
         do {
             guard let stringId = request.urlVariables["id"], let id = UUID(uuidString: stringId) else {
                 return response.sendBadRequestError()
             }
 
-            guard let _ = try self.tasksService.get(byId: id) else {
+            guard try self.tasksService.get(byId: id) != nil else {
                 return response.sendNotFoundError()
             }
-            
+
             try self.tasksService.delete(entityWithId: id)
-            return response.sendOk();
-        }
-        catch {
+            return response.sendOk()
+        } catch {
             response.sendInternalServerError(error: error)
         }
     }

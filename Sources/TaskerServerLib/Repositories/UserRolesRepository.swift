@@ -9,14 +9,14 @@ import Foundation
 import PerfectCRUD
 
 public protocol UserRolesRepositoryProtocol {
-    func get(forUserId id: UUID) throws -> [Role]
+    func get(forUserId userId: UUID) throws -> [Role]
     func set(roles: [Role]?, forUserId userid: UUID) throws
 }
 
-class UserRolesRepository : BaseRepository<User>, UserRolesRepositoryProtocol {
-    
+class UserRolesRepository: BaseRepository<User>, UserRolesRepositoryProtocol {
+
     public func get(forUserId userId: UUID) throws -> [Role] {
-        
+
         let userRolesQuery = try self.databaseContext.set(UserRole.self).where(\UserRole.userId == userId).select()
 
         var roleIds: [UUID] = []
@@ -51,7 +51,8 @@ class UserRolesRepository : BaseRepository<User>, UserRolesRepositoryProtocol {
 
         let rolesQuery = try self.databaseContext.set(Role.self).where(\Role.name ~ roleNames).select()
         for role in rolesQuery {
-            try self.databaseContext.set(UserRole.self).insert(UserRole(id: UUID(), createDate: Date(), userId: userId, roleId: role.id))
+            try self.databaseContext.set(UserRole.self).insert(UserRole(id: UUID(), createDate: Date(),
+                                                                        userId: userId, roleId: role.id))
         }
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct BadRequestResponseDto : Codable {
+struct BadRequestResponseDto: Codable {
 
     public var message: String
 

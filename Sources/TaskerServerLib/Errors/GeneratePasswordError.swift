@@ -7,5 +7,5 @@
 
 import Foundation
 
-struct GeneratePasswordError : Error {
+struct GeneratePasswordError: Error {
 }

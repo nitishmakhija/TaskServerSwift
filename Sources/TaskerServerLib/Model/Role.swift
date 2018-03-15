@@ -7,12 +7,12 @@
 
 import Foundation
 
-public class Role : EntityProtocol {
-    
+public class Role: EntityProtocol {
+
     public var id: UUID
     public var createDate: Date
     public var name: String
-    
+
     init(id: UUID, createDate: Date, name: String) {
         self.id = id
         self.createDate = createDate

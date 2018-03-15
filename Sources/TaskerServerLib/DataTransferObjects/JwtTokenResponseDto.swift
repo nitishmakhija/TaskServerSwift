@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct JwtTokenResponseDto : Codable {
+struct JwtTokenResponseDto: Codable {
 
     public var token: String
 

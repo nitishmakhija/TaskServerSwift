@@ -17,29 +17,29 @@ public enum AuthorizationPolicy {
 public class Controller {
     var allRoutes = Routes()
     var routesWithAuthorization = Routes()
-    
+
     init() {
         initRoutes()
     }
-    
+
     func initRoutes() {
     }
-    
+
     public func add(method: HTTPMethod, uri: String, authorization: AuthorizationPolicy, handler: @escaping RequestHandler) {
-        
+
         let route = Route(method: method, uri: uri, handler: { (request: HTTPRequest, response: HTTPResponse) -> Void in
             if self.isUserHasAccess(request: request, response: response, authorization: authorization) {
                 handler(request, response)
             }
         })
-        
+
         self.allRoutes.add(route)
         addToRoutesWithAutorization(authorization, route)
-        
+
         //let controllerName = String(describing: type(of: self))
         //print("Controller: \(controllerName), method: \(method), uri: \(uri)")
     }
-    
+
     private func addToRoutesWithAutorization(_ authorization: AuthorizationPolicy, _ route: Route) {
         switch authorization {
         case AuthorizationPolicy.signedIn, AuthorizationPolicy.inRole(_):
@@ -48,12 +48,12 @@ public class Controller {
             break
         }
     }
-    
+
     private func isUserHasAccess(request: HTTPRequest, response: HTTPResponse, authorization: AuthorizationPolicy) -> Bool {
-        
+
         switch authorization {
         case AuthorizationPolicy.signedIn:
-            guard let _ = request.getUserCredentials() else {
+            guard request.getUserCredentials() != nil else {
                 response.sendUnauthorizedError()
                 return false
             }
@@ -62,14 +62,14 @@ public class Controller {
                 response.sendUnauthorizedError()
                 return false
             }
-            
+
             if roles.count > 0 {
-                
+
                 guard let userRoles = userCredentials.roles else {
                     response.sendForbiddenError()
                     return false
                 }
-                
+
                 var isUserInRole = false
                 for role in roles {
                     if userRoles.contains(role) {
@@ -77,17 +77,17 @@ public class Controller {
                         break
                     }
                 }
-                
+
                 if !isUserInRole {
                     response.sendForbiddenError()
                     return false
                 }
             }
-            
+
         default:
             break
         }
-        
+
         return true
     }
 }

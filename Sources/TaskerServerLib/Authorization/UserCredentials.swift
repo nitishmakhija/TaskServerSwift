@@ -9,9 +9,9 @@ import Foundation
 
 public class UserCredentials {
     public let id: UUID
-    public let name:String
-    public let roles:[String]?
-    
+    public let name: String
+    public let roles: [String]?
+
     init(id: UUID, name: String, roles: [String]?) {
         self.id = id
         self.name = name

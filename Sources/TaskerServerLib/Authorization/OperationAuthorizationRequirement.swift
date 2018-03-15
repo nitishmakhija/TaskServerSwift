@@ -14,11 +14,10 @@ public enum Operations {
     case delete
 }
 
-public class OperationAuthorizationRequirement : AuthorizationRequirementProtocol {
+public class OperationAuthorizationRequirement: AuthorizationRequirementProtocol {
     public let operation: Operations
-    
+
     init(operation: Operations) {
         self.operation = operation
     }
 }
-

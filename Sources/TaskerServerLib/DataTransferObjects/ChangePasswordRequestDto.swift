@@ -7,14 +7,13 @@
 
 import Foundation
 
-struct ChangePasswordRequestDto : Codable {
+struct ChangePasswordRequestDto: Codable {
 
     public var email: String
     public var password: String
-        
+
     init(email: String, password: String) {
         self.email = email
         self.password = password
     }
 }
-

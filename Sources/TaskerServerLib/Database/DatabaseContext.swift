@@ -19,24 +19,24 @@ public class DatabaseContext: DatabaseContextProtocol {
     private var sqlConnection: SqlConnectionProtocol
     private var database: Database<SQLiteDatabaseConfiguration>
     private let lock = NSLock()
-    
+
     public func set<T: Codable>(_ type: T.Type) -> Table<T, Database<SQLiteDatabaseConfiguration>> {
         self.validateConnection()
         return database.table(type)
     }
-    
+
     init(sqlConnection: SqlConnectionProtocol) {
         self.sqlConnection = sqlConnection
         let databaseConfiguration = sqlConnection.getDatabaseConfiguration() as! SQLiteDatabaseConfiguration
         self.database = Database(configuration: databaseConfiguration)
     }
-    
+
     private func validateConnection() {
-        
+
         if self.sqlConnection.isValidConnection() {
             return
         }
-        
+
         lock.lock()
         if !self.sqlConnection.isValidConnection() {
             let databaseConfiguration = sqlConnection.getDatabaseConfiguration() as! SQLiteDatabaseConfiguration
@@ -44,15 +44,15 @@ public class DatabaseContext: DatabaseContextProtocol {
         }
         lock.unlock()
     }
-    
+
     public func executeMigrations(policy: TableCreatePolicy) throws {
         self.validateConnection()
-        
+
         try self.database.create(Task.self, policy: policy)
         try self.database.create(User.self, policy: policy)
         try self.database.create(Role.self, policy: policy)
         try self.database.create(UserRole.self, policy: policy)
-        
+
         try Roles.seed(databaseContext: self)
         try Users.seed(databaseContext: self)
     }

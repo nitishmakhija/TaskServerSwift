@@ -10,19 +10,19 @@ import PerfectHTTP
 import PerfectSQLite
 
 extension HTTPResponse {
-    
-    func sendJson<T>(_ value: T) where T : Encodable {
+
+    func sendJson<T>(_ value: T) where T: Encodable {
         let json = self.encode(value)
-        
+
         self.setHeader(.contentType, value: "text/json")
         self.appendBody(string: json).completed()
     }
-    
+
     func sendOk() {
         self.status = .ok
         self.completed()
     }
-    
+
     func sendNotFoundError() {
         self.status = .notFound
         self.completed()
@@ -32,51 +32,54 @@ extension HTTPResponse {
         self.status = .forbidden
         self.completed()
     }
-    
+
     func sendUnauthorizedError() {
         self.addHeader(.wwwAuthenticate, value: "Bearer realm=\"TaskerServer\"")
         self.status = .unauthorized
         self.completed()
     }
-    
+
     func sendBadRequestError() {
         self.status = .badRequest
-        let badRequestResponse = BadRequestResponseDto(message: "Error during parsing your request. Verify that all parameters and json was correct.")
+        let badRequestResponse = BadRequestResponseDto(
+            message: "Error during parsing your request. Verify that all parameters and json was correct.")
         let errorJosn = encode(badRequestResponse)
         self.appendBody(string: errorJosn).completed()
     }
-    
+
     func sendValidationsError(error: ValidationsError) {
         self.status = .badRequest
-        let validationErrorResponse = ValidationErrorResponseDto(message: "Error during parsing your request. Verify that all parameters and json was correct.", errors: error.errors)
+        let validationErrorResponse = ValidationErrorResponseDto(
+            message: "Error during parsing your request. Verify that all parameters and json was correct.",
+            errors: error.errors)
         let errorJosn = encode(validationErrorResponse)
         self.appendBody(string: errorJosn).completed()
     }
-    
+
     func sendInternalServerError(error: Error) {
         self.status = .internalServerError
-        
-        var errorDictionary: [String:String] = [:]
+
+        var errorDictionary: [String: String] = [:]
         errorDictionary["error"] = error.localizedDescription
-        
+
         switch error {
         case let sqliteError as SQLiteCRUDError:
             errorDictionary["description"] = sqliteError.description
         default:
             break
         }
-        
+
         let errorJosn = encode(errorDictionary)
         self.appendBody(string: errorJosn).completed()
     }
-    
-    private func encode<T>(_ value: T) -> String where T : Encodable {
+
+    private func encode<T>(_ value: T) -> String where T: Encodable {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         let jsonData = try! encoder.encode(value)
         let json = String(data: jsonData, encoding: .utf8)!
-        
+
         return json
     }
-    
+
 }

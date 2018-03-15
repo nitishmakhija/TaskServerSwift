@@ -16,57 +16,57 @@ public protocol UsersServiceProtocol {
     func get(byEmail email: String) throws -> User?
 }
 
-public class UsersService :  UsersServiceProtocol {
-    
+public class UsersService: UsersServiceProtocol {
+
     private let usersRepository: UsersRepositoryProtocol
     private let userRolesRepository: UserRolesRepositoryProtocol
     private let userValidator: UserValidatorProtocol
-    
+
     init(userValidator: UserValidatorProtocol, usersRepository: UsersRepositoryProtocol, userRolesRepository: UserRolesRepositoryProtocol) {
         self.userValidator = userValidator
         self.usersRepository = usersRepository
         self.userRolesRepository = userRolesRepository
     }
-    
+
     public func get() throws -> [User] {
         return try self.usersRepository.get()
     }
-    
+
     public func get(byId id: UUID) throws -> User? {
         let user =  try self.usersRepository.get(byId: id)
         try self.assignUserRoles(forUser: user)
         return user
     }
-    
+
     public func add(entity: User) throws {
-        
+
         if let errors = self.userValidator.getValidationErrors(entity, isNewUser: true) {
             throw ValidationsError(errors: errors)
         }
-        
+
         entity.salt = String(randomWithLength: 14)
         entity.password = try entity.password.generateHash(salt: entity.salt)
-        
+
         try self.usersRepository.add(entity: entity)
         try self.userRolesRepository.set(roles: entity.roles, forUserId: entity.id)
     }
-    
+
     public func update(entity: User) throws {
-        
+
         if let errors = self.userValidator.getValidationErrors(entity, isNewUser: false) {
             throw ValidationsError(errors: errors)
         }
-        
+
         try self.usersRepository.update(entity: entity)
         try self.userRolesRepository.set(roles: entity.roles, forUserId: entity.id)
     }
-    
+
     public func delete(entityWithId id: UUID) throws {
         try self.usersRepository.delete(entityWithId: id)
     }
-    
+
     public func get(byEmail email: String) throws -> User? {
-        let user = try self.usersRepository.get(byEmail:email)
+        let user = try self.usersRepository.get(byEmail: email)
         try self.assignUserRoles(forUser: user)
         return user
     }

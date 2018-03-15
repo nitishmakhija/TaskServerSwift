@@ -7,14 +7,14 @@
 
 import Foundation
 
-public class Task : EntityProtocol {
-    
+public class Task: EntityProtocol {
+
     public var id: UUID
     public var createDate: Date
     public var name: String
     public var isFinished: Bool
     public var userId: UUID
-    
+
     init(id: UUID, createDate: Date, name: String, isFinished: Bool, userId: UUID) {
         self.id = id
         self.createDate = createDate

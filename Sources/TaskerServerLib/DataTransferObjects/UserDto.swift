@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserDto : Codable {
+struct UserDto: Codable {
 
     public var id: UUID?
     public var createDate: Date
@@ -15,7 +15,7 @@ struct UserDto : Codable {
     public var email: String
     public var isLocked: Bool
     public var roles: [String]?
-    
+
     init(id: UUID, createDate: Date, name: String, email: String, isLocked: Bool) {
         self.id = id
         self.createDate = createDate
@@ -28,7 +28,7 @@ struct UserDto : Codable {
         self.init(id: id, createDate: createDate, name: name, email: email, isLocked: isLocked)
         self.roles = roles
     }
-    
+
     init(user: User) {
         self.id = user.id
         self.createDate = user.createDate
@@ -37,20 +37,20 @@ struct UserDto : Codable {
         self.isLocked = user.isLocked
         self.roles = user.getRolesNames()
     }
-    
+
     public func toUser() -> User {
         return User(
             id: self.id ?? UUID.empty(),
             createDate: self.createDate,
-            name: self.name, 
-            email: self.email, 
-            password: "", 
-            salt: "", 
+            name: self.name,
+            email: self.email,
+            password: "",
+            salt: "",
             isLocked: self.isLocked,
             roles: self.getRoles()
         )
     }
-    
+
     public func getRoles() -> [Role]? {
         var roles: [Role]?
         if let userRoles = self.roles {
@@ -59,7 +59,7 @@ struct UserDto : Codable {
                 roles!.append(Role(id: UUID.empty(), createDate: Date(), name: role))
             }
         }
-        
+
         return roles
     }
 }

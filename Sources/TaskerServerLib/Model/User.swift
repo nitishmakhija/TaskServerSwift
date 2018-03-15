@@ -7,8 +7,8 @@
 
 import Foundation
 
-public class User : EntityProtocol {
-    
+public class User: EntityProtocol {
+
     public var id: UUID
     public var createDate: Date
     public var name: String
@@ -28,20 +28,22 @@ public class User : EntityProtocol {
         self.isLocked = isLocked
     }
 
-    convenience init(id: UUID, createDate: Date, name: String, email: String, password: String, salt: String, isLocked: Bool, roles: [Role]?) {
-        self.init(id: id, createDate: createDate, name: name, email: email, password: password, salt: salt, isLocked: isLocked)
-        
+    convenience init(id: UUID, createDate: Date, name: String, email: String,
+                     password: String, salt: String, isLocked: Bool, roles: [Role]?) {
+        self.init(id: id, createDate: createDate, name: name, email: email,
+                  password: password, salt: salt, isLocked: isLocked)
+
         self.roles = roles
     }
-    
+
     func getRolesNames() -> [String] {
-        var roles:[String] = []
+        var roles: [String] = []
         if let userRoles = self.roles {
             for role in userRoles {
                 roles.append(role.name)
             }
         }
-        
+
         return roles
     }
 }

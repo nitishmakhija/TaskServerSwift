@@ -7,5 +7,5 @@
 
 import Foundation
 
-public class AuthorizationTypeMismatchError : Error {
+public class AuthorizationTypeMismatchError: Error {
 }
