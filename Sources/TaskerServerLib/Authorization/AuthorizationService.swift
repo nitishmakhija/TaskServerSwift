@@ -30,8 +30,10 @@ public class AuthorizationService: AuthorizationServiceProtocol {
 
     public func authorize(user: UserCredentials, resource: EntityProtocol, requirement: AuthorizationRequirementProtocol) throws -> Bool {
 
+        var isHandlerExists = false
         for authorizationHandler in authorizationHandlers {
             if authorizationHandler.resourceType == type(of: resource) && authorizationHandler.requirementType == type(of: requirement) {
+                isHandlerExists = true
 
                 let authorizationResult = try authorizationHandler.handle(user: user, resource: resource, requirement: requirement)
                 if authorizationResult == false {
@@ -40,7 +42,7 @@ public class AuthorizationService: AuthorizationServiceProtocol {
             }
         }
 
-        return true
+        return isHandlerExists
     }
 
     public func authorize(user: UserCredentials, resource: EntityProtocol, policy: String) throws -> Bool {
@@ -52,8 +54,10 @@ public class AuthorizationService: AuthorizationServiceProtocol {
                     return false
                 }
             }
+
+            return true
         }
 
-        return true
+        return false
     }
 }

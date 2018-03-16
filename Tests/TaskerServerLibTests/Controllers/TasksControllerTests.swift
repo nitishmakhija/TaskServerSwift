@@ -14,7 +14,7 @@ import Dobby
 
 class TasksControllerTests: XCTestCase {
     
-    let serverContext = TestServerContext()
+    let serverContext = try! TestServerContext()
     
     func testInitRoutesShouldInitializeGetAllTasksRoute() {
         

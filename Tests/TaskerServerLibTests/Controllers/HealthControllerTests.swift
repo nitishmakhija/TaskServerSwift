@@ -4,7 +4,7 @@ import PerfectHTTP
 
 class HealthControllerTests: XCTestCase {
     
-    let serverContext = TestServerContext()
+    let serverContext = try! TestServerContext()
     
     func testGetHealthShouldReturnMessageAboutHealth() {
         

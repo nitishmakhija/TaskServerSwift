@@ -303,4 +303,15 @@ class AuthorizationFilterTests : XCTestCase {
             }
         }
     }
+    
+    static var allTests = [
+        ("testFilterShouldCallCallbackFunctionIfRouteIsForAnonymousUser", testFilterShouldCallCallbackFunctionIfRouteIsForAnonymousUser),
+        ("testFilterShouldReturnUnauthorizedWhenAuthorizationHeaderNotExists", testFilterShouldReturnUnauthorizedWhenAuthorizationHeaderNotExists),
+        ("testFilterShouldReturnUnauthorizeWhenAuthorizationHeaderNotContainsBearer", testFilterShouldReturnUnauthorizeWhenAuthorizationHeaderNotContainsBearer),
+        ("testFilterShouldReturnUnauthorizeWhenTokenIsNotCorrect", testFilterShouldReturnUnauthorizeWhenTokenIsNotCorrect),
+        ("testFilterShouldReturnUnauthorizeWhenTokenIsNotValid", testFilterShouldReturnUnauthorizeWhenTokenIsNotValid),
+        ("testFilterShouldReturnUnauthorizeWhenTokenExpired", testFilterShouldReturnUnauthorizeWhenTokenExpired),
+        ("testFilterShouldCallCallbackFunctionIfAuthorizationWasSuccessfull", testFilterShouldCallCallbackFunctionIfAuthorizationWasSuccessfull),
+        ("testFilterShouldSetUpUserCredentialsIfAuthorizationWasSuccessfull", testFilterShouldSetUpUserCredentialsIfAuthorizationWasSuccessfull)   
+    ]
 }
