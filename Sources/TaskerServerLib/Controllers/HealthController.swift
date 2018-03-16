@@ -16,10 +16,14 @@ class HealthController: Controller {
 
     func get(request: HTTPRequest, response: HTTPResponse) {
 
-        let scoreArray: [String: Any] = ["message": "I'm fine and running!"]
-        let encoded = try! scoreArray.jsonEncodedString()
+        do {
+            let scoreArray: [String: Any] = ["message": "I'm fine and running!"]
+            let encoded = try scoreArray.jsonEncodedString()
 
-        response.setHeader(.contentType, value: "text/json")
-        response.appendBody(string: encoded).completed()
+            response.setHeader(.contentType, value: "text/json")
+            response.appendBody(string: encoded).completed()
+        } catch {
+            response.sendInternalServerError(error: error)
+        }
     }
 }

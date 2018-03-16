@@ -10,29 +10,29 @@ import Dip
 import PerfectSQLite
 
 extension DependencyContainer {
-    public func configure(withConfiguration configuration: Configuration) {
+    public func configure(withConfiguration configuration: Configuration) throws {
         self.addConfiguration(toContainer: self, configuration: configuration)
-        self.addDatabase(toContainer: self)
+        try self.addDatabase(toContainer: self)
         self.addRepositories(toContainer: self)
         self.addServices(toContainer: self)
         self.addControllers(toContainer: self)
         self.addValidators(toContainer: self)
     }
 
-    public func resolveAllControllers() -> [Controller] {
+    public func resolveAllControllers() throws -> [Controller] {
         let controllers: [Controller] = [
-            try! self.resolve() as HealthController,
-            try! self.resolve() as TasksController,
-            try! self.resolve() as UsersController,
-            try! self.resolve() as AccountController
+            try self.resolve() as HealthController,
+            try self.resolve() as TasksController,
+            try self.resolve() as UsersController,
+            try self.resolve() as AccountController
         ]
 
         return controllers
     }
 
-    private func addDatabase(toContainer container: DependencyContainer) {
+    private func addDatabase(toContainer container: DependencyContainer) throws {
         container.register(.singleton) { SQLiteConnection(configuration: $0) as SqlConnectionProtocol }
-        container.register { DatabaseContext(sqlConnection: $0) as DatabaseContextProtocol }
+        container.register { try DatabaseContext(sqlConnection: $0) as DatabaseContextProtocol }
     }
 
     private func addConfiguration(toContainer container: DependencyContainer, configuration: Configuration) {

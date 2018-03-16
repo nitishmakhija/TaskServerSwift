@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol UserValidatorProtocol {
-    func getValidationErrors(_ user: User, isNewUser: Bool) -> [String: String]?
+    func getValidationErrors(_ user: User, isNewUser: Bool) throws -> [String: String]?
 }
 
 public class UserValidator: UserValidatorProtocol {
@@ -19,12 +19,12 @@ public class UserValidator: UserValidatorProtocol {
         self.usersRepository = usersRepository
     }
 
-    public func getValidationErrors(_ user: User, isNewUser: Bool) -> [String: String]? {
+    public func getValidationErrors(_ user: User, isNewUser: Bool) throws -> [String: String]? {
 
         var errors: [String: String] = [:]
 
         if isNewUser {
-            if try! self.usersRepository.get(byEmail: user.email) != nil {
+            if try self.usersRepository.get(byEmail: user.email) != nil {
                 errors["email"] = "User with following email exists."
             }
         }

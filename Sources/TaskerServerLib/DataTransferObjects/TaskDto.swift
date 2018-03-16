@@ -10,7 +10,7 @@ import Foundation
 struct TaskDto: Codable {
 
     public var id: UUID?
-    public var createDate: Date
+    public var createDate: Date?
     public var name: String
     public var isFinished: Bool
 
@@ -29,7 +29,10 @@ struct TaskDto: Codable {
     }
 
     public func toTask() -> Task {
-        return Task(id: self.id ?? UUID.empty(), createDate: self.createDate, name: self.name,
-                    isFinished: self.isFinished, userId: UUID.empty())
+        return Task(id: self.id ?? UUID.empty(),
+                    createDate: self.createDate ?? Date(),
+                    name: self.name,
+                    isFinished: self.isFinished,
+                    userId: UUID.empty())
     }
 }

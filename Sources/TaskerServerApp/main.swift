@@ -3,7 +3,7 @@ import PerfectHTTPServer
 import TaskerServerLib
 
 do {
-    let serverContext = ServerContext()
+    let serverContext = try ServerContext()
 
     // Launch the HTTP server.
     try HTTPServer.launch(

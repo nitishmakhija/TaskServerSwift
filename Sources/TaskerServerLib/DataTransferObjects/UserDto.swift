@@ -10,7 +10,7 @@ import Foundation
 struct UserDto: Codable {
 
     public var id: UUID?
-    public var createDate: Date
+    public var createDate: Date?
     public var name: String
     public var email: String
     public var isLocked: Bool
@@ -41,7 +41,7 @@ struct UserDto: Codable {
     public func toUser() -> User {
         return User(
             id: self.id ?? UUID.empty(),
-            createDate: self.createDate,
+            createDate: self.createDate ?? Date(),
             name: self.name,
             email: self.email,
             password: "",

@@ -8,6 +8,7 @@
 import Foundation
 import PerfectHTTP
 import PerfectSQLite
+import PerfectLib
 
 extension HTTPResponse {
 
@@ -76,8 +77,14 @@ extension HTTPResponse {
     private func encode<T>(_ value: T) -> String where T: Encodable {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
-        let jsonData = try! encoder.encode(value)
-        let json = String(data: jsonData, encoding: .utf8)!
+
+        var json = ""
+        do {
+            let jsonData = try encoder.encode(value)
+            json = String(data: jsonData, encoding: .utf8)!
+        } catch {
+            Log.error(message: "Error during serializable object to JSON")
+        }
 
         return json
     }

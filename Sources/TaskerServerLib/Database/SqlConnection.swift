@@ -11,7 +11,7 @@ import PerfectSQLite
 import FileKit
 
 public protocol SqlConnectionProtocol {
-    func getDatabaseConfiguration() -> DatabaseConfigurationProtocol
+    func getDatabaseConfiguration() throws -> DatabaseConfigurationProtocol
     func isValidConnection() -> Bool
 }
 
@@ -21,7 +21,7 @@ class SQLiteConnection: SqlConnectionProtocol {
     private var configuration: SQLiteDatabaseConfiguration?
     private let lock = NSLock()
 
-    public func getDatabaseConfiguration() -> DatabaseConfigurationProtocol {
+    public func getDatabaseConfiguration() throws -> DatabaseConfigurationProtocol {
 
         if self.configuration != nil && isValidConnection() {
             return self.configuration!
@@ -30,7 +30,7 @@ class SQLiteConnection: SqlConnectionProtocol {
         lock.lock()
         if self.configuration == nil {
             let databaseUrl = self.getDatabaseFileUrl()
-            self.configuration = try! SQLiteDatabaseConfiguration(databaseUrl)
+            self.configuration = try SQLiteDatabaseConfiguration(databaseUrl)
         }
         lock.unlock()
 

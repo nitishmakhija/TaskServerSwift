@@ -23,13 +23,13 @@ open class ServerContext {
     public var databaseContext: DatabaseContextProtocol!
     public var authorizationService: AuthorizationServiceProtocol!
 
-    public init() {
+    public init() throws {
         self.initConfiguration()
-        self.initDependencyContainer()
-        self.initRoutes()
-        self.initDatabase()
+        try self.initDependencyContainer()
+        try self.initRoutes()
+        try self.initDatabase()
         self.initAuthorization()
-        self.initResourceBasedAuthorization()
+        try self.initResourceBasedAuthorization()
     }
 
     public func initConfiguration() {
@@ -41,21 +41,21 @@ open class ServerContext {
         self.configuration = configurationManager.build()
     }
 
-    public func initDependencyContainer() {
+    public func initDependencyContainer() throws {
         self.container = DependencyContainer()
-        self.container.configure(withConfiguration: configuration)
+        try self.container.configure(withConfiguration: configuration)
     }
 
-    public func initRoutes() {
-        self.controllers = container.resolveAllControllers()
+    public func initRoutes() throws {
+        self.controllers = try container.resolveAllControllers()
 
         allRoutes = Routes()
         allRoutes.configure(allRoutes: controllers)
     }
 
-    public func initDatabase() {
-        self.databaseContext = try! container.resolve() as DatabaseContextProtocol
-        try! self.databaseContext.executeMigrations(policy: .reconcileTable)
+    public func initDatabase() throws {
+        self.databaseContext = try container.resolve() as DatabaseContextProtocol
+        try self.databaseContext.executeMigrations(policy: .reconcileTable)
     }
 
     public func initAuthorization() {
@@ -68,8 +68,8 @@ open class ServerContext {
         ]
     }
 
-    public func initResourceBasedAuthorization() {
-        authorizationService = try! container.resolve() as AuthorizationServiceProtocol
+    public func initResourceBasedAuthorization() throws {
+        authorizationService = try container.resolve() as AuthorizationServiceProtocol
         authorizationService.add(authorizationHandler: TaskOperationAuthorizationHandler())
     }
 }
