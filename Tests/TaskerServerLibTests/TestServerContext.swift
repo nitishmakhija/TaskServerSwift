@@ -5,51 +5,49 @@
 //  Created by Marcin Czachurski on 11.03.2018.
 //
 
+// swiftlint:disable force_try
+
 import Foundation
 @testable import TaskerServerLib
 
-class TestServerContext : ServerContext {
-    
-    private var _tasksController: TasksController!
-    private var _usersController: UsersController!
-    private var _healthController: HealthController!
-    
-    var tasksController: TasksController {
-        get {
-            if self._tasksController == nil {
-                self._tasksController = try! self.container.resolve() as TasksController
-            }
-            
-            return self._tasksController
-        }
+class TestServerContext: ServerContext {
+
+    private override init() throws {
+        try super.init()
     }
 
-    var usersController: UsersController {
-        get {
-            if self._usersController == nil {
-                self._usersController = try! self.container.resolve() as UsersController
-            }
-            
-            return self._usersController
-        }
-    }
-    
-    var healthController: HealthController {
-        get {
-            if self._healthController == nil {
-                self._healthController = try! self.container.resolve() as HealthController
-            }
-            
-            return self._healthController
-        }
-    }
-    
+    public static var shared: TestServerContext = {
+        return try! TestServerContext()
+    }()
+
+    lazy var tasksController: TasksController = {
+        let tasksController = try! self.container.resolve() as TasksController
+        return tasksController
+    }()
+
+    lazy var usersController: UsersController = {
+        let usersController = try! self.container.resolve() as UsersController
+        return usersController
+    }()
+
+    lazy var healthController: HealthController = {
+        let healthController = try! self.container.resolve() as HealthController
+        return healthController
+    }()
+
+    lazy var accountController: AccountController = {
+        let accountController = try! self.container.resolve() as AccountController
+        return accountController
+    }()
+
     public override func initDatabase() {
         self.databaseContext = try! container.resolve() as DatabaseContextProtocol
         try! self.databaseContext.executeMigrations(policy: .dropTable)
-        
+
+        // swiftlint:disable force_cast
         try! TestUsers.seed(databaseContext: databaseContext as! DatabaseContext)
         try! TestTasks.seed(databaseContext: databaseContext as! DatabaseContext)
+        // swiftlint:enable force_cast
     }
-    
+
 }

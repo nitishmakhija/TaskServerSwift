@@ -8,5 +8,5 @@
 import Foundation
 import TaskerServerLib
 
-class FakeTasksRepository : FakeBaseRepository<Task>, TasksRepositoryProtocol {    
+class FakeTasksRepository: FakeBaseRepository<Task>, TasksRepositoryProtocol {
 }

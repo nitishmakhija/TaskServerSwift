@@ -9,13 +9,13 @@ import Foundation
 import TaskerServerLib
 import Dobby
 
-class FakeUsersRepository : FakeBaseRepository<User>, UsersRepositoryProtocol {
-    
+class FakeUsersRepository: FakeBaseRepository<User>, UsersRepositoryProtocol {
+
     let getByEmailMock = Mock<(String)>()
     let getByEmailStub = Stub<(String), User?>()
-    
+
     func get(byEmail email: String) throws -> User? {
         getByEmailMock.record((email))
-        return try! getByEmailStub.invoke((email))
+        return try getByEmailStub.invoke((email))
     }
 }
