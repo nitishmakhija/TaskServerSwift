@@ -31,8 +31,7 @@ extension DependencyContainer {
     }
 
     private func addDatabase(toContainer container: DependencyContainer) throws {
-        container.register(.singleton) { SQLiteConnection(configuration: $0) as SqlConnectionProtocol }
-        container.register { try DatabaseContext(sqlConnection: $0) as DatabaseContextProtocol }
+        container.register { DatabaseContext(configuration: $0) as DatabaseContextProtocol }
     }
 
     private func addConfiguration(toContainer container: DependencyContainer, configuration: Configuration) {
