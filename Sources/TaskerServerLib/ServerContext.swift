@@ -22,6 +22,7 @@ open class ServerContext {
     public var controllers: [Controller]!
     public var databaseContext: DatabaseContextProtocol!
     public var authorizationService: AuthorizationServiceProtocol!
+    public var openAPIController: OpenAPIController!
 
     public init() throws {
         self.initConfiguration()
@@ -51,6 +52,9 @@ open class ServerContext {
 
         allRoutes = Routes()
         allRoutes.configure(allRoutes: controllers)
+
+        self.openAPIController = OpenAPIController()
+        allRoutes.add(self.openAPIController.getRoute())
     }
 
     public func initDatabase() throws {
