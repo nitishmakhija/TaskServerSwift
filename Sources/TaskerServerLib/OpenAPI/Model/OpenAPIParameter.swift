@@ -9,12 +9,11 @@ import Foundation
 
 // Describes a single operation parameter.
 // A unique parameter is defined by a combination of a name and location.
-class OpenAPIParameter: Codable {
-    var ref: String? // TODO: This should be in json as $ref
+class OpenAPIParameter: Encodable {
+    var ref: String?
 
-    // TODO: Here we have only fixed fields (documentation describes more).
     var name: String?
-    var `in`: OpenAPIParameterLocation = OpenAPIParameterLocation.path
+    var parameterLocation: OpenAPIParameterLocation = OpenAPIParameterLocation.path
     var description: String?
     var required: Bool = false
     var deprecated: Bool = false
@@ -26,5 +25,15 @@ class OpenAPIParameter: Codable {
 
     init(ref: String) {
         self.ref = ref
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case ref = "$ref"
+        case name
+        case parameterLocation = "in"
+        case description
+        case required
+        case deprecated
+        case allowEmptyValue
     }
 }

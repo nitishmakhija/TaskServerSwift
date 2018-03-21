@@ -8,11 +8,19 @@
 import Foundation
 
 // Object with example description.
-class OpenAPIExample: Codable {
-    var ref: String? // TODO: This should be in json as $ref
+class OpenAPIExample: Encodable {
+    var ref: String?
 
     var summary: String?
     var description: String?
     var value: String?
     var externalValue: String?
+
+    private enum CodingKeys: String, CodingKey {
+        case ref = "$ref"
+        case summary
+        case description
+        case value
+        case externalValue
+    }
 }

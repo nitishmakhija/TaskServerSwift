@@ -8,7 +8,7 @@
 import Foundation
 
 // This is the root document object of the OpenAPI document.
-class OpenAPIDocument : Codable {
+class OpenAPIDocument : Encodable {
     let openapi = "3.0.1"
 
     var info: OpenAPIInfo
@@ -19,10 +19,11 @@ class OpenAPIDocument : Codable {
     var security: [String: [String]]?
     var externalDocs: OpenAPIExternalDocumentation?
 
-    init(info: OpenAPIInfo, paths: [String: OpenAPIPathItem], servers: [OpenAPIServer]? = nil, tags: [OpenAPITag]? = nil) {
+    init(info: OpenAPIInfo, paths: [String: OpenAPIPathItem], servers: [OpenAPIServer]? = nil, tags: [OpenAPITag]? = nil, components: OpenAPIComponents? = nil) {
         self.info = info
         self.paths = paths
         self.servers = servers
         self.tags = tags
+        self.components = components
     }
 }

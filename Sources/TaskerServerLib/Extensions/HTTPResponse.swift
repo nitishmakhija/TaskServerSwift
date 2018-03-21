@@ -15,7 +15,7 @@ extension HTTPResponse {
     func sendJson<T>(_ value: T) where T: Encodable {
         let json = self.encode(value)
 
-        self.setHeader(.contentType, value: "text/json")
+        self.setHeader(.contentType, value: "application/json")
         self.appendBody(string: json).completed()
     }
 
@@ -82,6 +82,7 @@ extension HTTPResponse {
         do {
             let jsonData = try encoder.encode(value)
             json = String(data: jsonData, encoding: .utf8)!
+            json = json.replacingOccurrences(of: "\\/", with: "/")
         } catch {
             Log.error(message: "Error during serializable object to JSON")
         }

@@ -8,19 +8,24 @@
 import Foundation
 
 // The Schema Object allows the definition of input and output data types.
-class OpenAPISchema: Codable {
-    var ref: String? // TODO: This should be in json as $ref
+class OpenAPISchema: Encodable {
+    var ref: String?
 
-    var nullable: Bool = false
-    var discriminator: OpenAPIDiscriminator?
-    var readOnly: Bool = false
-    var writeOnly: Bool = false
-    var xml: OpenAPIXML?
-    var externalDocs: OpenAPIExternalDocumentation?
-    var example: String?
-    var deprecated: Bool = false
+    var type: String?
+    var required: [String]?
+    var properties: [String: OpenAPIObjectProperty]?
+
+    init() {
+    }
 
     init(ref: String) {
         self.ref = ref
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case ref = "$ref"
+        case type
+        case required
+        case properties
     }
 }

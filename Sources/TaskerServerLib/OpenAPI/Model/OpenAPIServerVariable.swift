@@ -8,12 +8,18 @@
 import Foundation
 
 // An object representing a Server Variable for server URL template substitution.
-class OpenAPIServerVariable: Codable {
-    var `default`: String
-    var `enum`: [String]?
+class OpenAPIServerVariable: Encodable {
+    var defaultValue: String
+    var enumValues: [String]?
     var description: String?
 
-    init(default: String) {
-        self.`default` = `default`
+    init(defaultValue: String) {
+        self.defaultValue = defaultValue
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case defaultValue = "default"
+        case enumValues = "enum"
+        case description
     }
 }

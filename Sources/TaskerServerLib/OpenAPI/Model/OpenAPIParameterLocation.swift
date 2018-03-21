@@ -8,7 +8,7 @@
 import Foundation
 
 // Enum with possible parameters locations.
-enum OpenAPIParameterLocation: String, Codable {
+enum OpenAPIParameterLocation: String, Encodable {
     case query = "query"
     case header = "header"
     case path = "path"

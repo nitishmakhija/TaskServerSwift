@@ -9,8 +9,8 @@ import Foundation
 
 // Describes a single response from an API Operation, including design-time,
 // static links to operations based on the response.
-class OpenAPIResponse: Codable {
-    var ref: String? // TODO: This should be in json as $ref
+class OpenAPIResponse: Encodable {
+    var ref: String?
 
     var description: String
     var headers: [String: OpenAPIHeader]?
@@ -19,5 +19,13 @@ class OpenAPIResponse: Codable {
 
     init(description: String) {
         self.description = description
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case ref = "$ref"
+        case description
+        case headers
+        case content
+        case links
     }
 }

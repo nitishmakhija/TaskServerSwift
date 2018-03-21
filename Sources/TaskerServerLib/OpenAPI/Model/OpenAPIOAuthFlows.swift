@@ -8,7 +8,7 @@
 import Foundation
 
 // Allows configuration of the supported OAuth Flows.
-class OpenAPIOAuthFlows: Codable {
+class OpenAPIOAuthFlows: Encodable {
     var implicit: OpenAPIOAuthFlow?
     var password: OpenAPIOAuthFlow?
     var clientCredentials: OpenAPIOAuthFlow?

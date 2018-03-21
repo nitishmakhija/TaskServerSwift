@@ -8,7 +8,7 @@
 import Foundation
 
 // License information for the exposed API.
-class OpenAPILicence : Codable {
+class OpenAPILicence : Encodable {
     var name: String
     var url: String?
 

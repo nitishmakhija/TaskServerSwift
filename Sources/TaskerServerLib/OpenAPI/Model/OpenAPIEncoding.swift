@@ -8,7 +8,7 @@
 import Foundation
 
 // A single encoding definition applied to a single schema property.
-class OpenAPIEncoding: Codable {
+class OpenAPIEncoding: Encodable {
     var contentType: String?
     var headers: [String: OpenAPIHeader]?
     var style: String?

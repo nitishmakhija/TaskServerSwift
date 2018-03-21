@@ -8,7 +8,7 @@
 import Foundation
 
 // An object representing a Server.
-class OpenAPIServer: Codable {
+class OpenAPIServer: Encodable {
     var url: String
     var description: String?
     var variables: [String: OpenAPIServerVariable]?

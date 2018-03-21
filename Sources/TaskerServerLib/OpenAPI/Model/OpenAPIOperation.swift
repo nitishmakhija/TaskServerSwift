@@ -8,7 +8,7 @@
 import Foundation
 
 // Describes a single API operation on a path.
-class OpenAPIOperation: Codable {
+class OpenAPIOperation: Encodable {
     var summary: String?
     var description: String?
     var tags: [String]?

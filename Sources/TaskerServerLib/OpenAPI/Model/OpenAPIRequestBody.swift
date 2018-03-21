@@ -8,10 +8,17 @@
 import Foundation
 
 // Describes a single request body.
-class OpenAPIRequestBody: Codable {
-    var ref: String? // TODO: This should be in json as $ref
+class OpenAPIRequestBody: Encodable {
+    var ref: String?
 
     var description: String?
     var content: [String: OpenAPIMediaType] = [:]
     var required: Bool = false
+
+    private enum CodingKeys: String, CodingKey {
+        case ref = "$ref"
+        case description
+        case content
+        case required
+    }
 }

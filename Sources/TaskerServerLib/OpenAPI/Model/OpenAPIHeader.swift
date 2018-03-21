@@ -7,12 +7,11 @@
 
 import Foundation
 
-class OpenAPIHeader: Codable {
-    var ref: String? // TODO: This should be in json as $ref
+class OpenAPIHeader: Encodable {
+    var ref: String?
 
-    // TODO: Here we have only fixed fields (documentation describes more).
     var name: String?
-    var `in`: OpenAPIParameterLocation = OpenAPIParameterLocation.path
+    var parameterLocation: OpenAPIParameterLocation = OpenAPIParameterLocation.path
     var description: String?
     var required: Bool = false
     var deprecated: Bool = false
@@ -24,5 +23,15 @@ class OpenAPIHeader: Codable {
 
     init(ref: String) {
         self.ref = ref
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case ref = "$ref"
+        case name
+        case parameterLocation = "in"
+        case description
+        case required
+        case deprecated
+        case allowEmptyValue
     }
 }
