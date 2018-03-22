@@ -11,14 +11,27 @@ import Foundation
 // The presence of a link does not guarantee the caller's ability to successfully invoke it,
 // rather it provides a known relationship and traversal mechanism between responses and other operations.
 class OpenAPILink: Encodable {
-    var ref: String? // TODO: This should be in json as $ref
 
-    var operationRef: String?
-    var operationId: String?
-    var parameters: [String: String]?
-    var requestBody: String?
-    var description: String?
-    var server: OpenAPIServer?
+    public private(set) var ref: String?
+    public private(set) var operationRef: String?
+    public private(set) var operationId: String?
+    public private(set) var parameters: [String: String]?
+    public private(set) var requestBody: String?
+    public private(set) var description: String?
+    public private(set) var server: OpenAPIServer?
+
+    init(ref: String) {
+        self.ref = ref
+    }
+
+    init(operationRef: String? = nil, operationId: String? = nil, parameters: [String: String]? = nil, requestBody: String? = nil, description: String? = nil, server: OpenAPIServer?) {
+        self.operationRef = operationRef
+        self.operationId = operationId
+        self.parameters = parameters
+        self.requestBody = requestBody
+        self.description = description
+        self.server = server
+    }
 
     private enum CodingKeys: String, CodingKey {
         case ref = "$ref"

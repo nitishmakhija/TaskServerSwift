@@ -9,8 +9,21 @@ import Foundation
 
 // Allows configuration of the supported OAuth Flows.
 class OpenAPIOAuthFlows: Encodable {
-    var implicit: OpenAPIOAuthFlow?
-    var password: OpenAPIOAuthFlow?
-    var clientCredentials: OpenAPIOAuthFlow?
-    var authorizationCode: OpenAPIOAuthFlow?
+
+    public private(set) var implicit: OpenAPIOAuthFlow?
+    public private(set) var password: OpenAPIOAuthFlow?
+    public private(set) var clientCredentials: OpenAPIOAuthFlow?
+    public private(set) var authorizationCode: OpenAPIOAuthFlow?
+
+    init(
+        implicit: OpenAPIOAuthFlow? = nil,
+        password: OpenAPIOAuthFlow? = nil,
+        clientCredentials: OpenAPIOAuthFlow? = nil,
+        authorizationCode: OpenAPIOAuthFlow? = nil
+    ) {
+        self.implicit = implicit
+        self.password = password
+        self.clientCredentials = clientCredentials
+        self.authorizationCode = authorizationCode
+    }
 }

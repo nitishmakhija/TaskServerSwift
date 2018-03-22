@@ -11,16 +11,31 @@ import Foundation
 // an API key (either as a header or as a query parameter), OAuth2's common flows (implicit, password,
 // application and access code) as defined in RFC6749, and OpenID Connect Discovery.
 class OpenAPISecurityScheme: Encodable {
-    var ref: String? // TODO: This should be in json as $ref
+    
+    public private(set) var ref: String?
+    public private(set) var type: String?
+    public private(set) var description: String?
+    public private(set) var name: String?
+    public private(set) var parameterLocation: OpenAPIParameterLocation = OpenAPIParameterLocation.path
+    public private(set) var scheme: String?
+    public private(set) var bearerFormat: String?
+    public private(set) var flows: OpenAPIOAuthFlows?
+    public private(set) var openIdConnectUrl: String?
 
-    var type: String?
-    var description: String?
-    var name: String?
-    var parameterLocation: OpenAPIParameterLocation = OpenAPIParameterLocation.path
-    var scheme: String?
-    var bearerFormat: String?
-    var flows: OpenAPIOAuthFlows?
-    var openIdConnectUrl: String?
+    init(ref: String) {
+        self.ref = ref
+    }
+
+    init(type: String? = nil, description: String? = nil, name: String? = nil, parameterLocation: OpenAPIParameterLocation = OpenAPIParameterLocation.path, scheme: String? = nil, bearerFormat: String? = nil, flows: OpenAPIOAuthFlows? = nil, openIdConnectUrl: String? = nil) {
+        self.type = type
+        self.description = description
+        self.name = name
+        self.parameterLocation = parameterLocation
+        self.scheme = scheme
+        self.bearerFormat = bearerFormat
+        self.flows = flows
+        self.openIdConnectUrl = openIdConnectUrl
+    }
 
     private enum CodingKeys: String, CodingKey {
         case ref = "$ref"

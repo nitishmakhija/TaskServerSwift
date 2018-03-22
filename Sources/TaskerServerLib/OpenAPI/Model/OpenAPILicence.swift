@@ -9,10 +9,12 @@ import Foundation
 
 // License information for the exposed API.
 class OpenAPILicence : Encodable {
-    var name: String
-    var url: String?
 
-    init(name: String) {
+    public private(set) var name: String
+    public private(set) var url: String?
+
+    init(name: String, url: String? = nil) {
         self.name = name
+        self.url = url
     }
 }

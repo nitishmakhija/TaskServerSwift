@@ -9,8 +9,21 @@ import Foundation
 
 // Configuration details for a supported OAuth Flow.
 class OpenAPIOAuthFlow: Encodable {
-    var authorizationUrl: String?
-    var tokenUrl: String?
-    var refreshUrl: String?
-    var scopes: [String: String]?
+
+    public private(set) var authorizationUrl: String?
+    public private(set) var tokenUrl: String?
+    public private(set) var refreshUrl: String?
+    public private(set) var scopes: [String: String]?
+
+    init(
+        authorizationUrl: String? = nil,
+        tokenUrl: String? = nil,
+        refreshUrl: String? = nil,
+        scopes: [String: String]? = nil
+    ) {
+        self.authorizationUrl = authorizationUrl
+        self.tokenUrl = tokenUrl
+        self.refreshUrl = refreshUrl
+        self.scopes = scopes
+    }
 }

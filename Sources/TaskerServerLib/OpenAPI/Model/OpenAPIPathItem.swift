@@ -11,21 +11,52 @@ import Foundation
 // The path itself is still exposed to the documentation viewer but they will not know which operations
 // and parameters are available.
 class OpenAPIPathItem: Encodable {
-    var summary: String?
-    var description: String?
-    var ref: String?
 
-    var get: OpenAPIOperation?
-    var put: OpenAPIOperation?
-    var post: OpenAPIOperation?
-    var delete: OpenAPIOperation?
-    var options: OpenAPIOperation?
-    var head: OpenAPIOperation?
-    var patch: OpenAPIOperation?
-    var trace: OpenAPIOperation?
+    public private(set) var ref: String?
+    public private(set) var summary: String?
+    public private(set) var description: String?
+    public private(set) var get: OpenAPIOperation?
+    public private(set) var put: OpenAPIOperation?
+    public private(set) var post: OpenAPIOperation?
+    public private(set) var delete: OpenAPIOperation?
+    public private(set) var options: OpenAPIOperation?
+    public private(set) var head: OpenAPIOperation?
+    public private(set) var patch: OpenAPIOperation?
+    public private(set) var trace: OpenAPIOperation?
+    public private(set) var servers: [OpenAPIServer]?
+    public private(set) var parameters: [OpenAPIParameter]?
 
-    var servers: [OpenAPIServer]?
-    var parameters: [OpenAPIParameter]?
+    init(ref: String) {
+        self.ref = ref
+    }
+
+    init(summary: String? = nil, description: String? = nil) {
+        self.summary = summary
+        self.description = description
+    }
+
+    func addOperation(method: OpenAPIHttpMethod, operation: OpenAPIOperation) {
+        switch method {
+        case .get:
+            self.get = operation
+        case .post:
+            self.post = operation
+        case .put:
+            self.put = operation
+        case .delete:
+            self.delete = operation
+        case .patch:
+            self.patch = operation
+        case .options:
+            self.options = operation
+        case .trace:
+            self.trace = operation
+        case .head:
+            self.head = operation
+        default:
+            print("Not implemented")
+        }
+    }
 
     private enum CodingKeys: String, CodingKey {
         case summary

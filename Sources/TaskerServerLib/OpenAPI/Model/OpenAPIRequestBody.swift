@@ -9,11 +9,21 @@ import Foundation
 
 // Describes a single request body.
 class OpenAPIRequestBody: Encodable {
-    var ref: String?
 
-    var description: String?
-    var content: [String: OpenAPIMediaType] = [:]
-    var required: Bool = false
+    public private(set) var ref: String?
+    public private(set) var description: String?
+    public private(set) var content: [String: OpenAPIMediaType]?
+    public private(set) var required: Bool = false
+
+    init(ref: String) {
+        self.ref = ref
+    }
+
+    init(description: String? = nil, content: [String: OpenAPIMediaType]? = nil, required: Bool = false) {
+        self.description = description
+        self.content = content
+        self.required = required
+    }
 
     private enum CodingKeys: String, CodingKey {
         case ref = "$ref"

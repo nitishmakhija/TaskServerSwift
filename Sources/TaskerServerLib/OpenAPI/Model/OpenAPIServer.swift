@@ -9,11 +9,14 @@ import Foundation
 
 // An object representing a Server.
 class OpenAPIServer: Encodable {
-    var url: String
-    var description: String?
-    var variables: [String: OpenAPIServerVariable]?
+    
+    public private(set) var url: String
+    public private(set) var description: String?
+    public private(set) var variables: [String: OpenAPIServerVariable]?
 
-    init(url: String) {
+    init(url: String, description: String? = nil, variables: [String: OpenAPIServerVariable]? = nil) {
         self.url = url
+        self.description = description
+        self.variables = variables
     }
 }

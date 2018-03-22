@@ -9,8 +9,9 @@ import Foundation
 
 // Allows referencing an external resource for extended documentation.
 class OpenAPIExternalDocumentation: Encodable {
-    var url: String
-    var description: String?
+
+    public private(set) var url: String
+    public private(set) var description: String?
 
     init(url: String, description: String? = nil) {
         self.url = url

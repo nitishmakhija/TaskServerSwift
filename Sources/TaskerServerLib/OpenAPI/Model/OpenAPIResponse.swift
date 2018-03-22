@@ -10,15 +10,22 @@ import Foundation
 // Describes a single response from an API Operation, including design-time,
 // static links to operations based on the response.
 class OpenAPIResponse: Encodable {
-    var ref: String?
 
-    var description: String
-    var headers: [String: OpenAPIHeader]?
-    var content: [String: OpenAPIMediaType]?
-    var links: [String: OpenAPILink]?
+    public private(set) var ref: String?
+    public private(set) var description: String?
+    public private(set) var headers: [String: OpenAPIHeader]?
+    public private(set) var content: [String: OpenAPIMediaType]?
+    public private(set) var links: [String: OpenAPILink]?
 
-    init(description: String) {
+    init(ref: String) {
+        self.ref = ref
+    }
+
+    init(description: String, headers: [String: OpenAPIHeader]? = nil, content: [String: OpenAPIMediaType]? = nil, links: [String: OpenAPILink]? = nil) {
         self.description = description
+        self.headers = headers
+        self.content = content
+        self.links = links
     }
 
     private enum CodingKeys: String, CodingKey {

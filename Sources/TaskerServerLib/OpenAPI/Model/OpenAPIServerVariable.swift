@@ -9,12 +9,15 @@ import Foundation
 
 // An object representing a Server Variable for server URL template substitution.
 class OpenAPIServerVariable: Encodable {
-    var defaultValue: String
-    var enumValues: [String]?
-    var description: String?
 
-    init(defaultValue: String) {
+    public private(set) var defaultValue: String
+    public private(set) var enumValues: [String]?
+    public private(set) var description: String?
+
+    init(defaultValue: String, enumValues: [String]? = nil, description: String? = nil) {
         self.defaultValue = defaultValue
+        self.enumValues = enumValues
+        self.description = description
     }
 
     private enum CodingKeys: String, CodingKey {

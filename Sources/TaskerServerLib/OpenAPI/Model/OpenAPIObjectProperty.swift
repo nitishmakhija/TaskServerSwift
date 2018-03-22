@@ -8,7 +8,8 @@
 import Foundation
 
 class OpenAPIObjectProperty: Encodable {
-    var type: String
+    
+    public private(set) var type: String
 
     init(type: String) {
         self.type = type
