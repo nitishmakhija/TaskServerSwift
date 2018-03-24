@@ -26,7 +26,16 @@ class OpenAPISecurityScheme: Encodable {
         self.ref = ref
     }
 
-    init(type: String? = nil, description: String? = nil, name: String? = nil, parameterLocation: OpenAPIParameterLocation = OpenAPIParameterLocation.path, scheme: String? = nil, bearerFormat: String? = nil, flows: OpenAPIOAuthFlows? = nil, openIdConnectUrl: String? = nil) {
+    init(
+        type: String? = nil,
+        description: String? = nil,
+        name: String? = nil,
+        parameterLocation: OpenAPIParameterLocation = OpenAPIParameterLocation.path,
+        scheme: String? = nil,
+        bearerFormat: String? = nil,
+        flows: OpenAPIOAuthFlows? = nil,
+        openIdConnectUrl: String? = nil
+    ) {
         self.type = type
         self.description = description
         self.name = name

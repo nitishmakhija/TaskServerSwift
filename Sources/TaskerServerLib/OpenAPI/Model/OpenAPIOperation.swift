@@ -20,7 +20,7 @@ class OpenAPIOperation: Encodable {
     public private(set) var responses: [String: OpenAPIResponse]?
     public private(set) var callbacks: [String: [String: OpenAPIPathItem]]?
     public private(set) var deprecated: Bool = false
-    public private(set) var security: [String: [String]]?
+    public private(set) var security: [[String: [String]]]?
     public private(set) var servers: [OpenAPIServer]?
 
     init(
@@ -34,7 +34,7 @@ class OpenAPIOperation: Encodable {
         responses: [String: OpenAPIResponse]? = nil,
         callbacks: [String: [String: OpenAPIPathItem]]? = nil,
         deprecated: Bool = false,
-        security: [String: [String]]? = nil,
+        security: [[String: [String]]]? = nil,
         servers: [OpenAPIServer]? = nil
     ) {
         self.summary = summary

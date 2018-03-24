@@ -10,8 +10,10 @@ import Foundation
 class OpenAPIObjectProperty: Encodable {
     
     public private(set) var type: String
+    public private(set) var example: String?
 
-    init(type: String) {
+    init(type: String, example: String?) {
         self.type = type
+        self.example = example
     }
 }

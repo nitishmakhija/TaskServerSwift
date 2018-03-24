@@ -14,7 +14,7 @@ import Configuration
 
 open class ServerContext {
 
-    public var requestFilters: [(HTTPRequestFilter, HTTPFilterPriority)]!
+    public var requestFilters: [(HTTPRequestFilter, HTTPFilterPriority)] = []
     public var allRoutes: Routes!
 
     public var configuration: Configuration!
@@ -27,6 +27,7 @@ open class ServerContext {
     public init() throws {
         self.initConfiguration()
         try self.initDependencyContainer()
+        self.initCORS()
         try self.initRoutes()
         try self.initDatabase()
         self.initAuthorization()
@@ -45,6 +46,11 @@ open class ServerContext {
     public func initDependencyContainer() throws {
         self.container = DependencyContainer()
         try self.container.configure(withConfiguration: configuration)
+    }
+
+    public func initCORS() {
+        let corsFilter = CORSFilter()
+        requestFilters.append((corsFilter, HTTPFilterPriority.high))
     }
 
     public func initRoutes() throws {
@@ -66,10 +72,8 @@ open class ServerContext {
         var routesWithAuthorization = Routes()
         routesWithAuthorization.configure(routesWithAuthorization: controllers)
 
-        requestFilters = [
-            (AuthorizationFilter(secret: configuration.secret,
-                                 routesWithAuthorization: routesWithAuthorization), HTTPFilterPriority.high)
-        ]
+        let authorizationFilter = AuthorizationFilter(secret: configuration.secret, routesWithAuthorization: routesWithAuthorization)
+        requestFilters.append((authorizationFilter, HTTPFilterPriority.medium))
     }
 
     public func initResourceBasedAuthorization() throws {
