@@ -1,6 +1,8 @@
 
 # Created by https://www.gitignore.io/api/macos,swift,xcode,swiftpm,windows,visualstudio,visualstudiocode,swiftpackagemanager
 
+database.sql
+
 ### macOS ###
 *.DS_Store
 .AppleDouble
@@ -69,6 +71,7 @@ playground.xcworkspace
 # Packages/
 # Package.pins
 .build/
+Package.resolved
 
 # CocoaPods - Refactored to standalone file
 
