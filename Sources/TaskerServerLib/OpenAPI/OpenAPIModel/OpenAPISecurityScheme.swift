@@ -50,6 +50,7 @@ class OpenAPISecurityScheme: Encodable {
         case ref = "$ref"
         case type
         case description
+        case name
         case parameterLocation = "in"
         case scheme
         case bearerFormat

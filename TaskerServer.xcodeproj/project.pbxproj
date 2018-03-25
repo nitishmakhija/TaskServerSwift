@@ -21,8 +21,26 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		F80A85D820676C8900D49D84 /* OpenAPIParametersBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80A85D720676C8900D49D84 /* OpenAPIParametersBuilder.swift */; };
+		F80A85DA20676E3100D49D84 /* OpenAPIRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80A85D920676E3100D49D84 /* OpenAPIRequestBuilder.swift */; };
+		F80A85DC2067701600D49D84 /* OpenAPIResponsesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80A85DB2067701600D49D84 /* OpenAPIResponsesBuilder.swift */; };
+		F80A85DE2067732E00D49D84 /* OpenAPISecuritySchemasBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80A85DD2067732E00D49D84 /* OpenAPISecuritySchemasBuilder.swift */; };
+		F80A85E02067749000D49D84 /* OpenAPIOperationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80A85DF2067749000D49D84 /* OpenAPIOperationBuilder.swift */; };
+		F80A85E220677BF100D49D84 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80A85E120677BF100D49D84 /* APIRequest.swift */; };
 		F8D80DF420661E25001083CE /* CORSFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D80DF320661E25001083CE /* CORSFilter.swift */; };
 		F8D80DF620669B90001083CE /* HealthStatusDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D80DF520669B90001083CE /* HealthStatusDto.swift */; };
+		F8D80DF82066D967001083CE /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D80DF72066D967001083CE /* APIResponse.swift */; };
+		F8D80DFA2066D9AE001083CE /* APIAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D80DF92066D9AE001083CE /* APIAction.swift */; };
+		F8D80DFC2066D9EA001083CE /* APIParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D80DFB2066D9EA001083CE /* APIParameter.swift */; };
+		F8D80DFE2066DA0B001083CE /* APIAuthorizationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D80DFD2066DA0B001083CE /* APIAuthorizationType.swift */; };
+		F8D80E002066DA6A001083CE /* OpenAPIBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D80DFF2066DA6A001083CE /* OpenAPIBuilder.swift */; };
+		F8D80E022066DDA3001083CE /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D80E012066DDA3001083CE /* APIController.swift */; };
+		F8D80E042066E133001083CE /* APIServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D80E032066E133001083CE /* APIServer.swift */; };
+		F8D80E072066E8CB001083CE /* OpenAPIServersBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D80E062066E8CB001083CE /* OpenAPIServersBuilder.swift */; };
+		F8D80E092066EA83001083CE /* OpenAPITagsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D80E082066EA83001083CE /* OpenAPITagsBuilder.swift */; };
+		F8D80E0B2066EBCC001083CE /* OpenAPISchemasBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D80E0A2066EBCC001083CE /* OpenAPISchemasBuilder.swift */; };
+		F8D80E0D2066F035001083CE /* OpenAPIPathsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D80E0C2066F035001083CE /* OpenAPIPathsBuilder.swift */; };
+		F8D80E0F2066F1FE001083CE /* OpenAPISecurityBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D80E0E2066F1FE001083CE /* OpenAPISecurityBuilder.swift */; };
 		OBJ_1000 /* HTTP2Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_224 /* HTTP2Request.swift */; };
 		OBJ_1001 /* HTTP2Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_225 /* HTTP2Response.swift */; };
 		OBJ_1002 /* HTTP2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_226 /* HTTP2Session.swift */; };
@@ -1086,8 +1104,26 @@
 		"Configuration::Configuration::Product" /* Configuration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Configuration.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Dip::Dip::Product" /* Dip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Dobby::Dobby::Product" /* Dobby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dobby.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F80A85D720676C8900D49D84 /* OpenAPIParametersBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAPIParametersBuilder.swift; sourceTree = "<group>"; };
+		F80A85D920676E3100D49D84 /* OpenAPIRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAPIRequestBuilder.swift; sourceTree = "<group>"; };
+		F80A85DB2067701600D49D84 /* OpenAPIResponsesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAPIResponsesBuilder.swift; sourceTree = "<group>"; };
+		F80A85DD2067732E00D49D84 /* OpenAPISecuritySchemasBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAPISecuritySchemasBuilder.swift; sourceTree = "<group>"; };
+		F80A85DF2067749000D49D84 /* OpenAPIOperationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAPIOperationBuilder.swift; sourceTree = "<group>"; };
+		F80A85E120677BF100D49D84 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		F8D80DF320661E25001083CE /* CORSFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CORSFilter.swift; path = CORS/CORSFilter.swift; sourceTree = "<group>"; };
 		F8D80DF520669B90001083CE /* HealthStatusDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStatusDto.swift; sourceTree = "<group>"; };
+		F8D80DF72066D967001083CE /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
+		F8D80DF92066D9AE001083CE /* APIAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAction.swift; sourceTree = "<group>"; };
+		F8D80DFB2066D9EA001083CE /* APIParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIParameter.swift; sourceTree = "<group>"; };
+		F8D80DFD2066DA0B001083CE /* APIAuthorizationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAuthorizationType.swift; sourceTree = "<group>"; };
+		F8D80DFF2066DA6A001083CE /* OpenAPIBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAPIBuilder.swift; sourceTree = "<group>"; };
+		F8D80E012066DDA3001083CE /* APIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
+		F8D80E032066E133001083CE /* APIServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServer.swift; sourceTree = "<group>"; };
+		F8D80E062066E8CB001083CE /* OpenAPIServersBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAPIServersBuilder.swift; sourceTree = "<group>"; };
+		F8D80E082066EA83001083CE /* OpenAPITagsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAPITagsBuilder.swift; sourceTree = "<group>"; };
+		F8D80E0A2066EBCC001083CE /* OpenAPISchemasBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAPISchemasBuilder.swift; sourceTree = "<group>"; };
+		F8D80E0C2066F035001083CE /* OpenAPIPathsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAPIPathsBuilder.swift; sourceTree = "<group>"; };
+		F8D80E0E2066F1FE001083CE /* OpenAPISecurityBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAPISecurityBuilder.swift; sourceTree = "<group>"; };
 		"FileKit::FileKit::Product" /* FileKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"LoggerAPI::LoggerAPI::Product" /* LoggerAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LoggerAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* AuthorizationFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationFilter.swift; sourceTree = "<group>"; };
@@ -1800,6 +1836,20 @@
 				F8D80DF320661E25001083CE /* CORSFilter.swift */,
 			);
 			name = CORS;
+			sourceTree = "<group>";
+		};
+		F8D80E052066E7C4001083CE /* APIModel */ = {
+			isa = PBXGroup;
+			children = (
+				F8D80DF72066D967001083CE /* APIResponse.swift */,
+				F8D80DF92066D9AE001083CE /* APIAction.swift */,
+				F8D80DFB2066D9EA001083CE /* APIParameter.swift */,
+				F8D80E012066DDA3001083CE /* APIController.swift */,
+				F8D80E032066E133001083CE /* APIServer.swift */,
+				F8D80DFD2066DA0B001083CE /* APIAuthorizationType.swift */,
+				F80A85E120677BF100D49D84 /* APIRequest.swift */,
+			);
+			name = APIModel;
 			sourceTree = "<group>";
 		};
 		OBJ_101 /* Validators */ = {
@@ -2715,13 +2765,25 @@
 		OBJ_61 /* OpenAPI */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_62 /* Model */,
+				F8D80E052066E7C4001083CE /* APIModel */,
+				OBJ_62 /* OpenAPIModel */,
 				OBJ_91 /* OpenAPIController.swift */,
+				F8D80DFF2066DA6A001083CE /* OpenAPIBuilder.swift */,
+				F8D80E062066E8CB001083CE /* OpenAPIServersBuilder.swift */,
+				F8D80E082066EA83001083CE /* OpenAPITagsBuilder.swift */,
+				F8D80E0A2066EBCC001083CE /* OpenAPISchemasBuilder.swift */,
+				F8D80E0C2066F035001083CE /* OpenAPIPathsBuilder.swift */,
+				F80A85DF2067749000D49D84 /* OpenAPIOperationBuilder.swift */,
+				F8D80E0E2066F1FE001083CE /* OpenAPISecurityBuilder.swift */,
+				F80A85D720676C8900D49D84 /* OpenAPIParametersBuilder.swift */,
+				F80A85D920676E3100D49D84 /* OpenAPIRequestBuilder.swift */,
+				F80A85DB2067701600D49D84 /* OpenAPIResponsesBuilder.swift */,
+				F80A85DD2067732E00D49D84 /* OpenAPISecuritySchemasBuilder.swift */,
 			);
 			path = OpenAPI;
 			sourceTree = "<group>";
 		};
-		OBJ_62 /* Model */ = {
+		OBJ_62 /* OpenAPIModel */ = {
 			isa = PBXGroup;
 			children = (
 				OBJ_63 /* OpenAPIComponents.swift */,
@@ -2753,7 +2815,7 @@
 				OBJ_89 /* OpenAPITag.swift */,
 				OBJ_90 /* OpenAPIXML.swift */,
 			);
-			path = Model;
+			path = OpenAPIModel;
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -4010,6 +4072,8 @@
 				OBJ_792 /* AuthorizationService.swift in Sources */,
 				OBJ_793 /* AuthorizationTypeMismatchError.swift in Sources */,
 				OBJ_794 /* ClaimsNames.swift in Sources */,
+				F8D80E042066E133001083CE /* APIServer.swift in Sources */,
+				F8D80E072066E8CB001083CE /* OpenAPIServersBuilder.swift in Sources */,
 				OBJ_795 /* OperationAuthorizationRequirement.swift in Sources */,
 				OBJ_796 /* TaskOperationAuthorizationHandler.swift in Sources */,
 				OBJ_797 /* TokenProvider.swift in Sources */,
@@ -4027,15 +4091,22 @@
 				OBJ_808 /* RegisterUserDto.swift in Sources */,
 				OBJ_809 /* SignInDto.swift in Sources */,
 				OBJ_810 /* TaskDto.swift in Sources */,
+				F8D80E092066EA83001083CE /* OpenAPITagsBuilder.swift in Sources */,
+				F80A85DA20676E3100D49D84 /* OpenAPIRequestBuilder.swift in Sources */,
 				OBJ_811 /* UserDto.swift in Sources */,
 				OBJ_812 /* ValidationErrorResponseDto.swift in Sources */,
 				OBJ_813 /* DatabaseContext.swift in Sources */,
+				F8D80E0F2066F1FE001083CE /* OpenAPISecurityBuilder.swift in Sources */,
+				F8D80DFE2066DA0B001083CE /* APIAuthorizationType.swift in Sources */,
 				OBJ_814 /* Roles.swift in Sources */,
 				OBJ_815 /* Users.swift in Sources */,
 				OBJ_816 /* GeneratePasswordError.swift in Sources */,
+				F8D80E0B2066EBCC001083CE /* OpenAPISchemasBuilder.swift in Sources */,
 				OBJ_817 /* JWTTokenExpirationDateError.swift in Sources */,
 				OBJ_818 /* PrepareTokenError.swift in Sources */,
 				OBJ_819 /* ConfigurationManager.swift in Sources */,
+				F80A85E02067749000D49D84 /* OpenAPIOperationBuilder.swift in Sources */,
+				F8D80DFA2066D9AE001083CE /* APIAction.swift in Sources */,
 				OBJ_820 /* DependencyContainer.swift in Sources */,
 				OBJ_821 /* HTTPRequest.swift in Sources */,
 				OBJ_822 /* HTTPResponse.swift in Sources */,
@@ -4046,6 +4117,7 @@
 				OBJ_827 /* EntityProtocol.swift in Sources */,
 				OBJ_828 /* Role.swift in Sources */,
 				OBJ_829 /* Task.swift in Sources */,
+				F8D80E022066DDA3001083CE /* APIController.swift in Sources */,
 				OBJ_830 /* User.swift in Sources */,
 				OBJ_831 /* UserRole.swift in Sources */,
 				OBJ_832 /* OpenAPIComponents.swift in Sources */,
@@ -4076,18 +4148,26 @@
 				OBJ_856 /* OpenAPIServer.swift in Sources */,
 				OBJ_857 /* OpenAPIServerVariable.swift in Sources */,
 				OBJ_858 /* OpenAPITag.swift in Sources */,
+				F80A85E220677BF100D49D84 /* APIRequest.swift in Sources */,
 				OBJ_859 /* OpenAPIXML.swift in Sources */,
+				F8D80DF82066D967001083CE /* APIResponse.swift in Sources */,
 				OBJ_860 /* OpenAPIController.swift in Sources */,
 				OBJ_861 /* BaseRepository.swift in Sources */,
+				F80A85DE2067732E00D49D84 /* OpenAPISecuritySchemasBuilder.swift in Sources */,
+				F80A85DC2067701600D49D84 /* OpenAPIResponsesBuilder.swift in Sources */,
 				OBJ_862 /* TasksRepository.swift in Sources */,
+				F8D80E002066DA6A001083CE /* OpenAPIBuilder.swift in Sources */,
 				OBJ_863 /* UserRolesRepository.swift in Sources */,
 				OBJ_864 /* UsersRepository.swift in Sources */,
 				OBJ_865 /* ServerContext.swift in Sources */,
+				F8D80DFC2066D9EA001083CE /* APIParameter.swift in Sources */,
 				OBJ_866 /* TasksService.swift in Sources */,
 				OBJ_867 /* UsersService.swift in Sources */,
 				OBJ_868 /* TaskValidator.swift in Sources */,
 				OBJ_869 /* UserValidator.swift in Sources */,
 				OBJ_870 /* ValidationsError.swift in Sources */,
+				F8D80E0D2066F035001083CE /* OpenAPIPathsBuilder.swift in Sources */,
+				F80A85D820676C8900D49D84 /* OpenAPIParametersBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
