@@ -24,7 +24,8 @@ extension DependencyContainer {
             try self.resolve() as HealthController,
             try self.resolve() as TasksController,
             try self.resolve() as UsersController,
-            try self.resolve() as AccountController
+            try self.resolve() as AccountController,
+            try self.resolve() as OpenAPIController
         ]
 
         return controllers
@@ -56,6 +57,7 @@ extension DependencyContainer {
         container.register { UsersController(usersService: $0) }
         container.register { AccountController(configuration: $0, usersService: $1) }
         container.register { HealthController() }
+        container.register { OpenAPIController() }
     }
 
     private func addValidators(toContainer container: DependencyContainer) {

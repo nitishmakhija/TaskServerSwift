@@ -58,9 +58,6 @@ open class ServerContext {
 
         allRoutes = Routes()
         allRoutes.configure(allRoutes: controllers)
-
-        self.openAPIController = OpenAPIController()
-        allRoutes.add(self.openAPIController.getRoute())
     }
 
     public func initDatabase() throws {

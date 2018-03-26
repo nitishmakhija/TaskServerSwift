@@ -56,6 +56,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Swiftgger::Swiftgger"
+               BuildableName = "Swiftgger.framework"
+               BlueprintName = "Swiftgger"
+               ReferencedContainer = "container:TaskerServer.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "PerfectSQLite::PerfectSQLite"
                BuildableName = "PerfectSQLite.framework"
                BlueprintName = "PerfectSQLite"
