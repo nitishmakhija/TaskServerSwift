@@ -9,6 +9,7 @@ import Foundation
 import PerfectCRUD
 import PerfectSQLite
 import FileKit
+import Dispatch
 
 public protocol DatabaseContextProtocol {
     func executeMigrations(policy: TableCreatePolicy) throws
@@ -73,6 +74,12 @@ public class DatabaseContext: DatabaseContextProtocol {
                 .appendingPathComponent(connectionString).standardized
         }
 
-        return pathUrl.absoluteString
+        var absoluteString = pathUrl.absoluteString
+
+        #if os(Linux)
+            absoluteString.removeFirst(7)
+        #endif
+
+        return absoluteString
     }()
 }
