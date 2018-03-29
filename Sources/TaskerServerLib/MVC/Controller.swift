@@ -8,15 +8,11 @@
 import Foundation
 import PerfectHTTP
 
-public enum AuthorizationPolicy {
-    case anonymous
-    case signedIn
-    case inRole([String])
-}
-
 public class Controller {
+
     var allRoutes = Routes()
     var routesWithAuthorization = Routes()
+    var actions: [Action] = []
 
     init() {
         initRoutes()
@@ -25,16 +21,27 @@ public class Controller {
     func initRoutes() {
     }
 
-    public func add(method: HTTPMethod, uri: String, authorization: AuthorizationPolicy, handler: @escaping RequestHandler) {
+    func getDescription() -> String {
+        return ""
+    }
 
-        let route = Route(method: method, uri: uri, handler: { (request: HTTPRequest, response: HTTPResponse) -> Void in
-            if self.isUserHasAccess(request: request, response: response, authorization: authorization) {
-                handler(request, response)
+    func getName() -> String {
+        let className = String(describing: self)
+        return className
+    }
+
+    public func register(_ action: Action) {
+
+        self.actions.append(action)
+
+        let route = Route(method: action.method, uri: action.uri, handler: { (request: HTTPRequest, response: HTTPResponse) -> Void in
+            if self.isUserHasAccess(request: request, response: response, authorization: action.authorization) {
+                action.handler(request, response)
             }
         })
 
         self.allRoutes.add(route)
-        addToRoutesWithAutorization(authorization, route)
+        self.addToRoutesWithAutorization(action.authorization, route)
     }
 
     private func addToRoutesWithAutorization(_ authorization: AuthorizationPolicy, _ route: Route) {

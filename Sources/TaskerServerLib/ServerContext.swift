@@ -32,6 +32,7 @@ open class ServerContext {
         try self.initDatabase()
         self.initAuthorization()
         try self.initResourceBasedAuthorization()
+        try self.initOpenAPIController()
     }
 
     public func initConfiguration() {
@@ -76,5 +77,11 @@ open class ServerContext {
     public func initResourceBasedAuthorization() throws {
         authorizationService = try container.resolve() as AuthorizationServiceProtocol
         authorizationService.add(authorizationHandler: TaskOperationAuthorizationHandler())
+    }
+
+    public func initOpenAPIController() throws {
+        print("Initialization open api controllers...")
+        let openAPIController = try container.resolve() as OpenAPIController
+        openAPIController.controllers = self.controllers
     }
 }

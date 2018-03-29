@@ -7,6 +7,7 @@
 
 import Foundation
 import PerfectHTTP
+import Swiftgger
 
 class AccountController: Controller {
 
@@ -19,9 +20,62 @@ class AccountController: Controller {
     }
 
     override func initRoutes() {
-        self.add(method: .post, uri: "/account/register", authorization: .anonymous, handler: register)
-        self.add(method: .post, uri: "/account/sign-in", authorization: .anonymous, handler: signIn)
-        self.add(method: .post, uri: "/account/change-password", authorization: .signedIn, handler: changePassword)
+
+        let changePasswordDto = ChangePasswordRequestDto(email: "email@test.pl", password: "123123")
+        let registerUserDto = RegisterUserDto(id: UUID(), createDate: Date(), name: "John Doe", email: "john.doe@email.com", isLocked: false, password: "sefg435")
+        let signInDto = SignInDto(email: "john.doe@email.com", password: "234efsge")
+        let jwtTokenResponseDto = JwtTokenResponseDto(token: "13r4qtfrq4t5egrf4qt5tgrfw45tgrafsdfgty54twgrthg")
+        let validationErrorResponseDto = ValidationErrorResponseDto(message: "Object is invalid", errors: ["property": "Information about error."])
+
+        self.register(
+            Action(method: .post, 
+                   uri: "/account/register", 
+                   summary: "Registering new user", 
+                   description: "Action for registering new user in system", 
+                   request: APIRequest(object: registerUserDto, description: "Object with registration information."),
+                   responses: [
+                        APIResponse(code: "200", description: "Response with user token for authorization", object: registerUserDto),
+                        APIResponse(code: "400", description: "User information are invalid", object: validationErrorResponseDto)
+                   ],
+                   authorization: .anonymous, 
+                   handler: register
+            )
+        )
+
+        self.register(
+            Action(method: .post, 
+                   uri: "/account/sign-in", 
+                   summary: "Signinig in to the system", 
+                   description: "Action for signing in user to the system", 
+                   request: APIRequest(object: signInDto, description: "Object for signing in user."),
+                   responses: [
+                        APIResponse(code: "200", description: "Response with user token for authorization", object: jwtTokenResponseDto),
+                        APIResponse(code: "404", description: "User credentials are invalid")
+                   ],
+                   authorization: .anonymous, 
+                   handler: signIn
+            )
+        )
+
+        self.register(
+            Action(method: .post, 
+                   uri: "/account/change-password", 
+                   summary: "Changing password", 
+                   description: "Action for changing password", 
+                   request: APIRequest(object: changePasswordDto, description: "Object with new user password."),
+                   responses: [
+                        APIResponse(code: "200", description: "Password was changed"),
+                        APIResponse(code: "400", description: "There was issues during changing password", object: validationErrorResponseDto),
+                        APIResponse(code: "401", description: "User not authorized")
+                   ],
+                   authorization: .signedIn, 
+                   handler: changePassword
+            )
+        )
+    }
+
+    override func getDescription() -> String {
+        return "Controller for managing user accout (registering/signing in/password)."
     }
 
     public func register(request: HTTPRequest, response: HTTPResponse) {

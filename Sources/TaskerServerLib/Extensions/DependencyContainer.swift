@@ -57,7 +57,7 @@ extension DependencyContainer {
         container.register { UsersController(usersService: $0) }
         container.register { AccountController(configuration: $0, usersService: $1) }
         container.register { HealthController() }
-        container.register { OpenAPIController() }
+        container.register(.singleton) { OpenAPIController() }
     }
 
     private func addValidators(toContainer container: DependencyContainer) {

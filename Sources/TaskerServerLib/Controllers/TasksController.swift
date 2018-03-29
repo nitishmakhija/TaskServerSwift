@@ -8,6 +8,7 @@
 import Foundation
 import PerfectCRUD
 import PerfectHTTP
+import Swiftgger
 
 class TasksController: Controller {
 
@@ -20,11 +21,99 @@ class TasksController: Controller {
     }
 
     override func initRoutes() {
-        self.add(method: .get, uri: "/tasks", authorization: .signedIn, handler: all)
-        self.add(method: .get, uri: "/tasks/{id}", authorization: .signedIn, handler: get)
-        self.add(method: .post, uri: "/tasks", authorization: .signedIn, handler: post)
-        self.add(method: .put, uri: "/tasks/{id}", authorization: .signedIn, handler: put)
-        self.add(method: .delete, uri: "/tasks/{id}", authorization: .signedIn, handler: delete)
+
+        let taskDto = TaskDto(id: UUID(), createDate: Date(), name: "Net task", isFinished: true)
+        let validationErrorResponseDto = ValidationErrorResponseDto(message: "Object is invalid", errors: ["property": "Information about error."])
+
+        self.register(
+            Action(method: .get, 
+                   uri: "/tasks", 
+                   summary: "All tasks", 
+                   description: "Action for getting all tasks from server", 
+                   responses: [
+                        APIResponse(code: "200", description: "List of users", object: [taskDto]),
+                        APIResponse(code: "401", description: "User not authorized")
+                   ],
+                   authorization: .signedIn, 
+                   handler: all
+            )
+        )
+
+        self.register(
+            Action(method: .get, 
+                   uri: "/tasks/{id}", 
+                   summary: "Task by id", 
+                   description: "Action for getting specific task from server", 
+                   parameters: [
+                        APIParameter(name: "id", description: "Task id", required: true)
+                   ],
+                   responses: [
+                        APIResponse(code: "200", description: "Specific task", object: taskDto),
+                        APIResponse(code: "404", description: "Task with entered id not exists"),
+                        APIResponse(code: "401", description: "User not authorized")
+                   ],
+                   authorization: .signedIn, 
+                   handler: get
+            )
+        )
+
+        self.register(
+            Action(method: .post, 
+                   uri: "/tasks", 
+                   summary: "New task", 
+                   description: "Action for adding new task to the server", 
+                   request: APIRequest(object: taskDto, description: "Object with task information."),
+                   responses: [
+                        APIResponse(code: "200", description: "Task data after adding to the system", object: taskDto),
+                        APIResponse(code: "400", description: "There was issues during adding new task", object: validationErrorResponseDto),
+                        APIResponse(code: "401", description: "User not authorized")
+                   ],
+                   authorization: .signedIn, 
+                   handler: post
+            )
+        )
+
+        self.register(
+            Action(method: .put, 
+                   uri: "/tasks/{id}", 
+                   summary: "Update task", 
+                   description: "Action for updating specific task in the server",
+                   parameters: [
+                        APIParameter(name: "id", description: "Task id", required: true)
+                   ],
+                   request: APIRequest(object: taskDto, description: "Object with task information."),
+                   responses: [
+                        APIResponse(code: "200", description: "Task data after adding to the system", object: taskDto),
+                        APIResponse(code: "400", description: "There was issues during updating task", object: validationErrorResponseDto),
+                        APIResponse(code: "404", description: "Task with entered id not exists"),
+                        APIResponse(code: "401", description: "User not authorized")
+                   ],
+                   authorization: .signedIn, 
+                   handler: put
+            )
+        )
+
+        self.register(
+            Action(method: .delete, 
+                   uri: "/tasks/{id}", 
+                   summary: "Delete task", 
+                   description: "Action for deleting task from the database", 
+                   parameters: [
+                        APIParameter(name: "id", description: "Task id", required: true)
+                   ],
+                   responses: [
+                        APIResponse(code: "200", description: "Task was deleted"),
+                        APIResponse(code: "404", description: "Task with entered id not exists"),
+                        APIResponse(code: "401", description: "User not authorized")
+                   ],
+                   authorization: .signedIn, 
+                   handler: delete
+            )
+        )
+    }
+
+    override func getDescription() -> String {
+        return "Controller for managing tasks."
     }
 
     public func all(request: HTTPRequest, response: HTTPResponse) {
