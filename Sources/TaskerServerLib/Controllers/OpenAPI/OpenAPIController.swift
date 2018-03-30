@@ -9,21 +9,27 @@ import Foundation
 import PerfectHTTP
 import Swiftgger
 
-public class OpenAPIController: Controller {
+public class OpenAPIController: ControllerProtocol {
 
-    private var openAPIAction: OpenAPIAction
+    private let openAPIAction = OpenAPIAction()
 
-    public var controllers: [Controller]? {
+    public var controllers: [ControllerProtocol]? {
         didSet {
-            self.openAPIAction.controllers = controllers
+            openAPIAction.controllers = self.controllers
         }
     }
 
-    override init() {
-        self.openAPIAction = OpenAPIAction()
+    public func getMetadataName() -> String {
+        return "OpenAPI"
     }
 
-    override func initRoutes() {
-        self.register(openAPIAction)
+    public func getMetadataDescription() -> String {
+        return "Controller for OpenAPI metadata"
+    }
+
+    public func getActions() -> [ActionProtocol] {
+        return [
+            openAPIAction
+        ]
     }
 }

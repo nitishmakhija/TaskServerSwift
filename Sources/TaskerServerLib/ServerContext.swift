@@ -19,10 +19,12 @@ open class ServerContext {
 
     public var configuration: Configuration!
     public var container: DependencyContainer!
-    public var controllers: [Controller]!
+    public var controllers: [ControllerProtocol]!
     public var databaseContext: DatabaseContextProtocol!
     public var authorizationService: AuthorizationServiceProtocol!
     public var openAPIController: OpenAPIController!
+
+    public var routesHandler = RoutesHandler()
 
     public init() throws {
         self.initConfiguration()
@@ -54,22 +56,18 @@ open class ServerContext {
         requestFilters.append((corsFilter, HTTPFilterPriority.high))
     }
 
-    public func initRoutes() throws {
-        self.controllers = try container.resolveAllControllers()
-
-        allRoutes = Routes()
-        allRoutes.configure(allRoutes: controllers)
-    }
-
     public func initDatabase() throws {
         self.databaseContext = try container.resolve() as DatabaseContextProtocol
         try self.databaseContext.executeMigrations(policy: .reconcileTable)
     }
 
-    public func initAuthorization() {
-        var routesWithAuthorization = Routes()
-        routesWithAuthorization.configure(routesWithAuthorization: controllers)
+    public func initRoutes() throws {
+        self.controllers = try container.resolveAllControllers()
+        allRoutes = self.routesHandler.registerHandlers(for: controllers)
+    }
 
+    public func initAuthorization() {
+        let routesWithAuthorization = self.routesHandler.getWithAuthorization(for: controllers)
         let authorizationFilter = AuthorizationFilter(secret: configuration.secret, routesWithAuthorization: routesWithAuthorization)
         requestFilters.append((authorizationFilter, HTTPFilterPriority.medium))
     }

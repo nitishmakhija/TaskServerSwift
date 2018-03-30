@@ -1,38 +1,29 @@
 //
-//  Controller.swift
-//  TaskerServer
+//  Routes.swift
+//  TaskerServerLib
 //
-//  Created by Marcin Czachurski on 12.02.2018.
+//  Created by Marcin Czachurski on 30.03.2018.
 //
 
 import Foundation
 import PerfectHTTP
 
-public class Controller {
+public class RoutesHandler {
 
-    var allRoutes = Routes()
-    var routesWithAuthorization = Routes()
-    var actions: [ActionProtocol] = []
+    public func registerHandlers(for controllers: [ControllerProtocol]) -> Routes {
 
-    init() {
-        initRoutes()
+        var routes = Routes()
+        for controller in controllers {
+            for action in controller.getActions() {
+                let route = self.register(action: action)
+                routes.add(route)
+            }
+        }
+
+        return routes
     }
 
-    func initRoutes() {
-    }
-
-    func getDescription() -> String {
-        return ""
-    }
-
-    func getName() -> String {
-        let className = String(describing: self)
-        return className
-    }
-
-    public func register(_ action: ActionProtocol) {
-
-        self.actions.append(action)
+    public func register(action: ActionProtocol) -> Route {
 
         let route = Route(method: action.getHttpMethod(), uri: action.getUri(), handler: { (request: HTTPRequest, response: HTTPResponse) -> Void in
             if self.isUserHasAccess(request: request, response: response, authorization: action.getMetadataAuthorization()) {
@@ -40,17 +31,21 @@ public class Controller {
             }
         })
 
-        self.allRoutes.add(route)
-        self.addToRoutesWithAutorization(action.getMetadataAuthorization(), route)
+        return route
     }
 
-    private func addToRoutesWithAutorization(_ authorization: AuthorizationPolicy, _ route: Route) {
-        switch authorization {
-        case AuthorizationPolicy.signedIn, AuthorizationPolicy.inRole(_):
-            self.routesWithAuthorization.add(route)
-        default:
-            break
+    public func getWithAuthorization(for controllers: [ControllerProtocol]) -> Routes {
+        var routes = Routes()
+        for controller in controllers {
+            for action in controller.getActions() {
+                if action.getMetadataAuthorization() != AuthorizationPolicy.anonymous {
+                    let route = Route(method: action.getHttpMethod(), uri: action.getUri(), handler: action.handler)
+                    routes.add(route)
+                }
+            }
         }
+
+        return routes
     }
 
     private func isUserHasAccess(request: HTTPRequest, response: HTTPResponse, authorization: AuthorizationPolicy) -> Bool {
@@ -94,4 +89,5 @@ public class Controller {
 
         return true
     }
+
 }

@@ -11,7 +11,7 @@ import Swiftgger
 
 class OpenAPIAction: ActionProtocol {
 
-    public var controllers: [Controller]?
+    public var controllers: [ControllerProtocol]?
 
     public func getHttpMethod() -> HTTPMethod {
         return .get
@@ -27,22 +27,6 @@ class OpenAPIAction: ActionProtocol {
 
     public func getMetadataDescription() -> String {
         return "Action for getting OpenAPI document."
-    }
-
-    public func getMetadataParameters() -> [APIParameter]? {
-        return nil
-    }
-
-    public func getMetadataRequest() -> APIRequest? {
-        return nil
-    }
-
-    public func getMetadataResponses() -> [APIResponse]? {
-        return nil
-    }
-
-    public func getMetadataAuthorization() -> AuthorizationPolicy {
-        return .anonymous
     }
 
     public func handler(request: HTTPRequest, response: HTTPResponse) {
@@ -85,7 +69,7 @@ class OpenAPIAction: ActionProtocol {
             for controller in apiControllers {
 
                 var actions: [APIAction] = []
-                for action in controller.actions {
+                for action in controller.getActions() {
                     let openAPIAction = APIAction(method: self.getAPIHttpMethod(from: action.getHttpMethod()), route: action.getUri(),
                                                   summary: action.getMetadataSummary(),
                                                   description: action.getMetadataDescription(),
@@ -98,7 +82,9 @@ class OpenAPIAction: ActionProtocol {
                     actions.append(openAPIAction)
                 }
 
-                _ = openAPIBuilder.addController(APIController(name: controller.getName(), description: controller.getDescription(), actions: actions))
+                _ = openAPIBuilder.addController(
+                    APIController(name: controller.getMetadataName(), description: controller.getMetadataDescription(), actions: actions)
+                )
             }
         }
 

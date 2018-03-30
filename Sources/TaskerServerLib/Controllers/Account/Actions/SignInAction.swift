@@ -35,10 +35,6 @@ public class SignInAction: ActionProtocol {
         return "Action for signing in user to the system"
     }
 
-    public func getMetadataParameters() -> [APIParameter]? {
-        return nil
-    }
-
     public func getMetadataRequest() -> APIRequest? {
         let signInDto = SignInDto(email: "john.doe@email.com", password: "234efsge")
         return APIRequest(object: signInDto, description: "Object for signing in user.")
@@ -50,10 +46,6 @@ public class SignInAction: ActionProtocol {
             APIResponse(code: "200", description: "Response with user token for authorization", object: jwtTokenResponseDto),
             APIResponse(code: "404", description: "User credentials are invalid")
         ]
-    }
-
-    public func getMetadataAuthorization() -> AuthorizationPolicy {
-        return .anonymous
     }
 
     public func handler(request: HTTPRequest, response: HTTPResponse) {

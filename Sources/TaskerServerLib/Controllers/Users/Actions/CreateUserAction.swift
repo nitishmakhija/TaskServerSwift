@@ -33,10 +33,6 @@ class CreateUserAction: ActionProtocol {
         return "Action for adding new user to the server"
     }
 
-    public func getMetadataParameters() -> [APIParameter]? {
-        return nil
-    }
-
     public func getMetadataRequest() -> APIRequest? {
         let userDto = UserDto(id: UUID(), createDate: Date(), name: "John Doe", email: "email@test.com", isLocked: false)
         return APIRequest(object: userDto, description: "Object with user information.")

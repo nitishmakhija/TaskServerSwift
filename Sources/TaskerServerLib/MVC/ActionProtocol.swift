@@ -23,3 +23,22 @@ public protocol ActionProtocol {
     func getMetadataRequest() -> APIRequest?
     func getMetadataResponses() -> [APIResponse]?
 }
+
+extension ActionProtocol {
+
+    public func getMetadataAuthorization() -> AuthorizationPolicy {
+        return .anonymous
+    }
+
+    public func getMetadataParameters() -> [APIParameter]? {
+        return nil
+    }
+
+    public func getMetadataRequest() -> APIRequest? {
+        return nil
+    }
+
+    public func getMetadataResponses() -> [APIResponse]? {
+        return nil
+    }
+}

@@ -41,10 +41,6 @@ class TaskByIdAction: ActionProtocol {
         ]
     }
 
-    public func getMetadataRequest() -> APIRequest? {
-        return nil
-    }
-
     public func getMetadataResponses() -> [APIResponse]? {
         let taskDto = TaskDto(id: UUID(), createDate: Date(), name: "Net task", isFinished: true)
         return [

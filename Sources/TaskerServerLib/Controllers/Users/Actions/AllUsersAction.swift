@@ -33,14 +33,6 @@ class AllUsersAction: ActionProtocol {
         return "Action for getting all users from server"
     }
 
-    public func getMetadataParameters() -> [APIParameter]? {
-        return nil
-    }
-
-    public func getMetadataRequest() -> APIRequest? {
-        return nil
-    }
-
     public func getMetadataResponses() -> [APIResponse]? {
         let userDto = UserDto(id: UUID(), createDate: Date(), name: "John Doe", email: "email@test.com", isLocked: false)
         return [

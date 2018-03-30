@@ -16,6 +16,26 @@ class UsersControllerTests: XCTestCase {
 
     private var serverContext: TestServerContext!
 
+    private var allUsersAction: ActionProtocol? {
+        return serverContext.usersController.getAction(for: AllUsersAction.self)
+    }
+
+    private var userByIdAction: ActionProtocol? {
+        return serverContext.usersController.getAction(for: UserByIdAction.self)
+    }
+
+    private var createUserAction: ActionProtocol? {
+        return serverContext.usersController.getAction(for: CreateUserAction.self)
+    }
+
+    private var updateUserAction: ActionProtocol? {
+        return serverContext.usersController.getAction(for: UpdateUserAction.self)
+    }
+
+    private var deleteUserAction: ActionProtocol? {
+        return serverContext.usersController.getAction(for: DeleteUserAction.self)
+    }
+
     override func setUp() {
         self.serverContext = TestServerContext.shared
     }
@@ -26,7 +46,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(method: .get)
 
         // Act.
-        let requestHandler = serverContext.usersController.allRoutes.navigator.findHandler(uri: "/users", webRequest: fakeHttpRequest)
+        let requestHandler = serverContext.allRoutes.navigator.findHandler(uri: "/users", webRequest: fakeHttpRequest)
 
         // Assert.
         XCTAssertNotNil(requestHandler)
@@ -38,7 +58,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(method: .get)
 
         // Act.
-        let requestHandler = serverContext.usersController.allRoutes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
+        let requestHandler = serverContext.allRoutes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
 
         // Assert.
         XCTAssertNotNil(requestHandler)
@@ -50,7 +70,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(method: .post)
 
         // Act.
-        let requestHandler = serverContext.usersController.allRoutes.navigator.findHandler(uri: "/users", webRequest: fakeHttpRequest)
+        let requestHandler = serverContext.allRoutes.navigator.findHandler(uri: "/users", webRequest: fakeHttpRequest)
 
         // Assert.
         XCTAssertNotNil(requestHandler)
@@ -62,7 +82,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(method: .put)
 
         // Act.
-        let requestHandler = serverContext.usersController.allRoutes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
+        let requestHandler = serverContext.allRoutes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
 
         // Assert.
         XCTAssertNotNil(requestHandler)
@@ -74,7 +94,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(method: .delete)
 
         // Act.
-        let requestHandler = serverContext.usersController.allRoutes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
+        let requestHandler = serverContext.allRoutes.navigator.findHandler(uri: "/users/123", webRequest: fakeHttpRequest)
 
         // Assert.
         XCTAssertNotNil(requestHandler)
@@ -87,7 +107,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.usersController.allUsers.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        allUsersAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         let users = try! fakeHttpResponse.getObjectFromResponseBody(Array<UserDto>.self)
@@ -103,7 +123,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.usersController.userByIdAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        userByIdAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         let userDto = try! fakeHttpResponse.getObjectFromResponseBody(UserDto.self)
@@ -119,7 +139,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.usersController.userByIdAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        userByIdAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.notFound.code, fakeHttpResponse.status.code)
@@ -135,7 +155,7 @@ class UsersControllerTests: XCTestCase {
         fakeHttpRequest.addObjectToRequestBody(user)
 
         // Act.
-        serverContext.usersController.createUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        createUserAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
@@ -148,7 +168,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.usersController.createUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        createUserAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -164,7 +184,7 @@ class UsersControllerTests: XCTestCase {
         fakeHttpRequest.addObjectToRequestBody(user)
 
         // Act.
-        serverContext.usersController.createUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        createUserAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -185,7 +205,7 @@ class UsersControllerTests: XCTestCase {
         fakeHttpRequest.addObjectToRequestBody(user)
 
         // Act.
-        serverContext.usersController.createUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        createUserAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -205,7 +225,7 @@ class UsersControllerTests: XCTestCase {
         fakeHttpRequest.addObjectToRequestBody(user)
 
         // Act.
-        serverContext.usersController.updateUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        updateUserAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
@@ -218,7 +238,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.usersController.updateUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        updateUserAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -234,7 +254,7 @@ class UsersControllerTests: XCTestCase {
         fakeHttpRequest.addObjectToRequestBody(user)
 
         // Act.
-        serverContext.usersController.updateUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        updateUserAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -253,7 +273,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.usersController.deleteUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        deleteUserAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
@@ -266,7 +286,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.usersController.deleteUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        deleteUserAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.notFound.code, fakeHttpResponse.status.code)

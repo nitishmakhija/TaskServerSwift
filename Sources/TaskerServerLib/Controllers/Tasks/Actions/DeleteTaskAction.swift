@@ -41,10 +41,6 @@ class DeleteTaskAction: ActionProtocol {
         ]
     }
 
-    public func getMetadataRequest() -> APIRequest? {
-        return nil
-    }
-
     public func getMetadataResponses() -> [APIResponse]? {
         return [
             APIResponse(code: "200", description: "Task was deleted"),

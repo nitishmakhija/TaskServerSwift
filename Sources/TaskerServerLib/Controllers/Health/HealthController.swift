@@ -9,19 +9,19 @@ import Foundation
 import PerfectHTTP
 import Swiftgger
 
-class HealthController: Controller {
+class HealthController: ControllerProtocol {
 
-    public let healthAction: HealthAction
+    private let actions = [HealthAction()]
 
-    override init() {
-        self.healthAction = HealthAction()
+    func getMetadataName() -> String {
+        return "Health"
     }
 
-    override func initRoutes() {
-        self.register(healthAction)
-    }
-
-    override func getDescription() -> String {
+    func getMetadataDescription() -> String {
         return "Controller which returns service health information."
+    }
+
+    func getActions() -> [ActionProtocol] {
+        return self.actions
     }
 }

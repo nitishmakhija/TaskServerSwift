@@ -33,14 +33,6 @@ class AllTasksAction: ActionProtocol {
         return "Action for getting all tasks from server"
     }
 
-    public func getMetadataParameters() -> [APIParameter]? {
-        return nil
-    }
-
-    public func getMetadataRequest() -> APIRequest? {
-        return nil
-    }
-
     public func getMetadataResponses() -> [APIResponse]? {
         let taskDto = TaskDto(id: UUID(), createDate: Date(), name: "Net task", isFinished: true)
         return[

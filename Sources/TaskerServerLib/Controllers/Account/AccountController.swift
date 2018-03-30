@@ -9,25 +9,27 @@ import Foundation
 import PerfectHTTP
 import Swiftgger
 
-class AccountController: Controller {
+class AccountController: ControllerProtocol {
 
-    let registerAction: RegisterAction
-    let signInAction: SignInAction
-    let changePasswordAction: ChangePasswordAction
+    private let actions: [ActionProtocol]
 
     init(configuration: Configuration, usersService: UsersServiceProtocol) {
-        self.registerAction = RegisterAction(usersService: usersService)
-        self.signInAction = SignInAction(configuration: configuration, usersService: usersService)
-        self.changePasswordAction = ChangePasswordAction(usersService: usersService)
+        self.actions =  [
+            RegisterAction(usersService: usersService),
+            SignInAction(configuration: configuration, usersService: usersService),
+            ChangePasswordAction(usersService: usersService)
+        ]
     }
 
-    override func initRoutes() {
-        self.register(self.registerAction)
-        self.register(self.signInAction)
-        self.register(self.changePasswordAction)
+    func getMetadataName() -> String {
+        return "Account"
     }
 
-    override func getDescription() -> String {
+    func getMetadataDescription() -> String {
         return "Controller for managing user accout (registering/signing in/password)."
+    }
+
+    func getActions() -> [ActionProtocol] {
+        return self.actions
     }
 }

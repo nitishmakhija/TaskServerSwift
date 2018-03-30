@@ -39,10 +39,6 @@ class DeleteUserAction: ActionProtocol {
         ]
     }
 
-    public func getMetadataRequest() -> APIRequest? {
-        return nil
-    }
-
     public func getMetadataResponses() -> [APIResponse]? {
         return [
             APIResponse(code: "200", description: "User was deleted"),

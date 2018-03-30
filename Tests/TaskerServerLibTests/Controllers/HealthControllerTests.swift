@@ -17,7 +17,7 @@ class HealthControllerTests: XCTestCase {
         let fakeResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.healthController.healthAction.handler(request: fakeRequest, response: fakeResponse)
+        serverContext.healthController.getAction(for: HealthAction.self)?.handler(request: fakeRequest, response: fakeResponse)
 
         // Assert.
         XCTAssert(fakeResponse.status.code == HTTPResponseStatus.ok.code)

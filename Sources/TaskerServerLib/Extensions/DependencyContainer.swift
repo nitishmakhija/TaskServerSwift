@@ -19,8 +19,8 @@ extension DependencyContainer {
         self.addValidators(toContainer: self)
     }
 
-    public func resolveAllControllers() throws -> [Controller] {
-        let controllers: [Controller] = [
+    public func resolveAllControllers() throws -> [ControllerProtocol] {
+        let controllers: [ControllerProtocol] = [
             try self.resolve() as HealthController,
             try self.resolve() as TasksController,
             try self.resolve() as UsersController,

@@ -33,10 +33,6 @@ public class ChangePasswordAction: ActionProtocol {
         return "Action for changing password"
     }
 
-    public func getMetadataParameters() -> [APIParameter]? {
-        return nil
-    }
-
     public func getMetadataRequest() -> APIRequest? {
         let changePasswordDto = ChangePasswordRequestDto(email: "email@test.pl", password: "123123")
         return APIRequest(object: changePasswordDto, description: "Object with new user password.")
@@ -52,7 +48,7 @@ public class ChangePasswordAction: ActionProtocol {
     }
 
     public func getMetadataAuthorization() -> AuthorizationPolicy {
-        return .anonymous
+        return .signedIn
     }
 
     public func handler(request: HTTPRequest, response: HTTPResponse) {

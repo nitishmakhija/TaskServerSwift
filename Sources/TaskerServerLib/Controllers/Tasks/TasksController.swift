@@ -10,31 +10,29 @@ import PerfectCRUD
 import PerfectHTTP
 import Swiftgger
 
-class TasksController: Controller {
+class TasksController: ControllerProtocol {
 
-    public let allTasks: AllTasksAction
-    public let taskByIdAction: TaskByIdAction
-    public let createTaskAction: CreateTaskAction
-    public let updateTaskAction: UpdateTaskAction
-    public let deleteTaskAction: DeleteTaskAction
+    private let actions: [ActionProtocol]
 
     init(tasksService: TasksServiceProtocol, authorizationService: AuthorizationServiceProtocol) {
-        self.allTasks = AllTasksAction(tasksService: tasksService)
-        self.taskByIdAction = TaskByIdAction(tasksService: tasksService, authorizationService: authorizationService)
-        self.createTaskAction = CreateTaskAction(tasksService: tasksService, authorizationService: authorizationService)
-        self.updateTaskAction = UpdateTaskAction(tasksService: tasksService, authorizationService: authorizationService)
-        self.deleteTaskAction = DeleteTaskAction(tasksService: tasksService, authorizationService: authorizationService)
+        self.actions = [
+            AllTasksAction(tasksService: tasksService),
+            TaskByIdAction(tasksService: tasksService, authorizationService: authorizationService),
+            CreateTaskAction(tasksService: tasksService, authorizationService: authorizationService),
+            UpdateTaskAction(tasksService: tasksService, authorizationService: authorizationService),
+            DeleteTaskAction(tasksService: tasksService, authorizationService: authorizationService)
+        ]
     }
 
-    override func initRoutes() {
-        self.register(self.allTasks)
-        self.register(self.taskByIdAction)
-        self.register(self.createTaskAction)
-        self.register(self.updateTaskAction)
-        self.register(self.deleteTaskAction)
+    func getMetadataName() -> String {
+        return "Tasks"
     }
 
-    override func getDescription() -> String {
+    func getMetadataDescription() -> String {
         return "Controller for managing tasks."
+    }
+
+    func getActions() -> [ActionProtocol] {
+        return self.actions
     }
 }

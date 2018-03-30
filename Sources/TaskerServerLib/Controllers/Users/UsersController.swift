@@ -9,31 +9,29 @@ import Foundation
 import PerfectHTTP
 import Swiftgger
 
-class UsersController: Controller {
+class UsersController: ControllerProtocol {
 
-    public let allUsers: AllUsersAction
-    public let userByIdAction: UserByIdAction
-    public let createUserAction: CreateUserAction
-    public let updateUserAction: UpdateUserAction
-    public let deleteUserAction: DeleteUserAction
+    private let actions: [ActionProtocol]
 
     init(usersService: UsersServiceProtocol) {
-        self.allUsers = AllUsersAction(usersService: usersService)
-        self.userByIdAction = UserByIdAction(usersService: usersService)
-        self.createUserAction = CreateUserAction(usersService: usersService)
-        self.updateUserAction = UpdateUserAction(usersService: usersService)
-        self.deleteUserAction = DeleteUserAction(usersService: usersService)
+        self.actions = [
+            AllUsersAction(usersService: usersService),
+            UserByIdAction(usersService: usersService),
+            CreateUserAction(usersService: usersService),
+            UpdateUserAction(usersService: usersService),
+            DeleteUserAction(usersService: usersService)
+        ]
     }
 
-    override func initRoutes() {
-        self.register(self.allUsers)
-        self.register(self.userByIdAction)
-        self.register(self.createUserAction)
-        self.register(self.updateUserAction)
-        self.register(self.deleteUserAction)
+    func getMetadataName() -> String {
+        return "Users"
     }
 
-    override func getDescription() -> String {
+    func getMetadataDescription() -> String {
         return "Controller for managing users."
+    }
+
+    func getActions() -> [ActionProtocol] {
+        return self.actions
     }
 }

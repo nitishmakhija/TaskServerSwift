@@ -27,23 +27,11 @@ class HealthAction: ActionProtocol {
         return "Action for getting status of health"
     }
 
-    public func getMetadataParameters() -> [APIParameter]? {
-        return nil
-    }
-
-    public func getMetadataRequest() -> APIRequest? {
-        return nil
-    }
-
     public func getMetadataResponses() -> [APIResponse]? {
         let healthStatusDto = HealthStatusDto(message: "I'm fine and running!")
         return [
             APIResponse(code: "200", description: "Information about health", object: healthStatusDto)
         ]
-    }
-
-    public func getMetadataAuthorization() -> AuthorizationPolicy {
-        return .anonymous
     }
 
     public func handler(request: HTTPRequest, response: HTTPResponse) {

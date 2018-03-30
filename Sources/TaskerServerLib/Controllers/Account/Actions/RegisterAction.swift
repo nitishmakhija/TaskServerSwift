@@ -32,10 +32,6 @@ class RegisterAction: ActionProtocol {
         return "Action for registering new user in system"
     }
 
-    public func getMetadataParameters() -> [APIParameter]? {
-        return nil
-    }
-
     public func getMetadataRequest() -> APIRequest? {
         let registerUserDto = RegisterUserDto(id: UUID(), createDate: Date(), name: "John Doe", email: "john.doe@email.com", isLocked: false, password: "fds")
         return APIRequest(object: registerUserDto, description: "Object with registration information.")
@@ -49,10 +45,6 @@ class RegisterAction: ActionProtocol {
             APIResponse(code: "200", description: "Response with user token for authorization", object: registerUserDto),
             APIResponse(code: "400", description: "User information are invalid", object: validationErrorResponseDto)
         ]
-    }
-
-    public func getMetadataAuthorization() -> AuthorizationPolicy {
-        return .anonymous
     }
 
     public func handler(request: HTTPRequest, response: HTTPResponse) {

@@ -26,7 +26,7 @@ class AccountControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(method: .post)
 
         // Act.
-        let requestHandler = serverContext.accountController.allRoutes.navigator.findHandler(uri: "/account/register", webRequest: fakeHttpRequest)
+        let requestHandler = serverContext.allRoutes.navigator.findHandler(uri: "/account/register", webRequest: fakeHttpRequest)
 
         // Assert.
         XCTAssertNotNil(requestHandler)
@@ -38,7 +38,7 @@ class AccountControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(method: .post)
 
         // Act.
-        let requestHandler = serverContext.accountController.allRoutes.navigator.findHandler(uri: "/account/sign-in", webRequest: fakeHttpRequest)
+        let requestHandler = serverContext.allRoutes.navigator.findHandler(uri: "/account/sign-in", webRequest: fakeHttpRequest)
 
         // Assert.
         XCTAssertNotNil(requestHandler)
@@ -50,7 +50,7 @@ class AccountControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(method: .post)
 
         // Act.
-        let requestHandler = serverContext.accountController.allRoutes.navigator.findHandler(uri: "/account/change-password", webRequest: fakeHttpRequest)
+        let requestHandler = serverContext.allRoutes.navigator.findHandler(uri: "/account/change-password", webRequest: fakeHttpRequest)
 
         // Assert.
         XCTAssertNotNil(requestHandler)

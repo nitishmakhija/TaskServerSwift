@@ -18,6 +18,26 @@ class TasksControllerTests: XCTestCase {
 
     private var serverContext: TestServerContext!
 
+    private var allTasksAction: ActionProtocol? {
+        return serverContext.tasksController.getAction(for: AllTasksAction.self)
+    }
+
+    private var taskByIdAction: ActionProtocol? {
+        return serverContext.tasksController.getAction(for: TaskByIdAction.self)
+    }
+
+    private var createTaskAction: ActionProtocol? {
+        return serverContext.tasksController.getAction(for: CreateTaskAction.self)
+    }
+
+    private var updateTaskAction: ActionProtocol? {
+        return serverContext.tasksController.getAction(for: UpdateTaskAction.self)
+    }
+
+    private var deleteTaskAction: ActionProtocol? {
+        return serverContext.tasksController.getAction(for: DeleteTaskAction.self)
+    }
+
     override func setUp() {
         self.serverContext = TestServerContext.shared
     }
@@ -28,7 +48,7 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(method: .get)
 
         // Act.
-        let requestHandler = serverContext.tasksController.allRoutes.navigator.findHandler(uri: "/tasks", webRequest: fakeHttpRequest)
+        let requestHandler = serverContext.allRoutes.navigator.findHandler(uri: "/tasks", webRequest: fakeHttpRequest)
 
         // Assert.
         XCTAssertNotNil(requestHandler)
@@ -40,7 +60,7 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(method: .get)
 
         // Act.
-        let requestHandler = serverContext.tasksController.allRoutes.navigator.findHandler(uri: "/tasks/123", webRequest: fakeHttpRequest)
+        let requestHandler = serverContext.allRoutes.navigator.findHandler(uri: "/tasks/123", webRequest: fakeHttpRequest)
 
         // Assert.
         XCTAssertNotNil(requestHandler)
@@ -52,7 +72,7 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(method: .post)
 
         // Act.
-        let requestHandler = serverContext.tasksController.allRoutes.navigator.findHandler(uri: "/tasks", webRequest: fakeHttpRequest)
+        let requestHandler = serverContext.allRoutes.navigator.findHandler(uri: "/tasks", webRequest: fakeHttpRequest)
 
         // Assert.
         XCTAssertNotNil(requestHandler)
@@ -64,7 +84,7 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(method: .put)
 
         // Act.
-        let requestHandler = serverContext.tasksController.allRoutes.navigator.findHandler(uri: "/tasks/123", webRequest: fakeHttpRequest)
+        let requestHandler = serverContext.allRoutes.navigator.findHandler(uri: "/tasks/123", webRequest: fakeHttpRequest)
 
         // Assert.
 
@@ -77,7 +97,7 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(method: .delete)
 
         // Act.
-        let requestHandler = serverContext.tasksController.allRoutes.navigator.findHandler(uri: "/tasks/123", webRequest: fakeHttpRequest)
+        let requestHandler = serverContext.allRoutes.navigator.findHandler(uri: "/tasks/123", webRequest: fakeHttpRequest)
 
         // Assert.
 
@@ -91,7 +111,7 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.tasksController.allTasks.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        allTasksAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
@@ -109,7 +129,7 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.tasksController.taskByIdAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        taskByIdAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         let taskDto = try! fakeHttpResponse.getObjectFromResponseBody(TaskDto.self)
@@ -125,7 +145,7 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.tasksController.taskByIdAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        taskByIdAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.notFound.code, fakeHttpResponse.status.code)
@@ -141,7 +161,7 @@ class TasksControllerTests: XCTestCase {
         fakeHttpRequest.addObjectToRequestBody(task)
 
         // Act.
-        serverContext.tasksController.createTaskAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        createTaskAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
@@ -154,7 +174,7 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.tasksController.createTaskAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        createTaskAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -169,7 +189,7 @@ class TasksControllerTests: XCTestCase {
         fakeHttpRequest.addObjectToRequestBody(Task(id: UUID(), createDate: Date(), name: "", isFinished: true, userId: user.id))
 
         // Act.
-        serverContext.tasksController.createTaskAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        createTaskAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -190,7 +210,7 @@ class TasksControllerTests: XCTestCase {
         fakeHttpRequest.addObjectToRequestBody(task)
 
         // Act.
-        serverContext.tasksController.updateTaskAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        updateTaskAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
@@ -203,7 +223,7 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.tasksController.updateTaskAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        updateTaskAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -220,7 +240,7 @@ class TasksControllerTests: XCTestCase {
         fakeHttpRequest.addObjectToRequestBody(task)
 
         // Act.
-        serverContext.tasksController.updateTaskAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        updateTaskAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -240,7 +260,7 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.tasksController.deleteTaskAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        deleteTaskAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
@@ -254,7 +274,7 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.tasksController.deleteTaskAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
+        deleteTaskAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.notFound.code, fakeHttpResponse.status.code)
