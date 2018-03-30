@@ -87,7 +87,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.usersController.all(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.allUsers.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         let users = try! fakeHttpResponse.getObjectFromResponseBody(Array<UserDto>.self)
@@ -103,7 +103,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.usersController.get(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.userByIdAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         let userDto = try! fakeHttpResponse.getObjectFromResponseBody(UserDto.self)
@@ -119,7 +119,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.usersController.get(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.userByIdAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.notFound.code, fakeHttpResponse.status.code)
@@ -135,7 +135,7 @@ class UsersControllerTests: XCTestCase {
         fakeHttpRequest.addObjectToRequestBody(user)
 
         // Act.
-        serverContext.usersController.post(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.createUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
@@ -148,7 +148,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.usersController.post(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.createUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -164,7 +164,7 @@ class UsersControllerTests: XCTestCase {
         fakeHttpRequest.addObjectToRequestBody(user)
 
         // Act.
-        serverContext.usersController.post(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.createUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -185,7 +185,7 @@ class UsersControllerTests: XCTestCase {
         fakeHttpRequest.addObjectToRequestBody(user)
 
         // Act.
-        serverContext.usersController.post(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.createUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -205,7 +205,7 @@ class UsersControllerTests: XCTestCase {
         fakeHttpRequest.addObjectToRequestBody(user)
 
         // Act.
-        serverContext.usersController.put(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.updateUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
@@ -218,7 +218,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.usersController.put(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.updateUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -234,7 +234,7 @@ class UsersControllerTests: XCTestCase {
         fakeHttpRequest.addObjectToRequestBody(user)
 
         // Act.
-        serverContext.usersController.put(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.updateUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
@@ -253,7 +253,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.usersController.delete(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.deleteUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
@@ -266,7 +266,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpResponse = FakeHTTPResponse()
 
         // Act.
-        serverContext.usersController.delete(request: fakeHttpRequest, response: fakeHttpResponse)
+        serverContext.usersController.deleteUserAction.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.notFound.code, fakeHttpResponse.status.code)

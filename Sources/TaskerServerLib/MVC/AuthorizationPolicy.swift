@@ -10,14 +10,13 @@ public enum AuthorizationPolicy: Equatable {
     case signedIn
     case inRole([String])
 
-    static public func ==(lhs: AuthorizationPolicy, rhs: AuthorizationPolicy) -> Bool
-    {
+    static public func == (lhs: AuthorizationPolicy, rhs: AuthorizationPolicy) -> Bool {
         switch (lhs, rhs) {
         case (.anonymous, .anonymous):
             return true
         case (.signedIn, .signedIn):
             return true
-        case (.inRole(_), .inRole(_)):
+        case (.inRole, .inRole):
             return true
         default:
             return false

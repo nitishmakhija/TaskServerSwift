@@ -6,8 +6,6 @@ do {
     let serverContext = try ServerContext()
     let server = HTTPServer()
 
-
-
     server.setRequestFilters(serverContext.requestFilters)
     server.serverName = serverContext.configuration.serverName
     server.serverPort = serverContext.configuration.serverPort

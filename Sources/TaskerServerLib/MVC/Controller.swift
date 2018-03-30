@@ -12,7 +12,7 @@ public class Controller {
 
     var allRoutes = Routes()
     var routesWithAuthorization = Routes()
-    var actions: [Action] = []
+    var actions: [ActionProtocol] = []
 
     init() {
         initRoutes()
@@ -30,18 +30,18 @@ public class Controller {
         return className
     }
 
-    public func register(_ action: Action) {
+    public func register(_ action: ActionProtocol) {
 
         self.actions.append(action)
 
-        let route = Route(method: action.method, uri: action.uri, handler: { (request: HTTPRequest, response: HTTPResponse) -> Void in
-            if self.isUserHasAccess(request: request, response: response, authorization: action.authorization) {
-                action.handler(request, response)
+        let route = Route(method: action.getHttpMethod(), uri: action.getUri(), handler: { (request: HTTPRequest, response: HTTPResponse) -> Void in
+            if self.isUserHasAccess(request: request, response: response, authorization: action.getMetadataAuthorization()) {
+                action.handler(request: request, response: response)
             }
         })
 
         self.allRoutes.add(route)
-        self.addToRoutesWithAutorization(action.authorization, route)
+        self.addToRoutesWithAutorization(action.getMetadataAuthorization(), route)
     }
 
     private func addToRoutesWithAutorization(_ authorization: AuthorizationPolicy, _ route: Route) {
