@@ -11,6 +11,8 @@ This is a simple project with server side code written in Swift. It contains few
  - Authentication & Authorization - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-authentication-authorization-cc6ea70ccd5f)
  - Resource based authorization - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-resource-based-authorization-62ef4e006e77)
  - Docker on Azure - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-docker-on-azure-5778be8f207)
+ - Continuous Integration - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-continuous-integration-af5574ba58f4)
+ - OpenAPI (Swagger) - described on Medium [article](https://medium.com/@mczachurski/server-side-swift-openapi-swagger-bed2648e584f)
  
 ## Getting started
 
