@@ -33,17 +33,13 @@ class RegisterAction: ActionProtocol {
     }
 
     public func getMetadataRequest() -> APIRequest? {
-        let registerUserDto = RegisterUserDto(id: UUID(), createDate: Date(), name: "John Doe", email: "john.doe@email.com", isLocked: false, password: "fds")
-        return APIRequest(object: registerUserDto, description: "Object with registration information.")
+        return APIRequest(object: RegisterUserDto.self, description: "Object with registration information.")
     }
 
     public func getMetadataResponses() -> [APIResponse]? {
-        let registerUserDto = RegisterUserDto(id: UUID(), createDate: Date(), name: "John Doe", email: "john.doe@email.com", isLocked: false, password: "fds")
-        let validationErrorResponseDto = ValidationErrorResponseDto(message: "Object is invalid", errors: ["property": "Information about error."])
-
         return [
-            APIResponse(code: "200", description: "Response with user token for authorization", object: registerUserDto),
-            APIResponse(code: "400", description: "User information are invalid", object: validationErrorResponseDto)
+            APIResponse(code: "200", description: "Response with user token for authorization", object: RegisterUserDto.self),
+            APIResponse(code: "400", description: "User information are invalid", object: ValidationErrorResponseDto.self)
         ]
     }
 

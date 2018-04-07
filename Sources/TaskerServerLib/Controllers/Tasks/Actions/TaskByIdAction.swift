@@ -42,9 +42,8 @@ class TaskByIdAction: ActionProtocol {
     }
 
     public func getMetadataResponses() -> [APIResponse]? {
-        let taskDto = TaskDto(id: UUID(), createDate: Date(), name: "Net task", isFinished: true)
         return [
-            APIResponse(code: "200", description: "Specific task", object: taskDto),
+            APIResponse(code: "200", description: "Specific task", object: TaskDto.self),
             APIResponse(code: "404", description: "Task with entered id not exists"),
             APIResponse(code: "401", description: "User not authorized")
         ]

@@ -28,9 +28,8 @@ class HealthAction: ActionProtocol {
     }
 
     public func getMetadataResponses() -> [APIResponse]? {
-        let healthStatusDto = HealthStatusDto(message: "I'm fine and running!")
         return [
-            APIResponse(code: "200", description: "Information about health", object: healthStatusDto)
+            APIResponse(code: "200", description: "Information about health", object: HealthStatusDto.self)
         ]
     }
 

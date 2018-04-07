@@ -34,16 +34,13 @@ class CreateUserAction: ActionProtocol {
     }
 
     public func getMetadataRequest() -> APIRequest? {
-        let userDto = UserDto(id: UUID(), createDate: Date(), name: "John Doe", email: "email@test.com", isLocked: false)
-        return APIRequest(object: userDto, description: "Object with user information.")
+        return APIRequest(object: UserDto.self, description: "Object with user information.")
     }
 
     public func getMetadataResponses() -> [APIResponse]? {
-        let userDto = UserDto(id: UUID(), createDate: Date(), name: "John Doe", email: "email@test.com", isLocked: false)
-        let validationErrorResponseDto = ValidationErrorResponseDto(message: "Object is invalid", errors: ["property": "Information about error."])
         return  [
-            APIResponse(code: "200", description: "User data after adding to the system", object: userDto),
-            APIResponse(code: "400", description: "There was issues during adding new user", object: validationErrorResponseDto),
+            APIResponse(code: "200", description: "User data after adding to the system", object: UserDto.self),
+            APIResponse(code: "400", description: "There was issues during adding new user", object: ValidationErrorResponseDto.self),
             APIResponse(code: "401", description: "User not authorized")
         ]
     }

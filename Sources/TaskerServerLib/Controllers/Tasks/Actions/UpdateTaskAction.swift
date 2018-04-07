@@ -42,16 +42,13 @@ class UpdateTaskAction: ActionProtocol {
     }
 
     public func getMetadataRequest() -> APIRequest? {
-        let taskDto = TaskDto(id: UUID(), createDate: Date(), name: "Net task", isFinished: true)
-        return APIRequest(object: taskDto, description: "Object with task information.")
+        return APIRequest(object: TaskDto.self, description: "Object with task information.")
     }
 
     public func getMetadataResponses() -> [APIResponse]? {
-        let taskDto = TaskDto(id: UUID(), createDate: Date(), name: "Net task", isFinished: true)
-        let validationErrorResponseDto = ValidationErrorResponseDto(message: "Object is invalid", errors: ["property": "Information about error."])
         return  [
-            APIResponse(code: "200", description: "Task data after adding to the system", object: taskDto),
-            APIResponse(code: "400", description: "There was issues during updating task", object: validationErrorResponseDto),
+            APIResponse(code: "200", description: "Task data after adding to the system", object: TaskDto.self),
+            APIResponse(code: "400", description: "There was issues during updating task", object: ValidationErrorResponseDto.self),
             APIResponse(code: "404", description: "Task with entered id not exists"),
             APIResponse(code: "401", description: "User not authorized")
         ]

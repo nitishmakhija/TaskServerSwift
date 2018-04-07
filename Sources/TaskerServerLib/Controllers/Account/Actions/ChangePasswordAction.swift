@@ -34,15 +34,13 @@ public class ChangePasswordAction: ActionProtocol {
     }
 
     public func getMetadataRequest() -> APIRequest? {
-        let changePasswordDto = ChangePasswordRequestDto(email: "email@test.pl", password: "123123")
-        return APIRequest(object: changePasswordDto, description: "Object with new user password.")
+        return APIRequest(object: ChangePasswordRequestDto.self, description: "Object with new user password.")
     }
 
     public func getMetadataResponses() -> [APIResponse]? {
-        let validationErrorResponseDto = ValidationErrorResponseDto(message: "Object is invalid", errors: ["property": "Information about error."])
         return [
             APIResponse(code: "200", description: "Password was changed"),
-            APIResponse(code: "400", description: "There was issues during changing password", object: validationErrorResponseDto),
+            APIResponse(code: "400", description: "There was issues during changing password", object: ValidationErrorResponseDto.self),
             APIResponse(code: "401", description: "User not authorized")
         ]
     }

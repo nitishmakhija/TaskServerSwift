@@ -34,9 +34,8 @@ class AllUsersAction: ActionProtocol {
     }
 
     public func getMetadataResponses() -> [APIResponse]? {
-        let userDto = UserDto(id: UUID(), createDate: Date(), name: "John Doe", email: "email@test.com", isLocked: false)
         return [
-            APIResponse(code: "200", description: "List of users", object: [userDto]),
+            APIResponse(code: "200", description: "List of users", array: UserDto.self),
             APIResponse(code: "401", description: "User not authorized")
         ]
     }

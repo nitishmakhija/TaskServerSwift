@@ -40,9 +40,8 @@ class UserByIdAction: ActionProtocol {
     }
 
     public func getMetadataResponses() -> [APIResponse]? {
-        let userDto = UserDto(id: UUID(), createDate: Date(), name: "John Doe", email: "email@test.com", isLocked: false)
         return [
-            APIResponse(code: "200", description: "Specific user", object: userDto),
+            APIResponse(code: "200", description: "Specific user", object: UserDto.self),
             APIResponse(code: "404", description: "User with entered id not exists"),
             APIResponse(code: "401", description: "User not authorized")
         ]

@@ -14,7 +14,7 @@ let package = Package(
         .package(url: "https://github.com/kjessup/Perfect-SQLite.git", .branch("master")),
         .package(url: "https://github.com/PerfectlySoft/Perfect-Crypto.git", from: "3.0.0"),
         .package(url: "https://github.com/IBM-Swift/FileKit.git", from: "0.0.1"),
-        .package(url: "https://github.com/mczachurski/Swiftgger", from: "1.0.2")
+        .package(url: "https://github.com/mczachurski/Swiftgger", from: "1.2.1")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
