@@ -9,6 +9,7 @@ import Foundation
 import PerfectHTTP
 import PerfectHTTPServer
 import PerfectLib
+import PerfectCORS
 import Dip
 import Configuration
 
