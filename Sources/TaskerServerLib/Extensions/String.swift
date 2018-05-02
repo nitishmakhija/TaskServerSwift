@@ -48,5 +48,4 @@ extension String {
             return Int(arc4random())
         #endif
     }
-
 }

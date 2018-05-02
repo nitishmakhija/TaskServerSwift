@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message TasksDto {
+  repeated TaskDto tasks = 1;
+}
+
+message TaskDto {
+  string id = 1;
+  string createDate = 2;
+  string name = 3;
+  bool isFinished = 4;
+}

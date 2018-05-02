@@ -8,6 +8,7 @@
 import Foundation
 import PerfectHTTP
 import Swiftgger
+import PerfectLib
 
 class OpenAPIAction: ActionProtocol {
 
@@ -31,7 +32,21 @@ class OpenAPIAction: ActionProtocol {
 
     public func handler(request: HTTPRequest, response: HTTPResponse) {
         let openAPIDocument = self.generateOpenAPIDocument()
-        response.sendJson(openAPIDocument)
+
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+
+        var json = ""
+        do {
+            let jsonData = try encoder.encode(openAPIDocument)
+            json = String(data: jsonData, encoding: .utf8)!
+            json = json.replacingOccurrences(of: "\\/", with: "/")
+        } catch {
+            Log.error(message: "Error during serializable object to JSON")
+        }
+
+        response.setHeader(.contentType, value: "application/json")
+        response.appendBody(string: json).completed()
     }
 
     private func getAPIHttpMethod(from method: HTTPMethod) -> APIHttpMethod {

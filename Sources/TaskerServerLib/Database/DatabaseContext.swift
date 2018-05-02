@@ -63,12 +63,12 @@ public class DatabaseContext: DatabaseContextProtocol {
     }
 
     private lazy var databaseUrl: String  = {
-        let fn = NSString(string: self.connectionString)
+        let path = NSString(string: self.connectionString)
         let pathUrl: URL
-        let isAbsolutePath = fn.isAbsolutePath
+        let isAbsolutePath = path.isAbsolutePath
 
         if isAbsolutePath {
-            pathUrl = URL(fileURLWithPath: fn.expandingTildeInPath)
+            pathUrl = URL(fileURLWithPath: path.expandingTildeInPath)
         } else {
             pathUrl = URL(fileURLWithPath: FileKit.workingDirectory)
                 .appendingPathComponent(connectionString).standardized

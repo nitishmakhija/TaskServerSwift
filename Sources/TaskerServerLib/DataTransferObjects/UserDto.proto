@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+message UsersDto {
+  repeated UserDto users = 1;
+}
+
+message UserDto {
+  string id = 1;
+  string createDate = 2;
+  string name = 3;
+  string email = 4;
+  bool isLocked = 5;
+  repeated string roles = 6;
+}

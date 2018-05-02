@@ -62,7 +62,7 @@ class UserByIdAction: ActionProtocol {
             }
 
             let userDto = UserDto(user: user)
-            return response.sendJson(userDto)
+            return try response.sendJson(userDto)
         } catch {
             response.sendInternalServerError(error: error)
         }

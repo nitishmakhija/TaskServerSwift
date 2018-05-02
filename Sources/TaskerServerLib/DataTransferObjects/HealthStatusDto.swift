@@ -7,10 +7,7 @@
 
 import Foundation
 
-struct HealthStatusDto: Codable {
-
-    public var message: String
-
+extension HealthStatusDto {
     init(message: String) {
         self.message = message
     }

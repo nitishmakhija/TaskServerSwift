@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+message JwtTokenResponseDto {
+  string token = 1;
+}

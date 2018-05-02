@@ -7,8 +7,8 @@ do {
     let server = HTTPServer()
 
     server.setRequestFilters(serverContext.requestFilters)
-    server.serverName = serverContext.configuration.serverName
-    server.serverPort = serverContext.configuration.serverPort
+    // server.serverName = serverContext.configuration.serverName
+    server.serverPort = 8181
     server.addRoutes(serverContext.allRoutes)
 
     // Launch the HTTP server.

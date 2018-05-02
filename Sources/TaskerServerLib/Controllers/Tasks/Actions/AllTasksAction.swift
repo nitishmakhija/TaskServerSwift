@@ -48,12 +48,12 @@ class AllTasksAction: ActionProtocol {
         do {
             let tasks = try self.tasksService.get()
 
-            var tasksDtos: [TaskDto] = []
+            var tasksDtos = TasksDto()
             for task in tasks {
-                tasksDtos.append(TaskDto(task: task))
+                tasksDtos.tasks.append(TaskDto(task: task))
             }
 
-            response.sendJson(tasksDtos)
+            try response.sendJson(tasksDtos)
         } catch {
             response.sendInternalServerError(error: error)
         }

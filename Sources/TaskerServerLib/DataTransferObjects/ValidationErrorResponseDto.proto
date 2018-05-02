@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+message ValidationErrorResponseDto {
+  string message = 4;
+  repeated ErrorDto errors = 6;
+}
+
+message ErrorDto {
+    string field = 1;
+    repeated string messages = 2;
+}

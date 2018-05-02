@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+message RegisterUserDto {
+  string id = 1;
+  string createDate = 2;
+  string name = 3;
+  string email = 4;
+  bool isLocked = 5;
+  string password = 6;
+}

@@ -61,7 +61,7 @@ class CreateUserAction: ActionProtocol {
             }
 
             let addedUserDto = UserDto(user: addedUser)
-            return response.sendJson(addedUserDto)
+            return try response.sendJson(addedUserDto)
         } catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()
         } catch let error as ValidationsError {

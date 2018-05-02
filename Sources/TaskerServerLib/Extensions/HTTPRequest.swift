@@ -8,6 +8,7 @@
 import Foundation
 import PerfectHTTP
 import PerfectHTTPServer
+import SwiftProtobuf
 
 enum RequestError: Error {
     case bodyIsEmpty
@@ -15,9 +16,16 @@ enum RequestError: Error {
 
 extension HTTPRequest {
 
-    func getObjectFromRequest<T>(_ type: T.Type) throws -> T where T: Decodable {
-        if let json = self.postBodyString {
-            return try self.decode(type, json)
+    func getObjectFromRequest<T>(_ type: T.Type) throws -> T where T: SwiftProtobuf.Message {
+
+        if self.isBinary() {
+            if let dataArray = self.postBodyBytes {
+                return try T(serializedData: Data(bytes: dataArray))
+            }
+        } else {
+            if let json = self.postBodyString {
+                return try T(jsonString: json)
+            }
         }
 
         throw RequestError.bodyIsEmpty
@@ -31,12 +39,8 @@ extension HTTPRequest {
         return self.scratchPad["userCredentials"] as? UserCredentials
     }
 
-    private func decode<T>(_ type: T.Type, _ json: String) throws -> T where T: Decodable {
-
-        let jsonData = json.data(using: .utf8)!
-        let decoder = JSONDecoder()
-        let task = try decoder.decode(type, from: jsonData)
-
-        return task
+    private func isBinary() -> Bool {
+        let contentType = self.header(HTTPRequestHeader.Name.contentType)
+        return contentType == "application/octet-stream"
     }
 }

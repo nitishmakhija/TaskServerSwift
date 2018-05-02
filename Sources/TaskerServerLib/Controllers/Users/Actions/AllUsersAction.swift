@@ -48,12 +48,12 @@ class AllUsersAction: ActionProtocol {
         do {
             let users = try self.usersService.get()
 
-            var usersDtos: [UserDto] = []
+            var usersDtos = UsersDto()
             for user in users {
-                usersDtos.append(UserDto(user: user))
+                usersDtos.users.append(UserDto(user: user))
             }
 
-            response.sendJson(usersDtos)
+            try response.sendJson(usersDtos)
         } catch {
             response.sendInternalServerError(error: error)
         }

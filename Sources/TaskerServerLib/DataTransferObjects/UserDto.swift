@@ -7,18 +7,11 @@
 
 import Foundation
 
-struct UserDto: Codable {
-
-    public var id: UUID?
-    public var createDate: Date?
-    public var name: String
-    public var email: String
-    public var isLocked: Bool
-    public var roles: [String]?
+extension UserDto {
 
     init(id: UUID, createDate: Date, name: String, email: String, isLocked: Bool) {
-        self.id = id
-        self.createDate = createDate
+        self.id = id.uuidString
+        self.createDate = DateHelper.toISO8601String(createDate)
         self.name = name
         self.email = email
         self.isLocked = isLocked
@@ -26,12 +19,15 @@ struct UserDto: Codable {
 
     init(id: UUID, createDate: Date, name: String, email: String, isLocked: Bool, roles: [String]?) {
         self.init(id: id, createDate: createDate, name: name, email: email, isLocked: isLocked)
-        self.roles = roles
+
+        if let unwrappedRoles = roles {
+            self.roles = unwrappedRoles
+        }
     }
 
     init(user: User) {
-        self.id = user.id
-        self.createDate = user.createDate
+        self.id = user.id.uuidString
+        self.createDate = DateHelper.toISO8601String(user.createDate)
         self.name = user.name
         self.email = user.email
         self.isLocked = user.isLocked
@@ -39,9 +35,13 @@ struct UserDto: Codable {
     }
 
     public func toUser() -> User {
+
+        let guid = UUID(uuidString: self.id) ?? UUID.empty()
+        let date = DateHelper.fromISO8601String(self.createDate) ?? Date()
+
         return User(
-            id: self.id ?? UUID.empty(),
-            createDate: self.createDate ?? Date(),
+            id: guid,
+            createDate: date,
             name: self.name,
             email: self.email,
             password: "",
@@ -52,12 +52,9 @@ struct UserDto: Codable {
     }
 
     public func getRoles() -> [Role]? {
-        var roles: [Role]?
-        if let userRoles = self.roles {
-            roles = []
-            for role in userRoles {
-                roles!.append(Role(id: UUID.empty(), createDate: Date(), name: role))
-            }
+        var roles: [Role] = []
+        for role in self.roles {
+            roles.append(Role(id: UUID.empty(), createDate: Date(), name: role))
         }
 
         return roles

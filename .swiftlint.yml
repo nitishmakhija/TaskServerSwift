@@ -1,6 +1,8 @@
 included: # paths to include during linting. `--path` is ignored if present.
   - Sources
   - Tests
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Sources/TaskerServerLib/DataTransferObjects
 line_length: 160
 force_try:
   severity: warning # explicitly

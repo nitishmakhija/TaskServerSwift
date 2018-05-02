@@ -61,7 +61,7 @@ public class SignInAction: ActionProtocol {
 
             let tokenProvider = TokenProvider(issuer: self.configuration.issuer, secret: self.configuration.secret)
             let token = try tokenProvider.prepareToken(user: user)
-            return response.sendJson(JwtTokenResponseDto(token: token))
+            return try response.sendJson(JwtTokenResponseDto(token: token))
         } catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()
         } catch let error as ValidationsError {

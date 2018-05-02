@@ -34,6 +34,10 @@ class HealthAction: ActionProtocol {
     }
 
     public func handler(request: HTTPRequest, response: HTTPResponse) {
-        response.sendJson(HealthStatusDto(message: "I'm fine and running!"))
+        do {
+            try response.sendJson(HealthStatusDto(message: "I'm fine and running!"))
+        } catch {
+            response.sendInternalServerError(error: error)
+        }
     }
 }

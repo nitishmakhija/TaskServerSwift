@@ -62,7 +62,7 @@ class UpdateTaskAction: ActionProtocol {
         do {
             let taskDto = try request.getObjectFromRequest(TaskDto.self)
 
-            guard let taskId = taskDto.id else {
+            guard let taskId = UUID(uuidString: taskDto.id) else {
                 return response.sendNotFoundError()
             }
 
@@ -76,7 +76,7 @@ class UpdateTaskAction: ActionProtocol {
             try self.tasksService.update(entity: task)
 
             let updatedTaskDto = TaskDto(task: task)
-            return response.sendJson(updatedTaskDto)
+            return try response.sendJson(updatedTaskDto)
         } catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()
         } catch let error as ValidationsError {

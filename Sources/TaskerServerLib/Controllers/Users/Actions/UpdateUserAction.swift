@@ -79,7 +79,7 @@ class UpdateUserAction: ActionProtocol {
             }
 
             let updatedUserDto = UserDto(user: updatedUser)
-            return response.sendJson(updatedUserDto)
+            return try response.sendJson(updatedUserDto)
         } catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()
         } catch let error as ValidationsError {

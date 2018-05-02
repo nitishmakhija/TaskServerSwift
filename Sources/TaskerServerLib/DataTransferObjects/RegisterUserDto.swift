@@ -7,18 +7,11 @@
 
 import Foundation
 
-struct RegisterUserDto: Codable {
-
-    public var id: UUID?
-    public var createDate: Date?
-    public var name: String
-    public var email: String
-    public var isLocked: Bool
-    public var password: String
+extension RegisterUserDto {
 
     init(id: UUID, createDate: Date, name: String, email: String, isLocked: Bool, password: String) {
-        self.id = id
-        self.createDate = createDate
+        self.id = id.uuidString
+        self.createDate = DateHelper.toISO8601String(createDate)
         self.name = name
         self.email = email
         self.isLocked = isLocked
@@ -26,8 +19,12 @@ struct RegisterUserDto: Codable {
     }
 
     public func toUser() -> User {
-        return User(id: self.id ?? UUID.empty(),
-                    createDate: self.createDate ?? Date(),
+
+        let guid = UUID(uuidString: self.id) ?? UUID.empty()
+        let date = DateHelper.fromISO8601String(self.createDate) ?? Date()
+
+        return User(id: guid,
+                    createDate: date,
                     name: self.name,
                     email: self.email,
                     password: self.password,

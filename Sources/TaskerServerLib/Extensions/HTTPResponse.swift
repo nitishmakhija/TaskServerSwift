@@ -9,14 +9,21 @@ import Foundation
 import PerfectHTTP
 import PerfectSQLite
 import PerfectLib
+import SwiftProtobuf
 
 extension HTTPResponse {
 
-    func sendJson<T>(_ value: T) where T: Encodable {
-        let json = self.encode(value)
+    func sendJson<T>(_ value: T) throws where T: SwiftProtobuf.Message {
 
-        self.setHeader(.contentType, value: "application/json")
-        self.appendBody(string: json).completed()
+        if self.acceptBinary() {
+            let data = try value.serializedData()
+            self.setHeader(.contentType, value: "application/octet-stream")
+            self.appendBody(bytes: [UInt8](data)).completed()
+        } else {
+            let json = try value.jsonString()
+            self.setHeader(.contentType, value: "application/json")
+            self.appendBody(string: json).completed()
+        }
     }
 
     func sendOk() {
@@ -44,8 +51,13 @@ extension HTTPResponse {
         self.status = .badRequest
         let badRequestResponse = BadRequestResponseDto(
             message: "Error during parsing your request. Verify that all parameters and json was correct.")
-        let errorJosn = encode(badRequestResponse)
-        self.appendBody(string: errorJosn).completed()
+
+        do {
+            let errorJosn = try badRequestResponse.jsonString()
+            self.appendBody(string: errorJosn).completed()
+        } catch {
+            Log.error(message: "Error during sending bad request response.")
+        }
     }
 
     func sendValidationsError(error: ValidationsError) {
@@ -53,41 +65,41 @@ extension HTTPResponse {
         let validationErrorResponse = ValidationErrorResponseDto(
             message: "Error during parsing your request. Verify that all parameters and json was correct.",
             errors: error.errors)
-        let errorJosn = encode(validationErrorResponse)
-        self.appendBody(string: errorJosn).completed()
+
+        do {
+            let errorJosn = try validationErrorResponse.jsonString()
+            self.appendBody(string: errorJosn).completed()
+        } catch {
+            Log.error(message: "Error during sending validation error response.")
+        }
     }
 
     func sendInternalServerError(error: Error) {
         self.status = .internalServerError
 
-        var errorDictionary: [String: String] = [:]
-        errorDictionary["error"] = error.localizedDescription
+        var internalServerError = InternalServerErrorDto()
+        internalServerError.error = error.localizedDescription
 
         switch error {
         case let sqliteError as SQLiteCRUDError:
-            errorDictionary["description"] = sqliteError.description
+            internalServerError.message = sqliteError.description
         default:
             break
         }
 
-        let errorJosn = encode(errorDictionary)
-        self.appendBody(string: errorJosn).completed()
+        do {
+            let errorJosn = try internalServerError.jsonString()
+            self.appendBody(string: errorJosn).completed()
+        } catch {
+            Log.error(message: "Error during sending internal server error response.")
+        }
     }
 
-    private func encode<T>(_ value: T) -> String where T: Encodable {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-
-        var json = ""
-        do {
-            let jsonData = try encoder.encode(value)
-            json = String(data: jsonData, encoding: .utf8)!
-            json = json.replacingOccurrences(of: "\\/", with: "/")
-        } catch {
-            Log.error(message: "Error during serializable object to JSON")
+    private func acceptBinary() -> Bool {
+        guard let header = self.request.header(HTTPRequestHeader.Name.accept) else {
+            return false
         }
 
-        return json
+        return header.contains(string: "application/octet-stream")
     }
-
 }

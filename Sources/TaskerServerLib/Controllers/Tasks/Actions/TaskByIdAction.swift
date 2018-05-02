@@ -74,7 +74,7 @@ class TaskByIdAction: ActionProtocol {
             }
 
             let taskDto = TaskDto(task: task)
-            return response.sendJson(taskDto)
+            return try response.sendJson(taskDto)
         } catch {
             response.sendInternalServerError(error: error)
         }

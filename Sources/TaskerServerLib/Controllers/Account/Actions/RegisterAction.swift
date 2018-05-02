@@ -55,7 +55,7 @@ class RegisterAction: ActionProtocol {
             }
 
             let registeredUserDto = UserDto(user: registeredUser)
-            return response.sendJson(registeredUserDto)
+            return try response.sendJson(registeredUserDto)
         } catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()
         } catch let error as ValidationsError {

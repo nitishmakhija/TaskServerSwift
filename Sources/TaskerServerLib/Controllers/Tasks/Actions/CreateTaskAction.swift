@@ -70,7 +70,7 @@ class CreateTaskAction: ActionProtocol {
             try self.tasksService.add(entity: task)
 
             let addedTaskDto = TaskDto(task: task)
-            return response.sendJson(addedTaskDto)
+            return try response.sendJson(addedTaskDto)
         } catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()
         } catch let error as ValidationsError {

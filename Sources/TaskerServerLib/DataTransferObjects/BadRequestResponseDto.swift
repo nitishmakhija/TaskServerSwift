@@ -7,10 +7,7 @@
 
 import Foundation
 
-struct BadRequestResponseDto: Codable {
-
-    public var message: String
-
+extension BadRequestResponseDto {
     init(message: String) {
         self.message = message
     }

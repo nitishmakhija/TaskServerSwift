@@ -7,10 +7,7 @@
 
 import Foundation
 
-struct JwtTokenResponseDto: Codable {
-
-    public var token: String
-
+extension JwtTokenResponseDto {
     init(token: String) {
         self.token = token
     }

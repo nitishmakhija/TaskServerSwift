@@ -7,11 +7,7 @@
 
 import Foundation
 
-struct ChangePasswordRequestDto: Codable {
-
-    public var email: String
-    public var password: String
-
+extension ChangePasswordRequestDto {
     init(email: String, password: String) {
         self.email = email
         self.password = password

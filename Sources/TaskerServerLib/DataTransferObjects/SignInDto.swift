@@ -7,11 +7,7 @@
 
 import Foundation
 
-struct SignInDto: Codable {
-
-    public var email: String
-    public var password: String
-
+extension SignInDto {
     init(email: String, password: String) {
         self.email = email
         self.password = password

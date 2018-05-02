@@ -7,13 +7,17 @@
 
 import Foundation
 
-struct ValidationErrorResponseDto: Codable {
-
-    public var message: String
-    public var errors: [String: String]
+extension ValidationErrorResponseDto {
 
     init(message: String, errors: [String: String]) {
         self.message = message
-        self.errors = errors
+
+        for item in errors {
+            var error = ErrorDto()
+            error.field = item.key
+            error.messages.append(item.value)
+
+            self.errors.append(error)
+        }
     }
 }
