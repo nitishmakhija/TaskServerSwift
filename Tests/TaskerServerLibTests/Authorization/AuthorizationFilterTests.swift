@@ -155,7 +155,7 @@ class AuthorizationFilterTests: XCTestCase {
 
         let tokenProvider = TokenProvider(issuer: "tasker", secret: "WRONG SECRET")
         let user = User(id: UUID(), createDate: Date(), name: "John Doe", email: "john.doe@emailx", password: "", salt: "", isLocked: false)
-        let token = try! tokenProvider.prepareToken(user: user)
+        let token = try! tokenProvider.prepareToken(user: user, roles: [])
 
         fakeHttpRequest.headerMock.expect(equals(HTTPRequestHeader.Name.authorization))
         fakeHttpRequest.headerStub.on(equals(HTTPRequestHeader.Name.authorization), return: "Bearer \(token)")
@@ -235,7 +235,7 @@ class AuthorizationFilterTests: XCTestCase {
 
         let tokenProvider = TokenProvider(issuer: "tasker", secret: "secret")
         let user = User(id: UUID(), createDate: Date(), name: "John Doe", email: "john.doe@emailx", password: "", salt: "", isLocked: false)
-        let token = try! tokenProvider.prepareToken(user: user)
+        let token = try! tokenProvider.prepareToken(user: user, roles: [])
 
         fakeHttpRequest.headerMock.expect(equals(HTTPRequestHeader.Name.authorization))
         fakeHttpRequest.headerStub.on(equals(HTTPRequestHeader.Name.authorization), return: "Bearer \(token)")
@@ -275,7 +275,7 @@ class AuthorizationFilterTests: XCTestCase {
 
         let tokenProvider = TokenProvider(issuer: "tasker", secret: "secret")
         let user = User(id: UUID(), createDate: Date(), name: "John Doe", email: "john.doe@emailx", password: "", salt: "", isLocked: false)
-        let token = try! tokenProvider.prepareToken(user: user)
+        let token = try! tokenProvider.prepareToken(user: user, roles: [])
 
         fakeHttpRequest.headerMock.expect(equals(HTTPRequestHeader.Name.authorization))
         fakeHttpRequest.headerStub.on(equals(HTTPRequestHeader.Name.authorization), return: "Bearer \(token)")

@@ -44,6 +44,8 @@ struct UserDto {
 
   var email: String = String()
 
+  var password: String = String()
+
   var isLocked: Bool = false
 
   var roles: [String] = []
@@ -91,8 +93,9 @@ extension UserDto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
     2: .same(proto: "createDate"),
     3: .same(proto: "name"),
     4: .same(proto: "email"),
-    5: .same(proto: "isLocked"),
-    6: .same(proto: "roles"),
+    5: .same(proto: "password"),
+    6: .same(proto: "isLocked"),
+    7: .same(proto: "roles"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -102,8 +105,9 @@ extension UserDto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
       case 2: try decoder.decodeSingularStringField(value: &self.createDate)
       case 3: try decoder.decodeSingularStringField(value: &self.name)
       case 4: try decoder.decodeSingularStringField(value: &self.email)
-      case 5: try decoder.decodeSingularBoolField(value: &self.isLocked)
-      case 6: try decoder.decodeRepeatedStringField(value: &self.roles)
+      case 5: try decoder.decodeSingularStringField(value: &self.password)
+      case 6: try decoder.decodeSingularBoolField(value: &self.isLocked)
+      case 7: try decoder.decodeRepeatedStringField(value: &self.roles)
       default: break
       }
     }
@@ -122,11 +126,14 @@ extension UserDto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
     if !self.email.isEmpty {
       try visitor.visitSingularStringField(value: self.email, fieldNumber: 4)
     }
+    if !self.password.isEmpty {
+      try visitor.visitSingularStringField(value: self.password, fieldNumber: 5)
+    }
     if self.isLocked != false {
-      try visitor.visitSingularBoolField(value: self.isLocked, fieldNumber: 5)
+      try visitor.visitSingularBoolField(value: self.isLocked, fieldNumber: 6)
     }
     if !self.roles.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.roles, fieldNumber: 6)
+      try visitor.visitRepeatedStringField(value: self.roles, fieldNumber: 7)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -136,6 +143,7 @@ extension UserDto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
     if self.createDate != other.createDate {return false}
     if self.name != other.name {return false}
     if self.email != other.email {return false}
+    if self.password != other.password {return false}
     if self.isLocked != other.isLocked {return false}
     if self.roles != other.roles {return false}
     if unknownFields != other.unknownFields {return false}

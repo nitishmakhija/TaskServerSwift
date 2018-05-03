@@ -23,6 +23,6 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(name: "TaskerServerApp", dependencies: ["TaskerServerLib", "PerfectHTTPServer"]),
         .target(name: "TaskerServerLib", dependencies: ["PerfectHTTPServer", "Dip", "Configuration", "PerfectSQLite", "PerfectCrypto", "FileKit", "Swiftgger", "PerfectCORS", "SwiftProtobuf"]),
-        .testTarget(name: "TaskerServerLibTests", dependencies: ["TaskerServerLib", "PerfectHTTPServer", "Dip", "Configuration", "Dobby"])
+        .testTarget(name: "TaskerServerLibTests", dependencies: ["TaskerServerLib", "PerfectHTTPServer", "Dip", "Configuration", "Dobby", "SwiftProtobuf"])
     ]
 )

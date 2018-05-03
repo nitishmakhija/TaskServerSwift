@@ -13,10 +13,12 @@ public class SignInAction: ActionProtocol {
 
     let usersService: UsersServiceProtocol
     let configuration: Configuration
+    let userRolesService: UserRolesServiceProtocol
 
-    init(configuration: Configuration, usersService: UsersServiceProtocol) {
+    init(configuration: Configuration, usersService: UsersServiceProtocol, userRolesService: UserRolesServiceProtocol) {
         self.configuration = configuration
         self.usersService = usersService
+        self.userRolesService = userRolesService
     }
 
     public func getHttpMethod() -> HTTPMethod {
@@ -59,8 +61,10 @@ public class SignInAction: ActionProtocol {
                 return response.sendNotFoundError()
             }
 
+            let roles = try self.userRolesService.get(forUserId: user.id)
+
             let tokenProvider = TokenProvider(issuer: self.configuration.issuer, secret: self.configuration.secret)
-            let token = try tokenProvider.prepareToken(user: user)
+            let token = try tokenProvider.prepareToken(user: user, roles: roles)
             return try response.sendJson(JwtTokenResponseDto(token: token))
         } catch let error where error is DecodingError || error is RequestError {
             response.sendBadRequestError()

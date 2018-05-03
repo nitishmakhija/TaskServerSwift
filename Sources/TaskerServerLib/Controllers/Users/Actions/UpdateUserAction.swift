@@ -70,7 +70,7 @@ class UpdateUserAction: ActionProtocol {
 
             user.name = userDto.name
             user.isLocked = userDto.isLocked
-            user.roles = userDto.getRoles()
+            // user.roles = userDto.getRoles()
 
             try self.usersService.update(entity: user)
 

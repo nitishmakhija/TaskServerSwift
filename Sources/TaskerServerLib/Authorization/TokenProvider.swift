@@ -18,12 +18,12 @@ public class TokenProvider {
         self.secret = secret
     }
 
-    public func prepareToken(user: User) throws -> String {
+    public func prepareToken(user: User, roles: [Role]) throws -> String {
 
         let payload = [
             ClaimsNames.uid.rawValue: user.id.uuidString,
             ClaimsNames.name.rawValue: user.email,
-            ClaimsNames.roles.rawValue: user.getRolesNames(),
+            ClaimsNames.roles.rawValue: roles.map { $0.name },
             ClaimsNames.issuer.rawValue: self.issuer,
             ClaimsNames.issuedAt.rawValue: Date().timeIntervalSince1970,
             ClaimsNames.expiration.rawValue: Date().addingTimeInterval(36000).timeIntervalSince1970

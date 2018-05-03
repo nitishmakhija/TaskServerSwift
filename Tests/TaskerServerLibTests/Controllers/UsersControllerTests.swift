@@ -110,9 +110,9 @@ class UsersControllerTests: XCTestCase {
         allUsersAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
 
         // Assert.
-        let users = try! fakeHttpResponse.getObjectFromResponseBody(Array<UserDto>.self)
+        let users = try! fakeHttpResponse.getObjectFromResponseBody(UsersDto.self)
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
-        XCTAssertTrue(users.count > 0)
+        XCTAssertTrue(users.users.count > 0)
     }
 
     func testGetUserShouldReturnUserWhenWeProvideCorrectId() {
@@ -128,7 +128,7 @@ class UsersControllerTests: XCTestCase {
         // Assert.
         let userDto = try! fakeHttpResponse.getObjectFromResponseBody(UserDto.self)
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
-        XCTAssertEqual(user.id, userDto.id)
+        XCTAssertEqual(user.id.uuidString, userDto.id)
         XCTAssertEqual(user.email, userDto.email)
     }
 
@@ -150,8 +150,9 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
-        let user = User(id: UUID(), createDate: Date(), name: "Martin Schmidt",
-                        email: "martin.schmidt@emailx.com", password: "p@ssword", salt: "123", isLocked: true)
+        var user = UserDto(id: UUID(), createDate: Date(), name: "Martin Schmidt",
+                        email: "martin.schmidt@emailx.com", isLocked: true)
+        user.password = "password"
         fakeHttpRequest.addObjectToRequestBody(user)
 
         // Act.
@@ -179,8 +180,8 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
-        let user = User(id: UUID(), createDate: Date(), name: "",
-                        email: "robin.schmidt@emailx.com", password: "p@ssword", salt: "123", isLocked: true)
+        let user = UserDto(id: UUID(), createDate: Date(), name: "",
+                        email: "robin.schmidt@emailx.com", isLocked: true)
         fakeHttpRequest.addObjectToRequestBody(user)
 
         // Act.
@@ -189,8 +190,8 @@ class UsersControllerTests: XCTestCase {
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
         let validationsError = try! fakeHttpResponse.getObjectFromResponseBody(ValidationErrorResponseDto.self)
-        let errorExists = validationsError.errors.contains { (key, value) -> Bool in
-            return key == "name" && value == "Field is required."
+        let errorExists = validationsError.errors.contains { (error) -> Bool in
+            return error.field == "name" && error.messages.first == "Field is required."
         }
         XCTAssertTrue(errorExists)
     }
@@ -200,8 +201,8 @@ class UsersControllerTests: XCTestCase {
         // Arrange.
         let fakeHttpRequest = FakeHTTPRequest()
         let fakeHttpResponse = FakeHTTPResponse()
-        let user = User(id: UUID(), createDate: Date(), name: "Robin Schmidt",
-                        email: "", password: "p@ssword", salt: "123", isLocked: true)
+        let user = UserDto(id: UUID(), createDate: Date(), name: "Robin Schmidt",
+                        email: "", isLocked: true)
         fakeHttpRequest.addObjectToRequestBody(user)
 
         // Act.
@@ -210,8 +211,8 @@ class UsersControllerTests: XCTestCase {
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
         let validationsError = try! fakeHttpResponse.getObjectFromResponseBody(ValidationErrorResponseDto.self)
-        let errorExists = validationsError.errors.contains { (key, value) -> Bool in
-            return key == "email" && value == "Field is required."
+        let errorExists = validationsError.errors.contains { (error) -> Bool in
+            return error.field == "email" && error.messages.first == "Field is required."
         }
         XCTAssertTrue(errorExists)
     }
@@ -222,7 +223,7 @@ class UsersControllerTests: XCTestCase {
         let user = TestUsers.getVikiDoe()
         let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": user.id.uuidString], withAuthorization: user)
         let fakeHttpResponse = FakeHTTPResponse()
-        fakeHttpRequest.addObjectToRequestBody(user)
+        fakeHttpRequest.addObjectToRequestBody(UserDto(user: user))
 
         // Act.
         updateUserAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
@@ -251,7 +252,7 @@ class UsersControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": user.id.uuidString])
         let fakeHttpResponse = FakeHTTPResponse()
         user.name = ""
-        fakeHttpRequest.addObjectToRequestBody(user)
+        fakeHttpRequest.addObjectToRequestBody(UserDto(user: user))
 
         // Act.
         updateUserAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
@@ -259,8 +260,8 @@ class UsersControllerTests: XCTestCase {
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
         let validationsError = try! fakeHttpResponse.getObjectFromResponseBody(ValidationErrorResponseDto.self)
-        let errorExists = validationsError.errors.contains { (key, value) -> Bool in
-            return key == "name" && value == "Field is required."
+        let errorExists = validationsError.errors.contains { (error) -> Bool in
+            return error.field == "name" && error.messages.first == "Field is required."
         }
         XCTAssertTrue(errorExists)
     }

@@ -116,8 +116,8 @@ class TasksControllerTests: XCTestCase {
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
 
-        let tasks = try! fakeHttpResponse.getObjectFromResponseBody(Array<TaskDto>.self)
-        XCTAssertTrue(tasks.count > 0)
+        let tasks = try! fakeHttpResponse.getObjectFromResponseBody(TasksDto.self)
+        XCTAssertTrue(tasks.tasks.count > 0)
     }
 
     func testGetTaskShouldReturnTaskWhenWeProvideCorrectId() {
@@ -134,7 +134,7 @@ class TasksControllerTests: XCTestCase {
         // Assert.
         let taskDto = try! fakeHttpResponse.getObjectFromResponseBody(TaskDto.self)
         XCTAssertEqual(HTTPResponseStatus.ok.code, fakeHttpResponse.status.code)
-        XCTAssertEqual(task.id, taskDto.id)
+        XCTAssertEqual(task.id.uuidString, taskDto.id)
         XCTAssertEqual(task.name, taskDto.name)
     }
 
@@ -157,7 +157,7 @@ class TasksControllerTests: XCTestCase {
         let user = TestUsers.getJohnDoe()
         let fakeHttpRequest = FakeHTTPRequest(withAuthorization: user)
         let fakeHttpResponse = FakeHTTPResponse()
-        let task = Task(id: UUID(), createDate: Date(), name: "Create unit tests", isFinished: true, userId: user.id)
+        let task = TaskDto(id: UUID(), createDate: Date(), name: "Create unit tests", isFinished: true)
         fakeHttpRequest.addObjectToRequestBody(task)
 
         // Act.
@@ -186,7 +186,7 @@ class TasksControllerTests: XCTestCase {
         let user = TestUsers.getJohnDoe()
         let fakeHttpRequest = FakeHTTPRequest(withAuthorization: user)
         let fakeHttpResponse = FakeHTTPResponse()
-        fakeHttpRequest.addObjectToRequestBody(Task(id: UUID(), createDate: Date(), name: "", isFinished: true, userId: user.id))
+        fakeHttpRequest.addObjectToRequestBody(TaskDto(id: UUID(), createDate: Date(), name: "", isFinished: true))
 
         // Act.
         createTaskAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
@@ -194,20 +194,20 @@ class TasksControllerTests: XCTestCase {
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
         let validationsError = try! fakeHttpResponse.getObjectFromResponseBody(ValidationErrorResponseDto.self)
-        let errorExists = validationsError.errors.contains { (key, value) -> Bool in
-            return key == "name" && value == "Field is required."
+        let errorExists = validationsError.errors.contains { (error) -> Bool in
+            return error.field == "name" && error.messages.first == "Field is required."
         }
         XCTAssertTrue(errorExists)
     }
 
-    func testPutTaskShouldUpdateUserInStoreWhenWeProvideCorrectTaskData() {
+    func testPutTaskShouldUpdateTaskInStoreWhenWeProvideCorrectTaskData() {
 
         // Arrange.
         let task = TestTasks.getTask("John 8 task")
         let user = TestUsers.getJohnDoe()
         let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": task.id.uuidString], withAuthorization: user)
         let fakeHttpResponse = FakeHTTPResponse()
-        fakeHttpRequest.addObjectToRequestBody(task)
+        fakeHttpRequest.addObjectToRequestBody(TaskDto(task: task))
 
         // Act.
         updateTaskAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
@@ -237,7 +237,7 @@ class TasksControllerTests: XCTestCase {
         let fakeHttpRequest = FakeHTTPRequest(urlVariables: ["id": task.id.uuidString], withAuthorization: user)
         let fakeHttpResponse = FakeHTTPResponse()
         task.name = ""
-        fakeHttpRequest.addObjectToRequestBody(task)
+        fakeHttpRequest.addObjectToRequestBody(TaskDto(task: task))
 
         // Act.
         updateTaskAction?.handler(request: fakeHttpRequest, response: fakeHttpResponse)
@@ -245,8 +245,8 @@ class TasksControllerTests: XCTestCase {
         // Assert.
         XCTAssertEqual(HTTPResponseStatus.badRequest.code, fakeHttpResponse.status.code)
         let validationsError = try! fakeHttpResponse.getObjectFromResponseBody(ValidationErrorResponseDto.self)
-        let errorExists = validationsError.errors.contains { (key, value) -> Bool in
-            return key == "name" && value == "Field is required."
+        let errorExists = validationsError.errors.contains { (error) -> Bool in
+            return error.field == "name" && error.messages.first == "Field is required."
         }
         XCTAssertTrue(errorExists)
     }
@@ -297,7 +297,7 @@ class TasksControllerTests: XCTestCase {
         ("testPostTaskShouldReturnValidationErrorWhenWeProvideEmptyName",
             testPostTaskShouldReturnValidationErrorWhenWeProvideEmptyName),
         ("testPutTaskShouldUpdateUserInStoreWhenWeProvideCorrectTaskData",
-            testPutTaskShouldUpdateUserInStoreWhenWeProvideCorrectTaskData),
+            testPutTaskShouldUpdateTaskInStoreWhenWeProvideCorrectTaskData),
         ("testPutTaskShouldReturnBadRequestStatusCodeWhenWeNotProvideJson",
             testPutTaskShouldReturnBadRequestStatusCodeWhenWeNotProvideJson),
         ("testPutTaskShouldReturnValidationErrorWhenWeProvideEmptyName",

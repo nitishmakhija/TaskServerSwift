@@ -1,6 +1,6 @@
-FROM swift:4.0.3
+FROM swift:4.1
 
-LABEL Description="TaskServer (swift) running on Docker" Vendor="Marcin Czachurski" Version="1.0"
+LABEL Description="TaskServer (swift) running on Docker" Vendor="Marcin Czachurski" Version="1.3"
 
 # Install needed system libraries for MySQL access
 RUN apt-get update \

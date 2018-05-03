@@ -9,6 +9,7 @@ message UserDto {
   string createDate = 2;
   string name = 3;
   string email = 4;
-  bool isLocked = 5;
-  repeated string roles = 6;
+  string password = 5;
+  bool isLocked = 6;
+  repeated string roles = 7;
 }

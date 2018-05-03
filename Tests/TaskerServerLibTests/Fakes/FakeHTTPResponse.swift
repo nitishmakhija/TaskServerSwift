@@ -9,6 +9,7 @@ import Foundation
 import PerfectHTTP
 import PerfectNet
 import Dobby
+import SwiftProtobuf
 
 class FakeHTTPResponse: HTTPResponse {
 
@@ -84,20 +85,11 @@ extension FakeHTTPResponse {
         return nil
     }
 
-    func getObjectFromResponseBody<T>(_ type: T.Type) throws -> T where T: Decodable {
+    func getObjectFromResponseBody<T>(_ type: T.Type) throws -> T where T: SwiftProtobuf.Message {
         if let json = self.body {
-            return try self.decode(type, json)
+            return try T(jsonString: json)
         }
 
         throw FakeHTTPResponseError.bodyIsEmpty
-    }
-
-    private func decode<T>(_ type: T.Type, _ json: String) throws -> T where T: Decodable {
-
-        let jsonData = json.data(using: .utf8)!
-        let decoder = JSONDecoder()
-        let task = try decoder.decode(type, from: jsonData)
-
-        return task
     }
 }

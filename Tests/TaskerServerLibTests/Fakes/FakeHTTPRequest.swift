@@ -9,6 +9,7 @@ import Foundation
 import PerfectHTTP
 import PerfectNet
 import Dobby
+import SwiftProtobuf
 @testable import TaskerServerLib
 
 class FakeHTTPRequest: HTTPRequest {
@@ -103,25 +104,14 @@ class FakeHTTPRequest: HTTPRequest {
 }
 
 extension FakeHTTPRequest {
-    func addObjectToRequestBody<T>(_ value: T) where T: Encodable {
-        let json = self.encode(value)
+    func addObjectToRequestBody<T>(_ value: T) where T: SwiftProtobuf.Message {
 
-        self.setHeader(.contentType, value: "text/json")
-        self.postBodyString = json
-    }
-
-    private func encode<T>(_ value: T) -> String where T: Encodable {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-
-        var json: String = ""
         do {
-            let jsonData = try encoder.encode(value)
-            json = String(data: jsonData, encoding: .utf8)!
+            let json = try value.jsonString()
+            self.setHeader(.contentType, value: "text/json")
+            self.postBodyString = json
         } catch {
-            print("Error during parsing json")
+            print("Error during converting to JSON.")
         }
-
-        return json
     }
 }

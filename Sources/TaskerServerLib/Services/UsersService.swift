@@ -34,7 +34,6 @@ public class UsersService: UsersServiceProtocol {
 
     public func get(byId id: UUID) throws -> User? {
         let user =  try self.usersRepository.get(byId: id)
-        try self.assignUserRoles(forUser: user)
         return user
     }
 
@@ -48,7 +47,6 @@ public class UsersService: UsersServiceProtocol {
         entity.password = try entity.password.generateHash(salt: entity.salt)
 
         try self.usersRepository.add(entity: entity)
-        try self.userRolesRepository.set(roles: entity.roles, forUserId: entity.id)
     }
 
     public func update(entity: User) throws {
@@ -58,7 +56,6 @@ public class UsersService: UsersServiceProtocol {
         }
 
         try self.usersRepository.update(entity: entity)
-        try self.userRolesRepository.set(roles: entity.roles, forUserId: entity.id)
     }
 
     public func delete(entityWithId id: UUID) throws {
@@ -67,14 +64,6 @@ public class UsersService: UsersServiceProtocol {
 
     public func get(byEmail email: String) throws -> User? {
         let user = try self.usersRepository.get(byEmail: email)
-        try self.assignUserRoles(forUser: user)
         return user
-    }
-
-    private func assignUserRoles(forUser user: User?) throws {
-        if user != nil {
-            let userRoles = try self.userRolesRepository.get(forUserId: user!.id)
-            user!.roles = userRoles
-        }
     }
 }

@@ -13,10 +13,10 @@ class AccountController: ControllerProtocol {
 
     private let actions: [ActionProtocol]
 
-    init(configuration: Configuration, usersService: UsersServiceProtocol) {
+    init(configuration: Configuration, usersService: UsersServiceProtocol, userRolesService: UserRolesServiceProtocol) {
         self.actions =  [
             RegisterAction(usersService: usersService),
-            SignInAction(configuration: configuration, usersService: usersService),
+            SignInAction(configuration: configuration, usersService: usersService, userRolesService: userRolesService),
             ChangePasswordAction(usersService: usersService)
         ]
     }
