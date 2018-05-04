@@ -1,6 +1,7 @@
 import PerfectHTTP
 import PerfectHTTPServer
 import TaskerServerLib
+import Foundation
 
 do {
     let serverContext = try ServerContext()
