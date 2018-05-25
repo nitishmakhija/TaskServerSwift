@@ -142,11 +142,11 @@ curl -X POST \
 
 Endpoint for signing in into the system. Endpoint returns JWT token which can be used for all further communication.
 
-|               |                   |
-|---------------|-------------------|
-| Method        | POST              |
-| Uri           | /account/signIn   |
-| Authorization | anonymous         |
+|               |                    |
+|---------------|--------------------|
+| Method        | POST               |
+| Uri           | /account/sign-in   |
+| Authorization | anonymous          |
 
 Request example:
 
@@ -169,7 +169,7 @@ Curl:
 
 ```bash
 curl -X POST \
-  http://localhost:8181/account/signIn \
+  http://localhost:8181/account/sign-in \
   -H 'Cache-Control: no-cache' \
   -H 'Content-Type: application/json' \
   -d '{
