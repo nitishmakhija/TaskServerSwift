@@ -21,6 +21,6 @@ public class UserRolesService: UserRolesServiceProtocol {
     }
 
     public func get(forUserId userId: UUID) throws -> [Role] {
-        return try self.get(forUserId: userId)
+        return try self.userRolesRepository.get(forUserId: userId)
     }
 }
